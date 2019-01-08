@@ -1,5 +1,5 @@
 
-export * from './toggle.component';
+export * from './mention.component';
 
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -7,7 +7,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxMentionsModule} from 'ngx-mentions';
 import {NgxdSharedModule} from '../../shared';
 import {NgxdComponentsSharedModule} from '../shared';
-import {NgxdMentionsComponent} from './toggle.component';
+import {NgxdMentionsComponent} from './mention.component';
 import {DEMO_DIRECTIVES} from './demos';
 
 @NgModule({

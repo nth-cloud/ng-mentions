@@ -11,7 +11,7 @@ import {CodeHighlightService} from './code-highlight.service';
 })
 export class NgxdCodeComponent implements AfterViewInit {
 
-    @ViewChild('code') codeEl: ElementRef<HTMLElement>;
+    @ViewChild('code') codeEl: ElementRef;
 
     @Input() code = '';
     @Input() lang = '';

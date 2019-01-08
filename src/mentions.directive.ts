@@ -1,8 +1,8 @@
 import {
+    ChangeDetectorRef,
     Directive,
     ElementRef,
     EventEmitter,
-    forwardRef,
     Inject,
     Input,
     OnChanges, OnDestroy,
@@ -14,13 +14,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms
 import {Subject} from "rxjs";
 
 @Directive({
-    selector: '[ngxMentionInput]',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => NgxMentionsInputDirective)
-        }
-    ]
+    selector: '[ngxMentionInput]'
 })
 export class NgxMentionsInputDirective implements OnChanges, OnDestroy, ControlValueAccessor {
     @Output() valueChanges: EventEmitter<string> = new EventEmitter<string>();
@@ -34,6 +28,7 @@ export class NgxMentionsInputDirective implements OnChanges, OnDestroy, ControlV
             this._inputValueAccessor.value = value;
             this.stateChanges.next();
             this.valueChanges.emit(value);
+            this._changeDetector.detectChanges();
         }
     }
 
@@ -42,7 +37,8 @@ export class NgxMentionsInputDirective implements OnChanges, OnDestroy, ControlV
     constructor(
         private element: ElementRef,
         @Optional() @Self() public ngControl: NgControl,
-        @Optional() @Self() @Inject(NG_VALUE_ACCESSOR) inputValueAccessor: any
+        @Optional() @Self() @Inject(NG_VALUE_ACCESSOR) inputValueAccessor: any,
+        private _changeDetector: ChangeDetectorRef
     ) {
         this._inputValueAccessor = inputValueAccessor || element.nativeElement;
     }

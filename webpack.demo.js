@@ -3,7 +3,6 @@ let webpack = require('webpack');
 let rxPaths = require('rxjs/_esm5/path-mapping');
 
 // Webpack Plugins
-let autoprefixer = require('autoprefixer');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 let MiniCssExtractPlugin = require('mini-css-extract-plugin');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -111,7 +110,12 @@ module.exports = function makeWebpackConfig() {
                 use: [
                     MiniCssExtractPlugin.loader,
                     // 'style-loader',
-                    'css-loader?sourceMap-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
                     'postcss-loader',
                 ]
             },
@@ -134,7 +138,12 @@ module.exports = function makeWebpackConfig() {
                 use: [
                     MiniCssExtractPlugin.loader,
                     // 'style-loader',
-                    'css-loader?sourceMap-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
                     'postcss-loader',
                     'sass-loader',
                 ]
@@ -207,17 +216,17 @@ module.exports = function makeWebpackConfig() {
         new webpack.LoaderOptionsPlugin({
             // add debug messages
             debug: !isProd,
-            minimize: isProd,
+            minimize: isProd//,
             /**
              * PostCSS
              * Reference: https://github.com/postcss/autoprefixer-core
              * Add vendor prefixes to your css
              */
-            postcss: [
-                autoprefixer({
-                    browsers: ['last 2 version']
-                })
-            ]
+            // postcss: [
+            //     autoprefixer({
+            //         browsers: ['last 2 version']
+            //     })
+            // ]
         }),
 
         // Workaround to remove Webpack warning in system_js_ng_module_factory_loader.js
@@ -271,7 +280,7 @@ module.exports = function makeWebpackConfig() {
      * Reference: https://webpack.js.org/webpack-dev-server/
      */
     config.devServer = {
-        contentBase: 'demo/dist',
+        contentBase: isProd ? 'demo/dist' : 'demo/src/public',
         historyApiFallback: true,
         stats: 'minimal' // none (or false), errors-only, minimal, normal (or true) and verbose
     };

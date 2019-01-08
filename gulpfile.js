@@ -8,7 +8,6 @@ let gulpFile = require('gulp-file');
 let del = require('del');
 let clangFormat = require('clang-format');
 let gulpFormat = require('gulp-clang-format');
-let runSequence = require('run-sequence');
 let tslint = require('gulp-tslint');
 let webpack = require('webpack');
 let exec = require('child_process').exec;
@@ -297,26 +296,20 @@ const cleanDemoCache = () => {
     return del('.publish/');
 };
 
-const demoServer = () => {
-    shell.task([
-        `webpack-dev-server --mode development --port ${docsConfig.port} --config webpack.demo.js --inline --progress`
-    ]);
-};
+const demoServer = shell.task([
+    `webpack-dev-server --mode development --port ${docsConfig.port} --config webpack.demo.js --inline --progress`
+]);
 
-const buildDemo = () => {
-    shell.task(
-        ['webpack --mode production --config webpack.demo.js --progress --profile --bail'],
-        {env: {MODE: 'build'}}
-    );
-};
+const buildDemo = shell.task(
+    ['webpack --mode production --config webpack.demo.js --progress --profile --bail'],
+    {env: {MODE: 'build'}}
+);
 
-const demoServerAOT = () => {
-    shell.task(
-        [`webpack-dev-server --mode development --port ${
-            docsConfig.port} --config webpack.demo.js --inline --progress`],
-        {env: {MODE: 'build'}}
-    );
-};
+const demoServerAOT = shell.task(
+    [`webpack-dev-server --mode development --port ${
+        docsConfig.port} --config webpack.demo.js --inline --progress`],
+    {env: {MODE: 'build'}}
+);
 
 const pushDemo = () => {
     return gulp.src(PATHS.demoDist)
@@ -324,32 +317,27 @@ const pushDemo = () => {
 };
 
 // Public Tasks
-// gulp.task('clean:build', cleanBuild);
-// gulp.task('clean:tests', cleanTests);
-// gulp.task('clean:demo', cleanDemo);
-// gulp.task('clean:demo-cache', cleanDemoCache);
-// gulp.task('ngc', compileAngular);
-// gulp.task('umd', compileUMD);
-// gulp.task('npm', packageNPM);
-// gulp.task('changelog', updateChangelog);
-// gulp.task('build:tests', ['clean:tests'], buildTests);
-// gulp.task('ddescribe-iit', describeIt);
-// gulp.task('test', ['build:tests'], runTests);
-// gulp.task('remap-coverage', remapCoverage);
-gulp.task('tdd', ['clean:tests'], TDD);
-gulp.task('saucelabs', ['build:tests'], saucelabs);
+
+const buildTestsTask = gulp.series(cleanTests, buildTests);
+
+gulp.task('clean:build', cleanBuild);
+gulp.task('clean:tests', cleanTests);
+gulp.task('clean:demo', cleanDemo);
+gulp.task('clean:demo-cache', cleanDemoCache);
+gulp.task('ngc', compileAngular);
+gulp.task('umd', compileUMD);
+gulp.task('npm', packageNPM);
+gulp.task('changelog', updateChangelog);
+gulp.task('build:tests', buildTestsTask);
+gulp.task('ddescribe-iit', describeIt);
+
+gulp.task('remap-coverage', remapCoverage);
 gulp.task('lint', lint);
 gulp.task('check-format', checkFormat);
 gulp.task('enforce-format', enforceFormat);
 gulp.task('generate-docs', generateDocs);
 gulp.task('generate-plunks', generatePlunks);
-gulp.task('demo-server', ['generate-docs', 'generate-plunks'], demoServer);
-gulp.task('build:demo', ['clean:demo', 'generate-docs', 'generate-plunks'], buildDemo);
-gulp.task('demo-server:aot', ['generate-docs', 'generate-plunks'], demoServerAOT);
 gulp.task('demo-push', pushDemo);
-
-const buildTestsTask = gulp.series(cleanTests, buildTests);
-
 
 const test = gulp.series(buildTestsTask, runTests);
 const clean = gulp.parallel(cleanBuild, cleanTests, cleanDemo, cleanDemoCache);
@@ -358,19 +346,17 @@ const deployDemo = gulp.series(cleanDemo, buildDemo, pushDemo, cleanDemoCache);
 const defaultTasks = gulp.series(lint, enforceFormat, describeIt, test);
 const ci = gulp.series(defaultTasks, buildDemo);
 
-gulp.task('clean', ['clean:build', 'clean:tests', 'clean:demo', 'clean:demo-cache']);
-gulp.task('build', function (done) {
-    runSequence('lint', 'enforce-format', 'ddescribe-iit', 'test', 'clean:build', 'ngc', 'umd', 'npm', done);
-});
-gulp.task('deploy-demo', function (done) {
-    runSequence('clean:demo', 'build:demo', 'demo-push', 'clean:demo-cache', done);
-});
-gulp.task('default', function (done) {
-    runSequence('lint', 'enforce-format', 'ddescribe-iit', 'test', done);
-});
-gulp.task('ci', function (done) {
-    runSequence('default', 'build:demo', done);
-});
+gulp.task('demo-server', gulp.series(generateDocs, generatePlunks, demoServer));
+gulp.task('build:demo', gulp.series(cleanDemo, generateDocs, generatePlunks, buildDemo));
+gulp.task('demo-server:aot', gulp.series(generateDocs, generatePlunks, demoServerAOT));
+gulp.task('saucelabs', gulp.series(buildTestsTask, saucelabs));
+gulp.task('tdd', gulp.series(cleanTests, TDD));
+gulp.task('test', test);
+gulp.task('clean', clean);
+gulp.task('build', build);
+gulp.task('deploy-demo', deployDemo);
+gulp.task('default', defaultTasks);
+gulp.task('ci', ci);
 
 function getLocalConfig() {
     try {
