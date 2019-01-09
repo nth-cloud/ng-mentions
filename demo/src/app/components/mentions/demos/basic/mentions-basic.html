@@ -1,9 +1,9 @@
 <div>
-    <ngx-mentions>
+    <ngx-mentions [mentions]="model.mentions">
         <textarea
             class="form-control"
             ngxMentionInput
-            [(ngModel)]="model"
+            [(ngModel)]="model.value"
             rows="5"
         ></textarea>
     </ngx-mentions>

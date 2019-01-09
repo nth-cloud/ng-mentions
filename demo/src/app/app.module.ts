@@ -8,7 +8,7 @@ import {AppComponent} from './app.component';
 import {routing} from './app.routing';
 import {NgxdDemoModule} from './components';
 import {NgxdSharedModule} from './shared';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import {ReactiveFormsModule} from "@angular/forms";
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
+    FormsModule,
     routing,
     NgbModule.forRoot(),
     NgxdDemoModule,

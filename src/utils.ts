@@ -1,3 +1,45 @@
+export const styleProperties = Object.freeze([
+    'direction', // RTL support
+    'boxSizing',
+    'width', // on Chrome and IE, exclude the scrollbar, so the mirror div wraps exactly as the textarea does
+    'height',
+    'overflowX',
+    'overflowY', // copy the scrollbar for IE
+
+    'borderTopWidth',
+    'borderRightWidth',
+    'borderBottomWidth',
+    'borderLeftWidth',
+    'borderStyle',
+
+    'paddingTop',
+    'paddingRight',
+    'paddingBottom',
+    'paddingLeft',
+
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/font
+    'fontStyle',
+    'fontVariant',
+    'fontWeight',
+    'fontStretch',
+    'fontSize',
+    'fontSizeAdjust',
+    'lineHeight',
+    'fontFamily',
+
+    'textAlign',
+    'textTransform',
+    'textIndent',
+    'textDecoration', // might not make a difference, but better be safe
+
+    'letterSpacing',
+    'wordSpacing',
+
+    'tabSize',
+    'MozTabSize'
+]);
+const isBrowser = typeof window !== 'undefined';
+const isFirefox = isBrowser && (<any>window).mozInnerScreenX != null;
 
 function isInputOrTextAreaElement(element?: HTMLElement): boolean {
     return element !== null && (
@@ -36,7 +78,7 @@ function iterateMentionsMarkup(
     }
 }
 
-function iterateFirstMentionsMarkup(
+function iterateOnlyMentionsMarkup(
     value: string,
     mentionMarkup: MarkupMention,
     markupIterator: (..._: any[]) => boolean,
@@ -49,15 +91,12 @@ function iterateFirstMentionsMarkup(
         let display = displayTransform(...match);
         let substr = value.substring(start, match.index);
         currentPlainTextIndex += substr.length;
-        if (markupIterator(match[0], match.index, currentPlainTextIndex, display) ) {
-            break;
-        }
         currentPlainTextIndex += display.length;
         start = regEx.lastIndex;
     }
 }
 
-function mapPlainTextIndex(
+export function mapPlainTextIndex(
     value: string,
     mentionMarkup: MarkupMention,
     indexInPlainText: number,
@@ -107,6 +146,48 @@ export function getCaretPosition(element: HTMLInputElement): number {
     return 0;
 }
 
+export function getCaretCoordinates(element: HTMLInputElement, position: number): {top: number, left: number} {
+    let coords = {top: 0, left: 0};
+    if (!isBrowser) {
+        return coords;
+    }
+    const div = document.createElement('div');
+    document.body.appendChild(div);
+    let style = div.style;
+    const computed = window.getComputedStyle ? getComputedStyle(element) : (<any>element).currentStyle;
+    style.whiteSpace = 'pre-wrap';
+    if (element.nodeName !== 'INPUT') {
+        style.wordWrap = 'break-word';
+    }
+    style.position = 'absolute';
+    style.visibility = 'hidden';
+    styleProperties.forEach(prop => style[prop] = computed[prop]);
+    if (isFirefox) {
+        if (element.scrollHeight > parseInt(computed.height)) {
+            style.overflowY = 'scroll';
+        }
+    } else {
+        style.overflow = 'hidden';
+    }
+    div.textContent = element.value.substring(0, position);
+    if (element.nodeName === 'INPUT') {
+        div.textContent = div.textContent.replace(/\s/g, '\u00a0');
+    }
+
+    let span = document.createElement('span');
+    span.textContent = element.value.substring(position) || '.';
+    div.appendChild(span);
+
+    coords = {
+        top: span.offsetTop + parseInt(computed['borderTopWidth']),
+        left: span.offsetLeft + parseInt(computed['borderLeftWidth'])
+    };
+
+    document.body.removeChild(div);
+
+    return coords;
+}
+
 export function setCaretPosition(element: HTMLInputElement, position: number): void {
     if (isInputOrTextAreaElement(element) && element.selectionStart) {
         element.focus();
@@ -135,14 +216,14 @@ export function markupToRegExp(markup: string): MarkupMention {
     let markupPattern = escapeRegExp(markup);
     let placeholderRegExp = /__([\w]+)__/g;
     let placeholders = {};
-    let match, i = 0;
+    let match, i = 1;
     do {
         match = placeholderRegExp.exec(markupPattern);
         if (match) {
             let placeholder = match[1];
             markupPattern = markupPattern.replace(
                 `__${placeholder}__`,
-                `(?<${placeholder}>.+)`
+                `(?<${placeholder}>[^\\)\\]]+)`
             );
             placeholders[placeholder] = ++i;
         }
@@ -150,30 +231,32 @@ export function markupToRegExp(markup: string): MarkupMention {
 
     return {
         markup: markup,
-        regEx: new RegExp(markupPattern, 'ig'),
+        regEx: new RegExp('(' + markupPattern + ')', 'ig'),
         groups: placeholders
     };
 }
-
-// export function isCoordinateWithinRect(rect: ClientRect, x: number, y: number) {
-//     return (rect.left < x && x < rect.right) && (rect.top < y && y < rect.bottom);
-// }
-
 export function getPlainText(value: string, mentionMarkup: MarkupMention, displayTransform: (..._: string[]) => string) {
     mentionMarkup.regEx.lastIndex = 0;
     return value.replace(mentionMarkup.regEx, displayTransform);
 }
 
+export function replacePlaceholders(item: any, markupMention: MarkupMention): string {
+    let result = markupMention.markup + '';
+    Object.keys(markupMention.groups).forEach(key => result = result.replace(new RegExp(`__${key}__`, 'g'), item[key]));
+
+    return result;
+}
+
 export function applyChangeToValue(
     value: string,
     markupMention: MarkupMention,
-    oldPlainTextValue: string,
     plainTextValue: string,
     selectionStartBeforeChange: number = 0,
     selectionEndBeforeChange: number = 0,
     selectionEndAfterChange: number = 0,
     displayTransform: (..._: string[]) => string
 ) {
+    let oldPlainTextValue = getPlainText(value, markupMention, displayTransform);
     let lengthDelta = oldPlainTextValue.length - plainTextValue.length;
     if (!selectionStartBeforeChange) {
         selectionStartBeforeChange = selectionEndBeforeChange + lengthDelta;
@@ -195,20 +278,7 @@ export function applyChangeToValue(
     if (selectionStartBeforeChange === selectionEndAfterChange) {
         spliceEnd = Math.max(selectionEndBeforeChange, selectionStartBeforeChange + lengthDelta);
     }
-console.log('applyChangeToValue', {
-    value,
-    oldPlainTextValue,
-    plainTextValue,
-    lengthDelta,
-    selectionStartBeforeChange, selectionEndAfterChange,
-    insert,
-    _newValue: spliceString(
-        value,
-        mapPlainTextIndex(value, markupMention, spliceStart, false, displayTransform),
-        mapPlainTextIndex(value, markupMention, spliceEnd, true, displayTransform),
-        insert
-    )
-});
+
     return spliceString(
         value,
         mapPlainTextIndex(value, markupMention, spliceStart, false, displayTransform),
@@ -222,17 +292,22 @@ export function findStartOfMentionInPlainText(
     mentionMarkup: MarkupMention,
     indexInPlainText: number,
     displayTransform: (..._: string[]) => string
-): number {
-    let result = -1;
+): {start: number, end: number} {
+    let result = {start: -1, end: -1};
     const markupIterator = (index: number, mentionPlainTextIndex: number, display: string): boolean => {
+        console.log(index, mentionPlainTextIndex, display);
         if (mentionPlainTextIndex < indexInPlainText && mentionPlainTextIndex + display.length > indexInPlainText) {
-            result = mentionPlainTextIndex;
+            result = {start: mentionPlainTextIndex, end: mentionPlainTextIndex + display.length};
             return true;
         }
 
         return false;
     };
-    iterateFirstMentionsMarkup(value, mentionMarkup, markupIterator, displayTransform);
+    iterateOnlyMentionsMarkup(value, mentionMarkup, markupIterator, displayTransform);
 
     return result;
+}
+
+export function getBoundsOfMentionAtPosition(value: string, mentionMarkup: MarkupMention, indexInPlainText: number, displayTransform: (..._: string[]) => string): {start: number, end: number} {
+    return findStartOfMentionInPlainText(value, mentionMarkup, indexInPlainText, displayTransform);
 }

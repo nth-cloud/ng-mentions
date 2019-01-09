@@ -1,8 +1,9 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {HighlightedDirective, NgxMentionsComponent} from "./mentions.component";
-import {NgxMentionsInputDirective} from "./mentions.directive";
+import {NgxMentionsInputDirective} from "./mentions-input.directive";
 import {MentionsListComponent} from "./mentions-list.component";
+import {FormsModule} from "@angular/forms";
 
 const EXPORT_DIRECTIVES = [
     NgxMentionsComponent,
@@ -15,5 +16,10 @@ const DECLARATIONS = [
     HighlightedDirective
 ];
 
-@NgModule({imports: [CommonModule], exports: EXPORT_DIRECTIVES, declarations: DECLARATIONS})
+@NgModule({
+    imports: [CommonModule, FormsModule],
+    exports: EXPORT_DIRECTIVES,
+    declarations: DECLARATIONS,
+    entryComponents: [MentionsListComponent]
+})
 export class NgxMentionsModule {}
