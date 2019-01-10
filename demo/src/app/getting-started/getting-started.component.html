@@ -3,24 +3,20 @@
     Dependencies
   </h3>
   <p>
-    This repository contains a Angular v6+ Bootstrap-styled Toggle that can be used as a standalone toggle or can convert checkboxes into UI toggles.
-    As a result no dependency on jQuery or Bootstrap's JavaScript is required. The only required dependencies are:
+    This repository contains a Angular v5+ rich mentions component. It allows for customizable mention display and custom searching.
+    The only required dependencies are:
   </p>
   <ul>
     <li>
-      <a href="https://angular.io" target="_blank">Angular</a> (<em>requires</em> Angular version 6 or higher, tested with 6.1.10)
-    </li>
-    <li>
-      <a href="https://www.getbootstrap.com" target="_blank">Bootstrap CSS</a> (<em>requires</em> Bootstrap 4.0 or higher, tested with 4.1.3)
+      <a href="https://angular.io" target="_blank">Angular</a> (<em>requires</em> Angular version 6 or higher, tested with 5.0.0)
     </li>
   </ul>
 
   <h3>
     Supported browsers
   </h3>
-  <p>We strive to support the same browsers and versions as supported by both Bootstrap 4 and Angular, whichever is more restrictive. Check browser support notes for
-    <a href="https://angular.io/docs/ts/latest/guide/browser-support.html" target="_blank">Angular</a> and
-    <a href="https://getbootstrap.com/docs/4.0/getting-started/browsers-devices/" target="_blank">Bootstrap</a>.
+  <p>We strive to support the same browsers and versions as supported by Angular. Check browser support notes for
+    <a href="https://angular.io/docs/ts/latest/guide/browser-support.html" target="_blank">Angular</a>.
   </p>
   <p>Our code is automatically tested on all the supported browsers.</p>
 
@@ -30,15 +26,15 @@
   <p>After installing the above dependencies, install <code>ngx-mentions</code> via: <br><code>npm install --save ngx-mentions</code></p>
 
   <p>Once installed you need to import our main module.</p>
-  <pre>import &#123;NgxToggleModule} from 'ngx-mentions';</pre>
+  <pre>import &#123;NgxMentionsModule} from 'ngx-mentions';</pre>
   <p>
     The only remaining part is to list the imported module in your application modules that make use of the components in this library:
   </p>
-  <pre>import &#123;NgxToggleModule} from 'ngx-mentions';
+  <pre>import &#123;NgxMentionsModule} from 'ngx-mentions';
 
 @NgModule(&#123;
   declarations: [AppComponent, ...],
-  imports: [NgxToggleModule, ...],
+  imports: [NgxMentionsModule, ...],
   bootstrap: [AppComponent]
 })
 export class AppModule &#123;

@@ -1,9 +1,9 @@
 # Angular v2+ Mentions
 
 [![npm version](https://badge.fury.io/js/ngx-mentions.svg)](https://badge.fury.io/js/ngx-mentions)
-[![Build Status](https://travis-ci.org/trickeyone/ngx-mentions.svg?branch=master)](https://travis-ci.org/trickeyone/ngx-mentions)
-[![dependency Status](https://david-dm.org/trickeyone/ngx-mentions.svg?branch=master)](https://david-dm.org/trickeyone/ngx-mentions)
-[![devDependency Status](https://david-dm.org/trickeyone/ngx-mentions/dev-status.svg?branch=master)](https://david-dm.org/trickeyone/ngx-mentions#info=devDependencies)
+[![Build Status](https://travis-ci.org/nth-cloud/ngx-mentions.svg?branch=master)](https://travis-ci.org/nth-cloud/ngx-mentions)
+[![dependency Status](https://david-dm.org/nth-cloud/ngx-mentions.svg?branch=master)](https://david-dm.org/nth-cloud/ngx-mentions)
+[![devDependency Status](https://david-dm.org/nth-cloud/ngx-mentions/dev-status.svg?branch=master)](https://david-dm.org/nth-cloud/ngx-mentions#info=devDependencies)
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/trickeyone.svg)](https://saucelabs.com/u/trickeyone)
 
 [![NPM](https://nodei.co/npm/ngx-mentions.png?compact=true)](https://www.npmjs.com/package/ngx-mentions)
@@ -47,7 +47,7 @@ If you are using SystemJS, you should adjust your configuration to point to the 
 In your systemJS config file, `map` needs to tell the System loader where to look for `ngx-mentions`:
 ```js
 map: {
-   'trickeyone/ngx-mentions': 'node_modules/trickeyone/ngx-mentions/bundles/ngx-mentions.js' 
+   'nth-cloud/ngx-mentions': 'node_modules/nth-cloud/ngx-mentions/bundles/ngx-mentions.js' 
 }
 ```
 

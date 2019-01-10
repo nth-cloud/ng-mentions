@@ -1,3 +1,6 @@
+export {NgxMentionsComponent} from './mentions.component';
+export * from './mentions-input.directive';
+
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {HighlightedDirective, NgxMentionsComponent} from "./mentions.component";

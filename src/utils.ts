@@ -91,6 +91,7 @@ function iterateOnlyMentionsMarkup(
         let display = displayTransform(...match);
         let substr = value.substring(start, match.index);
         currentPlainTextIndex += substr.length;
+        markupIterator(match[0], match.index, currentPlainTextIndex, display);
         currentPlainTextIndex += display.length;
         start = regEx.lastIndex;
     }
@@ -108,21 +109,21 @@ export function mapPlainTextIndex(
     }
 
     let result;
-    const textIterator = (substr: string, index: number, substringPlainTextIndex: number) => {
+    const textIterator = (matchString: string, index: number, substringPlainTextIndex: number) => {
         if (typeof result !== 'undefined') {
             return;
         }
-        if (substringPlainTextIndex + substr.length >= indexInPlainText) {
+        if (substringPlainTextIndex + matchString.length >= indexInPlainText) {
             result = index + indexInPlainText - substringPlainTextIndex;
         }
     };
-    const markupIterator = (index: number, mentionPlainTextIndex: number, display: string) => {
+    const markupIterator = (matchString: string, index: number, mentionPlainTextIndex: number, display: string) => {
         if (typeof result !== 'undefined') {
             return;
         }
 
         if (mentionPlainTextIndex + display.length > indexInPlainText) {
-            result = index + (toEndOfMarkup ? mentionMarkup.markup.length : 0);
+            result = index + (toEndOfMarkup ? matchString.length : 0);
         }
     };
 
@@ -294,8 +295,7 @@ export function findStartOfMentionInPlainText(
     displayTransform: (..._: string[]) => string
 ): {start: number, end: number} {
     let result = {start: -1, end: -1};
-    const markupIterator = (index: number, mentionPlainTextIndex: number, display: string): boolean => {
-        console.log(index, mentionPlainTextIndex, display);
+    const markupIterator = (matchString:string, index: number, mentionPlainTextIndex: number, display: string): boolean => {
         if (mentionPlainTextIndex < indexInPlainText && mentionPlainTextIndex + display.length > indexInPlainText) {
             result = {start: mentionPlainTextIndex, end: mentionPlainTextIndex + display.length};
             return true;

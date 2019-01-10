@@ -1,65 +1,39 @@
-<main class="bd-masthead">
+<div class="banner">
   <div class="container">
-    <p class="lead d-none d-md-block">
-      Rich, Angular-driven Mention
-    </p>
-    <p>Currently at v{{version}}</p>
-    <p class="lead">
-      <a
-        class="btn btn-outline-primary mr-2"
-        [routerLink]="['/demo']">Demo</a>
-      <a
-        class="btn btn-outline-primary"
-        [routerLink]="['/getting-started']">Installation</a>
-    </p>
+    <div class="lead">
+      <img class="logo" src="img/logo.png"/>
+      <div class="heading">NGX-MENTIONS</div>
+      <p>Native Angular components &amp; directives for customizable mentions</p>
+      <p class="small">Currently at v{{version}}</p>
+    </div>
   </div>
-</main>
+</div>
 
 <section class="container">
+  <div class="heading">Getting Started</div>
+  <p>Install through <code>npm</code>:</p>
+  <prism [html]="installNPM"></prism>
+  <p>If you are using <strong>SystemJS</strong>, you should also adjust your configuration to point to our UMD bundle, similar to this:</p>
+  <prism [html]="bundle"></prism>
+  <p>Once installed you need to import our main module.</p>
+  <prism language="typescript" [html]="importUsage"></prism>
+  <p>The only remaining part is to list the imported module in your application modules that make use of the components in this library:</p>
+  <prism language="typescript" [html]="usage"></prism>
 
-  <div class="row">
-    <div class="col-sm-2">
-      <img src="/img/cpu.svg" class="img-fluid d-none d-sm-block" alt="Native widgets icon (computer chip)">
-    </div>
-    <div class="col-sm-4">
-      <h4>Native</h4>
-      <p class="text-muted">
-        Angular - specific components built from the ground up. APIs that makes sense in the Angular ecosystem.
-        No dependencies on 3rd party JavaScript.
-      </p>
-    </div>
+  <div class="heading">Dependencies</div>
+  <p>
+    This repository contains a Angular v5+ rich mentions component. It allows for customizable mention display and custom searching.
+    The only required dependencies are:
+  </p>
+  <ul>
+    <li>
+      <a href="https://angular.io" target="_blank">Angular</a> (<em>requires</em> Angular version 6 or higher, tested with 5.0.0)
+    </li>
+  </ul>
 
-    <div class="col-sm-2">
-      <img src="/img/test.svg" class="img-fluid d-none d-sm-block" alt="Quality icon">
-    </div>
-    <div class="col-sm-4">
-      <h4>Quality</h4>
-      <p class="text-muted">
-        All code is tested (almost 100% test coverage) and all changes reviewed. We are not cutting corners.
-      </p>
-    </div>
-  </div>
-
-  <div class="row mt-md-5">
-    <div class="col-sm-2">
-      <img src="/img/escalator.svg" class="img-fluid d-none d-sm-block" alt="Accessible icon (escalator)">
-    </div>
-    <div class="col-sm-4">
-      <h4>Accessible</h4>
-      <p class="text-muted">
-        All the components are accessible. We use proper HTML elements.
-      </p>
-    </div>
-
-     <div class="col-sm-2">
-      <img src="/img/world.svg" class="img-fluid d-none d-sm-block" alt="Community icon">
-    </div>
-    <div class="col-sm-4">
-      <h4>Community</h4>
-      <p class="text-muted">
-        We give back to the community by contributing to projects we build upon (Angular, Bootstrap). We support people on <a href="http://stackoverflow.com/questions/tagged/ngx-mentions">Stack Overflow</a>.
-      </p>
-    </div>
-  </div>
-
+  <div class="heading">Supported browsers</div>
+  <p>We strive to support the same browsers and versions as supported by Angular. Check browser support notes for
+    <a href="https://angular.io/docs/ts/latest/guide/browser-support.html" target="_blank">Angular</a>.
+  </p>
+  <p>Our code is automatically tested on all the supported browsers.</p>
 </section>

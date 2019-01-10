@@ -21,7 +21,7 @@ import {NgxMentionsInputDirective} from "./mentions-input.directive";
 import {
     applyChangeToValue, escapeRegExp,
     findStartOfMentionInPlainText, getBoundsOfMentionAtPosition,
-    getCaretPosition, getPlainText, mapPlainTextIndex,
+    getCaretPosition, mapPlainTextIndex,
     MarkupMention,
     markupToRegExp, replacePlaceholders,
     setCaretPosition, styleProperties
@@ -114,7 +114,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
     @Input('markup') mentionMarkup: string = '@[__display__](__type__:__id__)';
     @Input('disableSearch') disableSearch: boolean = false;
     @Input('maxItems') maxItems: number = -1;
-    @Input('mentionFormat') mentionFormat: (item: any) => string;
+    @Input('mentionFormat') mentionFormat: (mentionContent: string) => string;
     @Input('dropUp') dropUp: boolean = false;
     @Input('displayName') displayName: string = 'display';
 
@@ -127,7 +127,6 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
     }
 
     @Output('search') search: EventEmitter<string> = new EventEmitter<string>();
-    @Output('mentionSelect') mentionSelect: EventEmitter<any> = new EventEmitter<any>();
 
     @ContentChild(NgxMentionsInputDirective) control: NgxMentionsInputDirective;
     @ContentChild(TemplateRef) mentionListTemplate: TemplateRef<any>;
@@ -228,7 +227,6 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
         let selectionEnd = this.textAreaInputElement.nativeElement.selectionEnd;
         let bounds = getBoundsOfMentionAtPosition(newPlainTextValue, this.markupSearch, selectionStart, displayTransform);
         if (bounds.start !== -1) {
-            console.log(bounds);
             newPlainTextValue = newPlainTextValue.substring(0, bounds.start) + newPlainTextValue.substring(bounds.end);
         }
         let newValue = applyChangeToValue(
@@ -240,12 +238,9 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
             selectionEnd,
             displayTransform
         );
-        newPlainTextValue = getPlainText(newValue, this.markupSearch, displayTransform);
-        console.log(newPlainTextValue);
+        // newPlainTextValue = getPlainText(newValue, this.markupSearch, displayTransform);
         let startOfMention = findStartOfMentionInPlainText(value, this.markupSearch, selectionStart, displayTransform);
-        console.log('startOfMention', startOfMention);
         if (startOfMention.start > -1 && this.selectionEnd > startOfMention.start) {
-            console.log('inside startOfMention', startOfMention);
             selectionStart = startOfMention.start;
             selectionEnd = selectionStart;
         }
@@ -275,9 +270,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
         let startOfMention = findStartOfMentionInPlainText(this.value, this.markupSearch, caretPosition, this.displayTransform.bind(this));
         if (characterPressed === this.triggerChar) {
             this.setupMentionsList(caretPosition);
-        } else if (startOfMention.start !== -1) {
-            console.log('onKeyDown startOfMention', startOfMention);
-        } else if (this.startPos >= 0) {
+        } else if (startOfMention.start === -1 && this.startPos >= 0) {
             if (caretPosition <= this.startPos) {
                 this.mentionsList.show = false;
                 this.startPos = -1;
@@ -304,6 +297,10 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
     }
 
     public formatMention(mention: Mention): string {
+        if (this.mentionFormat) {
+            return this.mentionFormat(mention.contents);
+        }
+
         return this._formatMention(mention.contents);
     }
 
@@ -406,6 +403,16 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
         }
     }
 
+    private getDisplayValue(item: any): string {
+        if (typeof item === 'string') {
+            return item;
+        } else if (item[this.displayName] != undefined) {
+            return item[this.displayName];
+        }
+
+        return null;
+    }
+
     private showMentionsList() {
         if (!this.mentionsList) {
             let componentFactory = this.componentResolver.resolveComponentFactory(MentionsListComponent);
@@ -418,13 +425,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
                 const fakeEvent = {keyCode: KEY_ENTER, wasSelection: true, item: item};
                 this.onKeyDown(fakeEvent);
             });
-            this.mentionsList.displayTransform = (item: any): string => {
-                if (item[this.displayName] != undefined) {
-                    return item[this.displayName];
-                }
-
-                return null;
-            };
+            this.mentionsList.displayTransform = this.getDisplayValue.bind(this);
         }
         this.mentionsList.show = true;
         this.mentionsList.dropUp = this.dropUp;
@@ -439,13 +440,12 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
             let searchString = this.searchString.toLowerCase(),
                 searchRegEx = new RegExp(escapeRegExp(searchString), 'i');
             items = items.filter(item => {
-                let value = null;
-                if (item[this.displayName] != undefined) {
-                    value = item[this.displayName];
-                }
-
+                let value = this.getDisplayValue(item);
                 return value !== null && searchRegEx.test(value);
             });
+            if (this.maxItems > 0) {
+                items = items.slice(0, this.maxItems);
+            }
         }
 
         this.mentionsList.items = items;

@@ -42,7 +42,7 @@ module.exports = function makeWebpackConfig() {
     config.entry = {
         'polyfills': './demo/src/polyfills.ts',
         'vendorStyles': [
-            './node_modules/prismjs/themes/prism.css',
+            './node_modules/prismjs/themes/prism-okaidia.css',
             './node_modules/bootstrap/dist/css/bootstrap.css'
         ],
         'main': './demo/src/main.ts'

@@ -257,7 +257,7 @@ const checkFormat = () => {
 const enforceFormat = () => {
     return doCheckFormat().on('warning', function () {
         console.log('ERROR: You forgot to run clang-format on your change.');
-        console.log('See https://github.com/trickeyone/ngx-mentions/blob/master/DEVELOPER.md#clang-format');
+        console.log('See https://github.com/nth-cloud/ngx-mentions/blob/master/DEVELOPER.md#clang-format');
         process.exit(1);
     });
 };
@@ -313,7 +313,7 @@ const demoServerAOT = shell.task(
 
 const pushDemo = () => {
     return gulp.src(PATHS.demoDist)
-        .pipe(ghPages({remoteUrl: 'https://github.com/trickeyone/ngx-mentions.github.io.git', branch: 'master'}));
+        .pipe(ghPages({branch: 'gh-pages'}));
 };
 
 // Public Tasks

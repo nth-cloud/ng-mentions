@@ -10,7 +10,7 @@ It also explains the basic mechanics of using `git`, `node`, and `npm`.
 * [Running Tests Locally](#running-tests-locally)
 * [Formatting](#clang-format)
 
-See the [contribution guidelines](https://github.com/trickeyone/ngx-mentions/blob/master/CONTRIBUTING.md)
+See the [contribution guidelines](https://github.com/nth-cloud/ngx-mentions/blob/master/CONTRIBUTING.md)
 if you'd like to contribute to ngx-mentions.
 
 ## Prerequisite Software
@@ -35,7 +35,7 @@ Fork and clone the ngx-mentions repository:
 1. Login to your GitHub account or create one by following the instructions given
    [here](https://github.com/signup/free).
 2. [Fork](http://help.github.com/forking) the [main ngx-mentions
-   repository](https://github.com/trickeyone/ngx-mentions).
+   repository](https://github.com/nth-cloud/ngx-mentions).
 3. Clone your fork of the ngx-mentions repository and define an `upstream` remote pointing back to
    the ngx-mentions repository that you forked in the first place.
 
@@ -47,7 +47,7 @@ git clone git@github.com:<github username>/ngx-mentions.git ngx-mentions
 cd ngx-mentions
 
 # Add the main ngx-mentions repository as an upstream remote to your repository:
-git remote add upstream https://github.com/trickeyone/ngx-mentions.git
+git remote add upstream https://github.com/nth-cloud/ngx-mentions.git
 ```
 
 ## Installing NPM Modules
