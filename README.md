@@ -1,4 +1,4 @@
-# Angular v2+ Mentions
+# NGX-MENTIONS
 
 [![npm version](https://badge.fury.io/js/ngx-mentions.svg)](https://badge.fury.io/js/ngx-mentions)
 [![Build Status](https://travis-ci.org/nth-cloud/ngx-mentions.svg?branch=master)](https://travis-ci.org/nth-cloud/ngx-mentions)
@@ -8,15 +8,14 @@
 
 [![NPM](https://nodei.co/npm/ngx-mentions.png?compact=true)](https://www.npmjs.com/package/ngx-mentions)
 
-Angular v2+ Mentions auto-complete and highlight for text areas.
+Native Angular v5+ components & directives for customizable mentions. Allowing for customizable search results and mention formatting.
 
-## Demo
+## Demo and Docs
 
-View it in action at https://ngx-mentions.github.io
+View it in action at https://nth-cloud.github.io/ngx-mentions
 
 ## Dependencies
 * [Angular](https://angular.io) (tested with 5.1.0)
-* [Bootstrap 4](https://www.getbootstrap.com) (tested with 4.0.0-beta.2)
 
 ## Installation
 After installing the above dependencies, install `ngx-mentions` via:
@@ -31,11 +30,11 @@ import {NgxMentionsModule} from "ngx-mentions";
 
 Import the module into your application:
 ```js
-import {NgxToggleModule} from "ngx-mentions";
+import {NgxMentionsModule} from "ngx-mentions";
 
 @NgModule({
     ...
-    imports: [NgxToggleModule, ...],
+    imports: [NgxMentionsModule, ...],
     ...
 })
 export class AppModule {
@@ -47,13 +46,13 @@ If you are using SystemJS, you should adjust your configuration to point to the 
 In your systemJS config file, `map` needs to tell the System loader where to look for `ngx-mentions`:
 ```js
 map: {
-   'nth-cloud/ngx-mentions': 'node_modules/nth-cloud/ngx-mentions/bundles/ngx-mentions.js' 
+   'ngx-mentions': 'node_modules/ngx-mentions/dist/bundles/ngx-mentions.js'
 }
 ```
 
 ## Supported browsers
-We support the same browsers and versions supported by both Bootstrap 4 and Angular, whichever is _more_ restrictive.
-See [this](https://github.com/angular/angular/blob/master/README.md) for up-to-date Angular browser support.
+We strive to support the same browsers and versions as supported by Angular. Check browser support notes for
+[Angular](https://github.com/angular/angular/blob/master/README.md).
 
 * Chrome (45+)
 * Firefox (40+)

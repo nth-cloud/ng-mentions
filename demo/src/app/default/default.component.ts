@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {environment} from '../../environments/environment';
 
 const prism = require('prismjs');
 import 'prismjs/components/prism-clike';
@@ -9,7 +10,7 @@ import 'prismjs/components/prism-typescript';
     templateUrl: './default.component.html'
 })
 export class DefaultComponent {
-    public version: string = process.env.version;
+    public version: string = environment.version;
 
     readonly installNPM: string = prism.highlight(require('!!raw-loader!./install-npm.md'), prism.languages.clike);
     readonly bundle: string = prism.highlight(require('!!raw-loader!./bundle.md'), prism.languages.javascript);

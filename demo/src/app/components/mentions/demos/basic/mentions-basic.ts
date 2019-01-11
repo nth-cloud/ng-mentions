@@ -5,8 +5,10 @@ import {Component} from '@angular/core';
     templateUrl: './mentions-basic.html'
 })
 export class NgxdMentionsBasic {
+    disabled: boolean = false;
+
     model: any = {
-        value: "Hello @[Dave](contact:1). How are you doing today?\n\nWould you like to play a game of chess?",
+        value: 'Hello @[Dave](contact:1). How are you doing today?\n\nWould you like to play a game of chess?',
         mentions: [
             {
                 display: 'Dave',

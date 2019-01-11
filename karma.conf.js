@@ -1,137 +1,39 @@
+const reporters = process.env.TRAVIS ? ['dots'] : ['progress'];
+const browsers = process.env.TRAVIS ? ['ChromeHeadlessNoSandbox'] : ['Chrome'];
+
 module.exports = function (config) {
-    config.set({
-        basePath: '',
-        frameworks: ['jasmine', '@angular/cli'],
-        plugins: [
-            require('karma-jasmine'),
-            require('karma-chrome-launcher'),
-            require('jasmine-growl-reporter'),
-            require('karma-coverage'),
-            require('karma-coverage-istanbul-reporter'),
-            require('@angular/cli/plugins/karma')
-        ],
+  config.set({
+    basePath: '',
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    plugins: [
+      require('karma-jasmine'),
+      require('karma-chrome-launcher'),
+      require('karma-firefox-launcher'),
+      require('karma-coverage-istanbul-reporter'),
+      require('@angular-devkit/build-angular/plugins/karma')
+    ],
 
-        files: [
-            // For travis
-            'node_modules/core-js/client/shim.js',
-            'node_modules/ie-shim/index.js',
-            // paths loaded by Karma
-            'node_modules/systemjs/dist/system-polyfills.js',
-            'node_modules/systemjs/dist/system.src.js',
-            'node_modules/zone.js/dist/zone.js',
-            'node_modules/zone.js/dist/long-stack-trace-zone.js',
-            'node_modules/zone.js/dist/proxy.js',
-            'node_modules/zone.js/dist/sync-test.js',
-            'node_modules/zone.js/dist/jasmine-patch.js',
-            'node_modules/zone.js/dist/async-test.js',
-            'node_modules/zone.js/dist/fake-async-test.js',
-            {pattern: 'node_modules/tslib/**.js', included: false, watched: false},
-            {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
-            {pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false},
-            {pattern: 'karma-test-shim.js', included: true, watched: true},
-            {pattern: 'node_modules/@angular/**/*.js', included: false, watched: true},
-            {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: true},
+    coverageIstanbulReports: {
+      dir: require('path').join(__dirname, 'coverage'),
+      reports: ['html', 'json', 'lcovonly'],
+      fixWebpackSourcePaths: true
+    },
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
 
-            // paths loaded via module imports
-            {pattern: 'temp/**/*.js', included: false, watched: true},
-
-            // paths to support debugging with source maps in dev tools
-            {pattern: 'src/**/*.ts', included: false, watched: false},
-            {pattern: 'temp/**/*.js.map', included: false, watched: false},
-
-            {pattern: './e2e/index.ts', watched: false}
-        ],
-
-        preprocessors: {
-            'temp/**/*.js': 'sourcemap',
-            'temp/**/!(*.spec|*.module).js': 'coverage'
-        },
-
-        customLaunchers: {
-            'SL_CHROME': {
-                base: 'SauceLabs',
-                browserName: 'chrome',
-                version: 'latest'
-            },
-            'SL_FIREFOX': {
-                base: 'SauceLabs',
-                browserName: 'firefox',
-                version: 'latest'
-            },
-            'SL_IE10': {
-                base: 'SauceLabs',
-                browserName: 'internet explorer',
-                platform: 'Windows 8',
-                version: '10'
-            },
-            'SL_IE11': {
-                base: 'SauceLabs',
-                browserName: 'internet explorer',
-                platform: 'Windows 8.1',
-                version: '11'
-            },
-            'SL_EDGE16': {
-                base: 'SauceLabs',
-                browserName: 'MicrosoftEdge',
-                platform: 'Windows 10',
-                version: '16.16299'
-            },
-            'SL_EDGE15': {
-                base: 'SauceLabs',
-                browserName: 'MicrosoftEdge',
-                platform: 'Windows 10',
-                version: '15.15063'
-            },
-            'SL_SAFARI10': {
-                base: 'SauceLabs',
-                browserName: 'safari',
-                platform: 'macOS 10.12',
-                version: '10'
-            },
-            'SL_SAFARI11': {
-                base: 'SauceLabs',
-                browserName: 'safari',
-                platform: 'macOS 10.13',
-                version: '11'
-            },
-        },
-
-        sauceLabs: {
-            testName: 'ngx-mentions',
-            retryLimit: 3,
-            startConnect: true,
-            recordVideo: false,
-            recordScreenshots: false
-        },
-
-        reporters: config.angularCli && config.angularCli.codeCoverage ?
-            ['progress', 'coverage-istanbul']
-            : ['progress', 'coverage'],
-
-        coverageIstanbulReports: {
-            reports: ['html', 'lcovonly'],
-            fixWebpackSourcePaths: true
-        },
-
-        coverageReporter: {
-            dir: 'coverage/',
-            reporters: [{
-                type: 'json',
-                dir: 'coverage',
-                subdir: 'json',
-                file: 'coverage-final.json'
-            }]
-        },
-
-        port: 9876,
-        colors: true,
-        logLevel: config.LOG_INFO,
-        autoWatch: true,
-        browsers: ['Chrome'],
-        singleRun: false,
-        captureTimeout: 60000,
-        browserDisconnectTimeout: 60000,
-        browserDisconnectTolerance: 3,
-        browserNoActivityTimeout: 60000
-    });
+    port: 9876,
+    colors: true,
+    logLevel: config.LOG_INFO,
+    autoWatch: true,
+    browsers,
+    reporters,
+    singleRun: false,
+    browserDisconnectTimeout: 60000,
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 60000
+  });
 };

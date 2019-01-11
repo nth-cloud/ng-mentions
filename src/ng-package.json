@@ -1,0 +1,11 @@
+{
+  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist/ngx-mentions",
+  "deleteDestPath": false,
+  "lib": {
+    "flatModuleFile": "ngx-mentions",
+    "entryFile": "./index.ts",
+    "umdId": "ngx",
+    "amdId": "ngx"
+  }
+}

@@ -1,19 +1,15 @@
 <div>
-    <label>
-        <input type="checkbox" [(ngModel)]="disabled"/>
-        Disabled
-    </label>
-</div>
-<div>
-    <ngx-mentions [mentions]="model.mentions">
+    <ngx-mentions [mentions]="model.mentions" [markup]="model.markup">
         <textarea
             class="form-control"
             ngxMentionInput
             [(ngModel)]="model.value"
-            [disabled]="disabled"
             rows="5"
             placeholder="Type text here..."
         ></textarea>
     </ngx-mentions>
 </div>
 <pre class="my-2">{{model | json}}</pre>
+<p class="text-danger">
+    A limitation of plain string values is that the mention value cannot contain any spaces.
+</p>
