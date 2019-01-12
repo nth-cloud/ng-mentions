@@ -18,12 +18,6 @@ const createTestComponent = (html: string) =>
     createGenericTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
 
 function createKeyDownEvent(event: any) {
-  event.preventDefault = () => {
-    console.log('preventDefault');
-  };
-  event.stopPropagation = () => {
-    console.log('stopPropagation');
-  };
   spyOn(event, 'preventDefault');
   spyOn(event, 'stopPropagation');
   return event;

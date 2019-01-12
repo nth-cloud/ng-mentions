@@ -70,7 +70,7 @@ export function createKeyEvent(
       type: 'keyup',
       bubbles: true,
       cancelable: true
-    }) {
+    }): KeyboardEvent {
   let eventInitDict: any = {bubbles: options.bubbles, cancelable: options.cancelable};
   if (key) {
     eventInitDict.key = String.fromCharCode(key);
