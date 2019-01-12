@@ -93,7 +93,8 @@
     "clean:test": "[[ ! -e coverage/ ]] || rm -r coverage/",
     "clean:demo": "[[ ! -e demo/dist/ ]] || rm -r demo/dist",
     "clean:demo:deploy": "[[ ! -e .publish/ ]] || rm -r .publish/",
-    "ci": "npm run test && npm run build"
+    "ci": "npm run test && npm run build",
+    "changelog": "gulp changelog"
   },
   "keywords": [
     "angular",
