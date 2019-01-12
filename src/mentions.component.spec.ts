@@ -77,6 +77,7 @@ function expectDropDownItems(element, expectedResults: string[]) {
 function tickFixture(fixture: ComponentFixture<TestComponent>) {
   const iterations = isBrowser(['ie10', 'ie11']) ? 2 : 1;
   for (let i = 0; i < iterations; i++) {
+    fixture.detectChanges();
     tick();
     fixture.detectChanges();
   }
@@ -116,7 +117,7 @@ describe('ngx-mentions', () => {
     let originalValue = 'Test string @[Name](type:1)';
     fixture.componentInstance.model = originalValue;
     fixture.componentInstance.mentions = [{display: 'Name2', type: 'type', id: 2}];
-    fixture.detectChanges();
+    tickFixture(fixture);
     expect(fixture.componentInstance.model).toBe(originalValue);
     expect(fixture.componentInstance.mentions.length).toBe(1);
     expect(fixture.debugElement.query(By.directive(MentionsListComponent))).toBeNull();
@@ -132,7 +133,7 @@ describe('ngx-mentions', () => {
          {display: 'item2', id: 2, type: 'type'},
          {display: 'item3', id: 3, type: 'type'},
        ];
-       fixture.detectChanges();
+       tickFixture(fixture);
        expect(comp.mentions.length).toEqual(3);
        tickFixture(fixture);
 
@@ -269,7 +270,7 @@ describe('ngx-mentions', () => {
        tickFixture(fixture);
        // mentionComp.displayContent = plainTextValue;
        mentionComp.onChange(plainTextValue);
-       fixture.detectChanges();
+       tickFixture(fixture);
        tickFixture(fixture);
 
        expect(mentionComp.displayContent).toEqual(expectedValue);
