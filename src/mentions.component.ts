@@ -382,7 +382,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
 
   private _formatMention(contents: string): string {
     let replaceValue = `\$${this.displayName}`, replaceIndex;
-    let result = contents.replace(this.markupSearch.regEx, `\$${this.displayName}`);
+    let result = contents.replace(this.markupSearch.regEx, replaceValue);
     if (result === replaceValue) {
       replaceIndex = `\$${this.markupSearch.groups[this.displayName]}`;
       result = contents.replace(this.markupSearch.regEx, replaceIndex);

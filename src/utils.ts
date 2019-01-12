@@ -190,7 +190,7 @@ export function markupToRegExp(markup: string): MarkupMention {
     match = placeholderRegExp.exec(markupPattern);
     if (match) {
       let placeholder = match[1];
-      markupPattern = markupPattern.replace(`__${placeholder}__`, `(?<${placeholder}>[${placeholderExclusion}]+)`);
+      markupPattern = markupPattern.replace(`__${placeholder}__`, `([${placeholderExclusion}]+)`);
       placeholders[placeholder] = ++i;
     }
   } while (match);
