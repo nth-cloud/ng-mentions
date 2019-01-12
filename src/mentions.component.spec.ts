@@ -6,7 +6,7 @@ import {By} from '@angular/platform-browser';
 import {NgxMentionsComponent, NgxMentionsModule} from './index';
 import {Key} from './key';
 import {MentionsListComponent} from './mentions-list.component';
-import {createGenericTestComponent, createKeyEvent, expectResults} from './test/common';
+import {createGenericTestComponent, createKeyEvent, expectResults, isBrowser} from './test/common';
 
 @Component({selector: 'test-cmp', template: ''})
 class TestComponent {
@@ -75,8 +75,11 @@ function expectDropDownItems(element, expectedResults: string[]) {
 }
 
 function tickFixture(fixture: ComponentFixture<TestComponent>) {
-  tick();
-  fixture.detectChanges();
+  const iterations = isBrowser(['ie10', 'ie11']) ? 2 : 1;
+  for (let i = 0; i < iterations; i++) {
+    tick();
+    fixture.detectChanges();
+  }
 }
 
 describe('ngx-mentions', () => {

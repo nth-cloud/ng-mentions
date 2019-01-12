@@ -10,7 +10,6 @@ env:
   - LOGS_DIR=/tmp/logs
 
 addons:
-  firefox: latest
   chrome: stable
   sause_connect: true
 
