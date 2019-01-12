@@ -79,7 +79,13 @@ export function createKeyEvent(
     eventInitDict.shiftKey = true;
     key = null;
   }
-  const event = new KeyboardEvent(options.type, eventInitDict);
+  let event;
+  if (isBrowser(['ie10', 'ie11'])) {
+    event = document.createEvent('KeyboardEvent') as KeyboardEvent;
+    event.initKeyboardEvent(options.type, options.cancelable, options.bubbles, window, key, 0, 0, 0, 0);
+  } else {
+    event = new KeyboardEvent(options.type, eventInitDict)
+  }
   if (key) {
     Object.defineProperties(event, {which: {get: () => key}});
     Object.defineProperties(event, {keyCode: {get: () => key}});
