@@ -88,11 +88,12 @@
     "demo:static": "gulp generate-demo-statics",
     "demo:build": "gulp generate-demo-statics && ng build demo --prod",
     "demo:deploy": "npm run demo:build && gulp demo-push",
-    "clean": "npm run clean:dist & npm run clean:test & npm run clean:demo & npm run clean:demo:deploy",
+    "clean": "npm run clean:dist & npm run clean:test & npm run clean:demo & npm run clean:demo:deploy && npm run clean:demo:plunks",
     "clean:dist": "([[ ! -e dist/ ]] || rm -r dist/) && ([[ ! -e dist.tgz ]] || rm dist.tgz)",
     "clean:test": "[[ ! -e coverage/ ]] || rm -r coverage/",
     "clean:demo": "[[ ! -e demo/dist/ ]] || rm -r demo/dist",
     "clean:demo:deploy": "[[ ! -e .publish/ ]] || rm -fr .publish/",
+    "clean:demo:plunks": "[[ ! -e demo/src/public/app/components ]] || rm -r demo/src/public/app/components",
     "ci": "npm run test && npm run build",
     "changelog": "gulp changelog"
   },
