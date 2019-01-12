@@ -131,6 +131,7 @@ describe('ngx-mentions', () => {
        ];
        fixture.detectChanges();
        expect(comp.mentions.length).toEqual(3);
+       tickFixture(fixture);
 
        const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
        expect(mentionComp.mentions.length).toEqual(3);
@@ -180,7 +181,7 @@ describe('ngx-mentions', () => {
          {display: 'item2', id: 2, type: 'type'},
          {display: 'item3', id: 3, type: 'type'},
        ];
-       fixture.detectChanges();
+       tickFixture(fixture);
        expect(comp.mentions.length).toEqual(3);
 
        const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
@@ -192,6 +193,7 @@ describe('ngx-mentions', () => {
        triggerTextAreaEvent(el, createKeyEvent(Key.Shift, {type: 'keydown'}));
        tickFixture(fixture);
        changeTextArea(el, triggerValue);
+       tickFixture(fixture);
        tickFixture(fixture);
 
        expectTextAreaValue(el, triggerValue);
