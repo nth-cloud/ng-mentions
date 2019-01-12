@@ -194,7 +194,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
   }
 
   set rows(value: any) {
-    this._rows = <number>value;
+    this._rows = Math.max(1, <number>value);
     this.updateStylesAndProperties();
   }
 
@@ -204,7 +204,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
   }
 
   set columns(value: any) {
-    this._columns = <number>value;
+    this._columns = Math.max(1, <number>value);
     this.updateStylesAndProperties();
   }
 
@@ -249,8 +249,8 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
   private _value: string = '';
   private _required: boolean;
   private _disabled: boolean;
-  private _rows: number;
-  private _columns: number;
+  private _rows: number = 1;
+  private _columns: number = 1;
   private searchString: string;
   private startPos: number;
   private startNode;
