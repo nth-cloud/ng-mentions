@@ -3,6 +3,7 @@
 /temp/
 /demo/dist/
 npm-debug.log
+dist.tgz
 .publish
 .sw*
 .idea
