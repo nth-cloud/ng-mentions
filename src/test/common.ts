@@ -71,10 +71,13 @@ export function createKeyEvent(
       bubbles: true,
       cancelable: true
     }): KeyboardEvent {
-  console.log(key, options);
   let eventInitDict: any = {bubbles: options.bubbles, cancelable: options.cancelable};
   if (key) {
     eventInitDict.key = String.fromCharCode(key);
+  }
+  if (key === Key.Shift) {
+    eventInitDict.shiftKey = true;
+    key = null;
   }
   const event = new KeyboardEvent(options.type, eventInitDict);
   if (key) {

@@ -350,7 +350,8 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
         this.mentionsList.show = false;
         this.startPos = -1;
       } else if (
-          keyCode !== Key.Shift && !event.metaKey && !event.altKey && !event.ctrlKey && caretPosition > this.startPos) {
+          keyCode !== Key.Shift && !event.shiftKey && !event.metaKey && !event.altKey && !event.ctrlKey &&
+          caretPosition > this.startPos) {
         this.handleKeyDown(event, caretPosition, characterPressed);
       }
     } else {
@@ -557,7 +558,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
     let tags: Tag[] = [], mention;
     let regEx = this.markupSearch.regEx;
     regEx.lastIndex = 0;
-    while (mention = regEx.exec(line)) {
+    while ((mention = regEx.exec(line)) !== null) {
       tags.push({indices: {start: mention.index, end: mention.index + mention[0].length}});
     }
 
