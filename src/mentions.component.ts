@@ -22,6 +22,7 @@ import {
 } from '@angular/core';
 import {Subject} from 'rxjs';
 
+import {Key} from './key';
 import {MentionsListComponent} from './mentions-list.component';
 import {
   applyChangeToValue,
@@ -36,7 +37,6 @@ import {
   setCaretPosition,
   styleProperties
 } from './utils';
-import {Key} from "./key";
 
 interface Tag {
   indices: {start: number, end: number};
@@ -95,8 +95,7 @@ export class HighlightedDirective {
   `,
   styles: [
     'ngx-mentions {position: relative;}',
-    'ngx-mentions textarea {position:relative; background-color: transparent !important;}',
-    `ngx-mentions .highlighter {
+    'ngx-mentions textarea {position:relative; background-color: transparent !important;}', `ngx-mentions .highlighter {
         position: absolute;
         top:      0;
         left:     0;
@@ -255,7 +254,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
   private searchString: string;
   private startPos: number;
   private startNode;
-   mentionsList: MentionsListComponent;
+  mentionsList: MentionsListComponent;
   private stopSearch: boolean = false;
   private markupSearch: MarkupMention;
   private _destroyed: Subject<void> = new Subject<void>();
@@ -351,8 +350,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
         this.mentionsList.show = false;
         this.startPos = -1;
       } else if (
-          keyCode !== Key.Shift && !event.metaKey && !event.altKey && !event.ctrlKey &&
-          caretPosition > this.startPos) {
+          keyCode !== Key.Shift && !event.metaKey && !event.altKey && !event.ctrlKey && caretPosition > this.startPos) {
         this.handleKeyDown(event, caretPosition, characterPressed);
       }
     } else {
@@ -464,10 +462,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
       }
     }
 
-    if (keyCode === Key.ArrowLeft ||
-      keyCode === Key.ArrowRight ||
-      keyCode === Key.Home ||
-      keyCode === Key.End) {
+    if (keyCode === Key.ArrowLeft || keyCode === Key.ArrowRight || keyCode === Key.Home || keyCode === Key.End) {
       this.onSelect(event);
       return;
     }

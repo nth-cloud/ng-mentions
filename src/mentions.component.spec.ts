@@ -1,13 +1,12 @@
 import {Component, DebugElement} from '@angular/core';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
-import {createGenericTestComponent, createKeyEvent, expectResults} from './test/common';
+import {By} from '@angular/platform-browser';
 
 import {NgxMentionsComponent, NgxMentionsModule} from './index';
-import {By} from "@angular/platform-browser";
-import {MentionsListComponent} from "./mentions-list.component";
-import {Key} from "./key";
+import {Key} from './key';
+import {MentionsListComponent} from './mentions-list.component';
+import {createGenericTestComponent, createKeyEvent, expectResults} from './test/common';
 
 @Component({selector: 'test-cmp', template: ''})
 class TestComponent {
@@ -19,8 +18,12 @@ const createTestComponent = (html: string) =>
     createGenericTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
 
 function createKeyDownEvent(event: any) {
-  event.preventDefault = () => {console.log('preventDefault');};
-  event.stopPropagation = () => {console.log('stopPropagation');};
+  event.preventDefault = () => {
+    console.log('preventDefault');
+  };
+  event.stopPropagation = () => {
+    console.log('stopPropagation');
+  };
   spyOn(event, 'preventDefault');
   spyOn(event, 'stopPropagation');
   return event;
@@ -65,7 +68,9 @@ function expectTextAreaValue(element: HTMLElement, value: string) {
 function expectMentionListToBeHidden(element: DebugElement, hidden: boolean) {
   let el = element.query(By.directive(MentionsListComponent));
   let e = expect(el);
-  if (!hidden) {e = e.not;}
+  if (!hidden) {
+    e = e.not;
+  }
   e.toBeNull();
 }
 
@@ -82,38 +87,34 @@ function tickFixture(fixture: ComponentFixture<TestComponent>) {
 
 describe('ngx-mentions', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [TestComponent],
-      imports: [NgxMentionsModule, FormsModule, ReactiveFormsModule]
-    });
+    TestBed.configureTestingModule(
+        {declarations: [TestComponent], imports: [NgxMentionsModule, FormsModule, ReactiveFormsModule]});
   });
 
   describe('value accessor', () => {
     it('should format value', fakeAsync(() => {
-      const plainTextValue = 'Test value with Mentions formatted\nAnd New Lines';
-      const model = 'Test value with @[Mentions](type:1) formatted\nAnd @[New Lines](type:2)';
+         const plainTextValue = 'Test value with Mentions formatted\nAnd New Lines';
+         const model = 'Test value with @[Mentions](type:1) formatted\nAnd @[New Lines](type:2)';
 
-      const fixture = createTestComponent(
-        `<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+         const fixture = createTestComponent(`<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
 
-      const el = fixture.nativeElement;
-      const comp = fixture.componentInstance;
+         const el = fixture.nativeElement;
+         const comp = fixture.componentInstance;
 
-      expectTextAreaValue(el, '');
+         expectTextAreaValue(el, '');
 
-      const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+         const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
 
-      comp.model = model;
-      fixture.detectChanges();
-      tick();
-      expect(comp.model).toBe(model);
-      expect(mentionComp.displayContent).toEqual(plainTextValue);
-    }));
+         comp.model = model;
+         fixture.detectChanges();
+         tick();
+         expect(comp.model).toBe(model);
+         expect(mentionComp.displayContent).toEqual(plainTextValue);
+       }));
   });
 
   it('should initialize', () => {
-    const fixture = createTestComponent(
-        `<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+    const fixture = createTestComponent(`<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
 
     let originalValue = 'Test string @[Name](type:1)';
     fixture.componentInstance.model = originalValue;
@@ -125,156 +126,153 @@ describe('ngx-mentions', () => {
   });
 
   it('should select first mention on Enter', fakeAsync(() => {
-    const fixture = createTestComponent(
-      `<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+       const fixture = createTestComponent(`<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
 
-    const el = fixture.nativeElement;
-    const comp = fixture.componentInstance;
-    comp.mentions = [
-      {display: 'item1', id: 1, type: 'type'},
-      {display: 'item2', id: 2, type: 'type'},
-      {display: 'item3', id: 3, type: 'type'},
-    ];
-    fixture.detectChanges();
-    expect(comp.mentions.length).toEqual(3);
+       const el = fixture.nativeElement;
+       const comp = fixture.componentInstance;
+       comp.mentions = [
+         {display: 'item1', id: 1, type: 'type'},
+         {display: 'item2', id: 2, type: 'type'},
+         {display: 'item3', id: 3, type: 'type'},
+       ];
+       fixture.detectChanges();
+       expect(comp.mentions.length).toEqual(3);
 
-    const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
-    expect(mentionComp.mentions.length).toEqual(3);
-    expectMentionListToBeHidden(fixture.debugElement, true);
-    tickFixture(fixture);
+       const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+       expect(mentionComp.mentions.length).toEqual(3);
+       expectMentionListToBeHidden(fixture.debugElement, true);
+       tickFixture(fixture);
 
-    let triggerValue = '@';
-    triggerTextAreaEvent(el, createKeyEvent(Key.Shift, {type: 'keydown'}));
-    tickFixture(fixture);
-    changeTextArea(el, triggerValue);
-    tickFixture(fixture);
+       let triggerValue = '@';
+       triggerTextAreaEvent(el, createKeyEvent(Key.Shift, {type: 'keydown'}));
+       tickFixture(fixture);
+       changeTextArea(el, triggerValue);
+       tickFixture(fixture);
 
-    expectTextAreaValue(el, triggerValue);
-    expect(comp.model).toEqual(triggerValue);
-    expect(mentionComp.value).toEqual(triggerValue);
-    expect(mentionComp.displayContent).toEqual(triggerValue);
-    expect(mentionComp.selectionStart).toBeGreaterThan(0);
-    tickFixture(fixture);
+       expectTextAreaValue(el, triggerValue);
+       expect(comp.model).toEqual(triggerValue);
+       expect(mentionComp.value).toEqual(triggerValue);
+       expect(mentionComp.displayContent).toEqual(triggerValue);
+       expect(mentionComp.selectionStart).toBeGreaterThan(0);
+       tickFixture(fixture);
 
-    const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
-    expect(mentionsList).not.toBeUndefined();
-    expect(mentionsList).not.toBeNull();
-    const mentionsListComp = mentionsList.componentInstance;
-    expect(mentionsListComp.show).toBeTruthy();
-    expect(mentionsListComp.activeIndex).toBe(0);
-    expect(mentionsListComp.selectedItem).not.toBeNull();
-    expect(mentionsListComp.selectedItem.display).toEqual('item1');
-    expect(mentionComp.selectionStart).toBeGreaterThan(0);
-    tickFixture(fixture);
-    expectDropDownItems(el, ['+item1', 'item2', 'item3']);
+       const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
+       expect(mentionsList).not.toBeUndefined();
+       expect(mentionsList).not.toBeNull();
+       const mentionsListComp = mentionsList.componentInstance;
+       expect(mentionsListComp.show).toBeTruthy();
+       expect(mentionsListComp.activeIndex).toBe(0);
+       expect(mentionsListComp.selectedItem).not.toBeNull();
+       expect(mentionsListComp.selectedItem.display).toEqual('item1');
+       expect(mentionComp.selectionStart).toBeGreaterThan(0);
+       tickFixture(fixture);
+       expectDropDownItems(el, ['+item1', 'item2', 'item3']);
 
-    let event = createKeyEvent(Key.Enter, {type: 'keydown'});
-    triggerTextAreaEvent(el, event);
-    tickFixture(fixture);
+       let event = createKeyEvent(Key.Enter, {type: 'keydown'});
+       triggerTextAreaEvent(el, event);
+       tickFixture(fixture);
 
-    expect(mentionComp.displayContent).toEqual('item1');
-    expect(comp.model).toEqual('@[item1](type:1)');
-  }));
+       expect(mentionComp.displayContent).toEqual('item1');
+       expect(comp.model).toEqual('@[item1](type:1)');
+     }));
 
   it('should make previous/next result active with up/down arrow keys', fakeAsync(() => {
-    const fixture = createTestComponent(
-      `<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+       const fixture = createTestComponent(`<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
 
-    const el = fixture.nativeElement;
-    const comp = fixture.componentInstance;
-    comp.mentions = [
-      {display: 'item1', id: 1, type: 'type'},
-      {display: 'item2', id: 2, type: 'type'},
-      {display: 'item3', id: 3, type: 'type'},
-    ];
-    fixture.detectChanges();
-    expect(comp.mentions.length).toEqual(3);
+       const el = fixture.nativeElement;
+       const comp = fixture.componentInstance;
+       comp.mentions = [
+         {display: 'item1', id: 1, type: 'type'},
+         {display: 'item2', id: 2, type: 'type'},
+         {display: 'item3', id: 3, type: 'type'},
+       ];
+       fixture.detectChanges();
+       expect(comp.mentions.length).toEqual(3);
 
-    const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
-    expect(mentionComp.mentions.length).toEqual(3);
-    expectMentionListToBeHidden(fixture.debugElement, true);
-    tickFixture(fixture);
+       const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+       expect(mentionComp.mentions.length).toEqual(3);
+       expectMentionListToBeHidden(fixture.debugElement, true);
+       tickFixture(fixture);
 
-    const triggerValue = '@';
-    triggerTextAreaEvent(el, createKeyEvent(Key.Shift, {type: 'keydown'}));
-    tickFixture(fixture);
-    changeTextArea(el, triggerValue);
-    tickFixture(fixture);
+       const triggerValue = '@';
+       triggerTextAreaEvent(el, createKeyEvent(Key.Shift, {type: 'keydown'}));
+       tickFixture(fixture);
+       changeTextArea(el, triggerValue);
+       tickFixture(fixture);
 
-    expectTextAreaValue(el, triggerValue);
-    expect(comp.model).toEqual(triggerValue);
-    expect(mentionComp.value).toEqual(triggerValue);
-    expect(mentionComp.displayContent).toEqual(triggerValue);
-    expect(mentionComp.selectionStart).toBeGreaterThan(0);
-    tickFixture(fixture);
+       expectTextAreaValue(el, triggerValue);
+       expect(comp.model).toEqual(triggerValue);
+       expect(mentionComp.value).toEqual(triggerValue);
+       expect(mentionComp.displayContent).toEqual(triggerValue);
+       expect(mentionComp.selectionStart).toBeGreaterThan(0);
+       tickFixture(fixture);
 
-    const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
-    expect(mentionsList).not.toBeUndefined();
-    expect(mentionsList).not.toBeNull();
-    const mentionsListComp = mentionsList.componentInstance;
-    expect(mentionsListComp.show).toBeTruthy();
-    expect(mentionsListComp.activeIndex).toBe(0);
-    expect(mentionsListComp.selectedItem).not.toBeNull();
-    expect(mentionsListComp.selectedItem.display).toEqual('item1');
-    expect(mentionComp.selectionStart).toBeGreaterThan(0);
-    tickFixture(fixture);
+       const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
+       expect(mentionsList).not.toBeUndefined();
+       expect(mentionsList).not.toBeNull();
+       const mentionsListComp = mentionsList.componentInstance;
+       expect(mentionsListComp.show).toBeTruthy();
+       expect(mentionsListComp.activeIndex).toBe(0);
+       expect(mentionsListComp.selectedItem).not.toBeNull();
+       expect(mentionsListComp.selectedItem.display).toEqual('item1');
+       expect(mentionComp.selectionStart).toBeGreaterThan(0);
+       tickFixture(fixture);
 
-    let event;
+       let event;
 
-    // Down
-    event = createKeyDownEvent(createKeyEvent(Key.ArrowDown, {type: 'keydown'}));
-    triggerTextAreaEvent(el, event);
-    tickFixture(fixture);
-    expect(event.preventDefault).toHaveBeenCalled();
-    expect(mentionsListComp.activeIndex).toBe(1);
+       // Down
+       event = createKeyDownEvent(createKeyEvent(Key.ArrowDown, {type: 'keydown'}));
+       triggerTextAreaEvent(el, event);
+       tickFixture(fixture);
+       expect(event.preventDefault).toHaveBeenCalled();
+       expect(mentionsListComp.activeIndex).toBe(1);
 
-    // Up
-    event = createKeyDownEvent(createKeyEvent(Key.ArrowUp, {type: 'keydown'}));
-    triggerTextAreaEvent(el, event);
-    tickFixture(fixture);
-    expect(event.preventDefault).toHaveBeenCalled();
-    expect(mentionsListComp.activeIndex).toBe(0);
+       // Up
+       event = createKeyDownEvent(createKeyEvent(Key.ArrowUp, {type: 'keydown'}));
+       triggerTextAreaEvent(el, event);
+       tickFixture(fixture);
+       expect(event.preventDefault).toHaveBeenCalled();
+       expect(mentionsListComp.activeIndex).toBe(0);
 
-    // End
-    event = createKeyDownEvent(createKeyEvent(Key.End, {type: 'keydown'}));
-    triggerTextAreaEvent(el, event);
-    tickFixture(fixture);
-    expect(event.preventDefault).toHaveBeenCalled();
-    expect(mentionsListComp.activeIndex).toBe(2);
+       // End
+       event = createKeyDownEvent(createKeyEvent(Key.End, {type: 'keydown'}));
+       triggerTextAreaEvent(el, event);
+       tickFixture(fixture);
+       expect(event.preventDefault).toHaveBeenCalled();
+       expect(mentionsListComp.activeIndex).toBe(2);
 
-    // Home
-    event = createKeyDownEvent(createKeyEvent(Key.Home, {type: 'keydown'}));
-    triggerTextAreaEvent(el, event);
-    tickFixture(fixture);
-    expect(event.preventDefault).toHaveBeenCalled();
-    expect(mentionsListComp.activeIndex).toBe(0);
-  }));
+       // Home
+       event = createKeyDownEvent(createKeyEvent(Key.Home, {type: 'keydown'}));
+       triggerTextAreaEvent(el, event);
+       tickFixture(fixture);
+       expect(event.preventDefault).toHaveBeenCalled();
+       expect(mentionsListComp.activeIndex).toBe(0);
+     }));
 
   it('should remove mention on backspace into mention', fakeAsync(() => {
-    const fixture = createTestComponent(
-      `<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
-    const comp = fixture.componentInstance;
-    const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+       const fixture = createTestComponent(`<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+       const comp = fixture.componentInstance;
+       const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
 
-    const originalValue = '@[Name](type:1)';
-    const plainTextValue = 'Nam';
-    const expectedValue = '';
-    fixture.componentInstance.model = originalValue;
-    tickFixture(fixture);
-    tickFixture(fixture);
+       const originalValue = '@[Name](type:1)';
+       const plainTextValue = 'Nam';
+       const expectedValue = '';
+       fixture.componentInstance.model = originalValue;
+       tickFixture(fixture);
+       tickFixture(fixture);
 
-    const textAreaElement = mentionComp.textAreaInputElement.nativeElement as HTMLTextAreaElement;
-    const selection = textAreaElement.value.length - 1;
-    textAreaElement.setSelectionRange(selection, selection);
-    tickFixture(fixture);
-    mentionComp.onSelect({target: textAreaElement});
-    tickFixture(fixture);
-    // mentionComp.displayContent = plainTextValue;
-    mentionComp.onChange(plainTextValue);
-    fixture.detectChanges();
-    tickFixture(fixture);
+       const textAreaElement = mentionComp.textAreaInputElement.nativeElement as HTMLTextAreaElement;
+       const selection = textAreaElement.value.length - 1;
+       textAreaElement.setSelectionRange(selection, selection);
+       tickFixture(fixture);
+       mentionComp.onSelect({target: textAreaElement});
+       tickFixture(fixture);
+       // mentionComp.displayContent = plainTextValue;
+       mentionComp.onChange(plainTextValue);
+       fixture.detectChanges();
+       tickFixture(fixture);
 
-    expect(mentionComp.displayContent).toEqual(expectedValue);
-    expect(comp.model).toEqual(expectedValue);
-  }));
+       expect(mentionComp.displayContent).toEqual(expectedValue);
+       expect(comp.model).toEqual(expectedValue);
+     }));
 });

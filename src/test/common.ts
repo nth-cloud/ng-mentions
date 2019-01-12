@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {Key} from "../key";
+import {Key} from '../key';
 
 function normalizeText(txt: string): string {
   return txt.trim().replace(/\s+/g, ' ');
@@ -66,12 +66,11 @@ export function isBrowser(browsers: Browser|Browser[], ua = window.navigator.use
 }
 
 export function createKeyEvent(
-  key: Key | number = null,
-  options: {type: 'keyup' | 'keydown' | 'input', bubbles?: boolean, cancelable?: boolean} = {
-    type: 'keyup',
-    bubbles: true,
-    cancelable: true
-  }) {
+    key: Key|number = null, options: {type: 'keyup'|'keydown'|'input', bubbles?: boolean, cancelable?: boolean} = {
+      type: 'keyup',
+      bubbles: true,
+      cancelable: true
+    }) {
   let eventInitDict: any = {bubbles: options.bubbles, cancelable: options.cancelable};
   if (key) {
     eventInitDict.key = String.fromCharCode(key);

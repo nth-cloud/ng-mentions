@@ -1,4 +1,4 @@
-import {toHaveCssClass} from "./matchers/toHaveCssClass";
+import {toHaveCssClass} from './matchers/toHaveCssClass';
 
 // Timeouts
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
@@ -16,10 +16,7 @@ function buildError(isNot: boolean) {
 beforeEach(() => {
   jasmine.addMatchers({
     toHaveCssClass: function(util, customEqualityTests) {
-      return {
-        compare: buildError(false),
-        negativeCompare: buildError(true)
-      };
+      return {compare: buildError(false), negativeCompare: buildError(true)};
     }
   });
 });
