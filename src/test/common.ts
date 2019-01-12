@@ -1,4 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {Key} from "../key";
+
+function normalizeText(txt: string): string {
+  return txt.trim().replace(/\s+/g, ' ');
+}
 
 export function createGenericTestComponent<T>(html: string, type: {new (...args: any[]): T}): ComponentFixture<T> {
   TestBed.overrideComponent(type, {set: {template: html}});
@@ -57,5 +62,43 @@ export function isBrowser(browsers: Browser|Browser[], ua = window.navigator.use
     return true;
   } else {
     return browsersStr.indexOf(browser) > -1;
+  }
+}
+
+export function createKeyEvent(
+  key: Key | number = null,
+  options: {type: 'keyup' | 'keydown' | 'input', bubbles?: boolean, cancelable?: boolean} = {
+    type: 'keyup',
+    bubbles: true,
+    cancelable: true
+  }) {
+  let eventInitDict: any = {bubbles: options.bubbles, cancelable: options.cancelable};
+  if (key) {
+    eventInitDict.key = String.fromCharCode(key);
+  }
+  const event = new KeyboardEvent(options.type, eventInitDict);
+  if (key) {
+    Object.defineProperties(event, {which: {get: () => key}});
+    Object.defineProperties(event, {keyCode: {get: () => key}});
+  }
+
+  return event;
+}
+
+export function expectResults(element: HTMLElement, resultsDef: string[]) {
+  const elements = element.querySelectorAll('li');
+
+  expect(elements.length).toEqual(resultsDef.length);
+  for (let i = 0; i < resultsDef.length; i++) {
+    let resultDef = resultsDef[i];
+    let classIndicator = resultDef.charAt(0);
+
+    if (classIndicator === '+') {
+      expect(elements[i]).toHaveCssClass('active');
+      expect(normalizeText(elements[i].textContent)).toEqual(resultDef.substr(1));
+    } else {
+      expect(elements[i]).not.toHaveCssClass('active');
+      expect(normalizeText(elements[i].textContent)).toEqual(resultDef);
+    }
   }
 }

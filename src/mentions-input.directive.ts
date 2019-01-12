@@ -1,135 +1,68 @@
 import {
   Directive,
-  DoCheck,
   ElementRef,
-  EventEmitter,
   forwardRef,
-  Injector,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges
+  OnDestroy, OnInit
 } from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs';
+import {takeUntil} from "rxjs/operators";
+import {NgxMentionsComponent} from "./mentions.component";
 
 /**
- * The NgxMentionsInputDirective directive is used to indicate the input element.
+ * The NgxMentionsAccessorDirective directive is used to indicate the input element.
  * This directive is required.
  */
 @Directive({
-  selector: '[ngxMentionInput]',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NgxMentionsInputDirective), multi: true}]
+  exportAs: 'ngxMentions',
+  selector: 'ngx-mentions',
+  host: {'(change)': 'onChange($event)', '(touch)': 'onTouched()'},
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NgxMentionsAccessorDirective), multi: true}]
 })
-export class NgxMentionsInputDirective implements OnChanges, OnInit, OnDestroy, ControlValueAccessor, DoCheck {
-  @Output() valueChanges: EventEmitter<string> = new EventEmitter<string>();
-  readonly stateChanges: Subject<void> = new Subject<void>();
-  readonly disabledChanges: Subject<boolean> = new Subject<boolean>();
-
-  @Input()
-  get value(): string {
-    return this._value;
-  }
-
-  set value(value: string) {
-    if (value !== this.value) {
-      this._value = value || '';
-      this.valueChanges.emit(value);
-      if (this._onChange) {
-        this._onChange(value);
-      }
-      this.stateChanges.next();
-    }
-  }
-
-  @Input()
-  get placeholder(): string {
-    return this._placeholder;
-  }
-
-  set placeholder(value: string) {
-    this._placeholder = value;
-    this.stateChanges.next();
-  }
-
-  @Input()
-  get required(): boolean {
-    return this._required;
-  }
-
-  set required(value: boolean) {
-    this._required = value;
-    this.stateChanges.next();
-  }
-
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
-  set disabled(value: boolean) {
-    this.setDisabledState(value);
-    this.stateChanges.next();
-  }
-
-  get errorState(): boolean {
-    return this._errorState;
-  }
-
+export class NgxMentionsAccessorDirective implements OnInit, OnDestroy, ControlValueAccessor {
   private _onChange: (_: string) => void;
-  private _placeholder: string = '';
-  private _required: boolean;
-  private _disabled: boolean;
-  private _value: string = '';
-  private ngControl: NgControl;
-  private _errorState: boolean = false;
+  private _onTouch: () => void;
+  private _destroyed: Subject<void> = new Subject<void>();
 
-  constructor(private element: ElementRef, private injector: Injector) {
-    this._value = this.value || '';
-  }
-
-  get nativeElement(): Element {
-    return this.element.nativeElement;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.stateChanges.next();
-  }
+  constructor(private element: ElementRef, private host: NgxMentionsComponent) {}
 
   ngOnInit(): void {
-    this.ngControl = this.injector.get(NgControl);
-    if (this.ngControl !== null) {
-      this.ngControl.valueAccessor = this;
-    }
-  }
-
-  ngDoCheck(): void {
-    if (this.ngControl) {
-      this._errorState = this.ngControl.invalid && this.ngControl.touched;
-      this.stateChanges.next();
-    }
+    this.host.valueChanges.pipe(takeUntil(this._destroyed))
+      .subscribe(value => this.onChange(value));
   }
 
   ngOnDestroy(): void {
-    this.stateChanges.complete();
+    this._destroyed.next();
+    this._destroyed.complete();
   }
 
   registerOnChange(fn: any): void {
     this._onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {}
+  registerOnTouched(fn: any): void {
+    this._onTouch = fn;
+  }
 
   setDisabledState(isDisabled: boolean): void {
-    this._disabled = isDisabled;
-    this.disabledChanges.next(this._disabled);
+    this.host.disabled = isDisabled;
   }
 
   writeValue(value: string): void {
     if (typeof value === 'string' || value === null) {
-      this.valueChanges.emit(value);
+      this.host.value = value;
+    }
+  }
+
+  onChange(value: any) {
+    if (this._onChange) {
+      this._onChange(value);
+    }
+  }
+
+  onTouched() {
+    if (this._onTouch) {
+      this._onTouch();
     }
   }
 }

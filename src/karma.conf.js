@@ -1,5 +1,6 @@
 const reporters = process.env.TRAVIS ? ['dots'] : ['progress'];
 const browsers = process.env.TRAVIS ? ['ChromeHeadlessNoSandbox'] : ['Chrome'];
+const env = process.env.TRAVIS ? 'prod' : 'dev';
 
 module.exports = function (config) {
   config.set({
@@ -12,9 +13,11 @@ module.exports = function (config) {
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
-
+    client: {
+      clearContent: false
+    },
     coverageIstanbulReports: {
-      dir: require('path').join(__dirname, 'coverage'),
+      dir: require('path').join(__dirname, '..', 'coverage'),
       reports: ['html', 'json', 'lcovonly'],
       fixWebpackSourcePaths: true
     },
@@ -24,7 +27,9 @@ module.exports = function (config) {
         flags: ['--no-sandbox']
       }
     },
-
+    angularCli: {
+      environment: env
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

@@ -5,15 +5,13 @@
     </label>
 </div>
 <div>
-    <ngx-mentions [mentions]="model.mentions">
-        <textarea
-            class="form-control"
-            ngxMentionInput
-            [(ngModel)]="model.value"
-            [disabled]="disabled"
-            rows="5"
-            placeholder="Type text here..."
-        ></textarea>
-    </ngx-mentions>
+    <ngx-mentions
+        [mentions]="model.mentions"
+        formClass="form-control"
+        rows="5"
+        [(ngModel)]="model.value"
+        [disabled]="disabled"
+        placeholder="Type text here..."
+    ></ngx-mentions>
 </div>
 <pre class="my-2">{{model | json}}</pre>

@@ -1,6 +1,4 @@
 import {
-  AfterContentChecked,
-  AfterContentInit,
   AfterViewInit,
   ChangeDetectorRef,
   Component,
@@ -23,9 +21,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
 
-import {NgxMentionsInputDirective} from './mentions-input.directive';
 import {MentionsListComponent} from './mentions-list.component';
 import {
   applyChangeToValue,
@@ -41,11 +37,6 @@ import {
   styleProperties
 } from './utils';
 import {Key} from "./key";
-
-const inputProperties = Object.freeze([
-  'rows',
-  'cols',
-]);
 
 interface Tag {
   indices: {start: number, end: number};
@@ -86,9 +77,9 @@ export class HighlightedDirective {
           </div>
       </div>
       <textarea
-        class="highlighter-input"
         #input
-        [rows]="textAreaRows"
+        [rows]="rows"
+        [cols]="columns"
         [ngModel]="displayContent"
         [ngClass]="textAreaClassNames"
         (keydown)="onKeyDown($event)"
@@ -97,18 +88,14 @@ export class HighlightedDirective {
         (mouseup)="onSelect($event)"
         (ngModelChange)="onChange($event)"
         (scroll)="onTextAreaScroll()"
-        [attr.cols]="textAreaAttributes?.cols"
-        [attr.rows]="textAreaAttributes?.rows"
         [disabled]="disabled"
         [required]="required"
         [placeholder]="placeholder"
       ></textarea>
-      <ng-content></ng-content>
   `,
   styles: [
     'ngx-mentions {position: relative;}',
     'ngx-mentions textarea {position:relative; background-color: transparent !important;}',
-    'ngx-mentions textarea:not(.highlighter-input) {position: absolute; visibility: visible; top: 0; left: 0; z-index: -1;}',
     `ngx-mentions .highlighter {
         position: absolute;
         top:      0;
@@ -130,8 +117,7 @@ export class HighlightedDirective {
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
-export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit, AfterContentChecked, AfterViewInit,
-                                             OnDestroy {
+export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
   /**
    * The character to trigger the mentions list when a user is typing in the input field
    */
@@ -158,6 +144,70 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
    * the mention in the search result list and when formatting a mention in the displayed text.
    */
   @Input('displayName') displayName: string = 'display';
+  /**
+   * Classes for textarea
+   */
+  @Input('formClass')
+  get formClass(): string {
+    return Object.keys(this.textAreaClassNames).join(' ');
+  }
+
+  set formClass(classNames: string) {
+    this.textAreaClassNames = {};
+    Array.from(classNames.split(' ')).forEach(className => {
+      this.textAreaClassNames[className] = true;
+    });
+  }
+
+  @Input('placeholder') placeholder: string;
+  @Input('value')
+  get value(): string {
+    return this._value;
+  }
+
+  set value(value: string) {
+    this.parseLines(value);
+  }
+
+  @Input('required')
+  get required(): boolean {
+    return this._required;
+  }
+
+  set required(value: boolean) {
+    this._required = value;
+    this.updateStylesAndProperties();
+  }
+
+  @Input('disabled')
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  set disabled(value: boolean) {
+    this._disabled = value;
+    this.updateStylesAndProperties();
+  }
+
+  @Input('rows')
+  get rows(): any {
+    return this._rows;
+  }
+
+  set rows(value: any) {
+    this._rows = <number>value;
+    this.updateStylesAndProperties();
+  }
+
+  @Input('cols')
+  get columns(): any {
+    return this._columns;
+  }
+
+  set columns(value: any) {
+    this._columns = <number>value;
+    this.updateStylesAndProperties();
+  }
 
   /**
    * The list of mentions to display, or filter, in the search result list.
@@ -173,9 +223,10 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
   /**
    * An event emitted, after the trigger character has been typed, with the user-entered search string.
    */
-  @Output('search') search: EventEmitter<string> = new EventEmitter<string>();
+  @Output('search') readonly search: EventEmitter<string> = new EventEmitter<string>();
+  @Output('valueChanges') readonly valueChanges: EventEmitter<string> = new EventEmitter<string>();
+  @Output('stateChanges') readonly stateChanges: Subject<void> = new Subject<void>();
 
-  @ContentChild(NgxMentionsInputDirective) control: NgxMentionsInputDirective;
   @ContentChild(TemplateRef) mentionListTemplate: TemplateRef<any>;
   @ViewChild('input') textAreaInputElement: ElementRef;
   @ViewChild('highlighter') highlighterElement: ElementRef;
@@ -184,8 +235,6 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
   lines: Line[] = [];
   highlighterStyle: {[key: string]: string} = {};
   textAreaClassNames: {[key: string]: boolean} = {};
-  textAreaRows: number = 1;
-  textAreaAttributes: any = {cols: null, rows: null};
   selectionStart: number;
   selectionEnd: number;
   mentions: any[] = [];
@@ -194,27 +243,24 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
     return this.disabled ? 'readonly' : null;
   }
 
-  get disabled(): boolean {
-    return this.control ? this.control.disabled : false;
+  get errorState(): boolean {
+    return this._errorState;
   }
 
-  get required(): boolean {
-    return this.control ? this.control.required : false;
-  }
-
-  get placeholder(): string {
-    return this.control ? this.control.placeholder : null
-  }
-
+  private _value: string = '';
+  private _required: boolean;
+  private _disabled: boolean;
+  private _rows: number;
+  private _columns: number;
   private searchString: string;
   private startPos: number;
   private startNode;
-  private mentionsList: MentionsListComponent;
+   mentionsList: MentionsListComponent;
   private stopSearch: boolean = false;
   private markupSearch: MarkupMention;
   private _destroyed: Subject<void> = new Subject<void>();
   private newLine: RegExp = /\n/g;
-  private value: string = '';
+  private _errorState: boolean = false;
 
   constructor(
       private element: ElementRef, private componentResolver: ComponentFactoryResolver,
@@ -230,24 +276,9 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
     }
   }
 
-  ngAfterContentInit(): void {
-    this.validateControl();
-
-    let control = this.control;
-    control.valueChanges.pipe(takeUntil(this._destroyed)).subscribe((value: string) => this.parseLines(value));
-    control.disabledChanges.pipe(takeUntil(this._destroyed)).subscribe(() => this.updateStylesAndProperties());
-    this.parseLines(control.value);
-    this.updateStylesAndProperties();
-  }
-
-  ngAfterContentChecked(): void {
-    this.validateControl();
-
-    this.updateStylesAndProperties();
-  }
-
   ngAfterViewInit(): void {
-    this.changeDetector.detectChanges();
+    this.parseLines(this._value);
+    this.updateStylesAndProperties();
   }
 
   ngOnDestroy(): void {
@@ -270,7 +301,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
   }
 
   public onChange(newPlainTextValue: string) {
-    let value = this.value;
+    let value = this._value;
     let displayTransform = this.displayTransform.bind(this);
     let selectionStart = this.textAreaInputElement.nativeElement.selectionStart;
     let selectionEnd = this.textAreaInputElement.nativeElement.selectionEnd;
@@ -289,7 +320,6 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
     this.selectionStart = Math.max(selectionStart, 0);
     this.selectionEnd = Math.max(selectionEnd, 0);
     this.parseLines(newValue);
-    this.changeDetector.detectChanges();
     if (this.selectionEnd > 0) {
       setTimeout(() => setCaretPosition(this.textAreaInputElement.nativeElement, this.selectionEnd));
     }
@@ -298,21 +328,22 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
   public onKeyDown(event: any) {
     let caretPosition: number = getCaretPosition(this.textAreaInputElement.nativeElement);
     let characterPressed = event.key;
+    let keyCode = event.which || event.keyCode;
     if (!characterPressed) {
-      let characterCode = event.which || event.keyCode;
+      let characterCode = event.which || keyCode;
       characterPressed = String.fromCharCode(characterCode);
       if (!event.shiftKey && (characterCode >= 65 && characterCode <= 90)) {
         characterPressed = String.fromCharCode(characterCode + 32);
       }
     }
 
-    if (event.keyCode === Key.Enter && event.wasSelection && caretPosition < this.startPos) {
+    if (keyCode === Key.Enter && event.wasSelection && caretPosition < this.startPos) {
       caretPosition = this.startNode.length;
       setCaretPosition(this.startNode, caretPosition);
     }
 
     let startOfMention =
-        findStartOfMentionInPlainText(this.value, this.markupSearch, caretPosition, this.displayTransform.bind(this));
+        findStartOfMentionInPlainText(this._value, this.markupSearch, caretPosition, this.displayTransform.bind(this));
     if (characterPressed === this.triggerChar) {
       this.setupMentionsList(caretPosition);
     } else if (startOfMention.start === -1 && this.startPos >= 0) {
@@ -320,7 +351,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
         this.mentionsList.show = false;
         this.startPos = -1;
       } else if (
-          event.keyCode !== Key.Shift && !event.metaKey && !event.altKey && !event.ctrlKey &&
+          keyCode !== Key.Shift && !event.metaKey && !event.altKey && !event.ctrlKey &&
           caretPosition > this.startPos) {
         this.handleKeyDown(event, caretPosition, characterPressed);
       }
@@ -378,19 +409,20 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
   }
 
   private handleKeyDown(event: any, caretPosition: number, characterPressed: string) {
-    if (event.keyCode === Key.Space) {
+    let keyCode = event.which || event.keyCode;
+    if (keyCode === Key.Space) {
       this.startPos = -1;
-    } else if (event.keyCode === Key.Backspace && caretPosition > 0) {
+    } else if (keyCode === Key.Backspace && caretPosition > 0) {
       caretPosition--;
       if (caretPosition === this.startPos) {
         this.stopSearch = true;
       }
       this.mentionsList.show = !this.stopSearch;
     } else if (this.mentionsList.show) {
-      if (event.keyCode === Key.Tab || event.keyCode === Key.Enter) {
+      if (keyCode === Key.Tab || keyCode === Key.Enter) {
         this.stopEvent(event);
         this.mentionsList.show = false;
-        let value = this.value;
+        let value = this._value;
         let start = mapPlainTextIndex(value, this.markupSearch, this.startPos, false, this.displayTransform.bind(this));
         let item = event.item || this.mentionsList.selectedItem;
         let newValue = replacePlaceholders(item, this.markupSearch);
@@ -408,40 +440,40 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
           this.onSelect({target: this.textAreaInputElement.nativeElement});
         });
         return;
-      } else if (event.keyCode === Key.Escape) {
+      } else if (keyCode === Key.Escape) {
         this.stopEvent(event);
         this.mentionsList.show = false;
         this.stopSearch = true;
         return;
-      } else if (event.keyCode === Key.ArrowDown) {
+      } else if (keyCode === Key.ArrowDown) {
         this.stopEvent(event);
         this.mentionsList.selectNextItem();
         return;
-      } else if (event.keyCode === Key.ArrowUp) {
+      } else if (keyCode === Key.ArrowUp) {
         this.stopEvent(event);
         this.mentionsList.selectPreviousItem();
         return;
-      } else if (event.keyCode === Key.Home) {
+      } else if (keyCode === Key.Home) {
         this.stopEvent(event);
         this.mentionsList.selectFirstItem();
         return;
-      } else if (event.keyCode === Key.End) {
+      } else if (keyCode === Key.End) {
         this.stopEvent(event);
         this.mentionsList.selectLastItem();
         return;
       }
     }
 
-    if (event.keyCode === Key.ArrowLeft ||
-      event.keyCode === Key.ArrowRight ||
-      event.keyCode === Key.Home ||
-      event.keyCode === Key.End) {
+    if (keyCode === Key.ArrowLeft ||
+      keyCode === Key.ArrowRight ||
+      keyCode === Key.Home ||
+      keyCode === Key.End) {
       this.onSelect(event);
       return;
     }
 
     let mention = this.displayContent.substring(this.startPos + 1, caretPosition);
-    if (event.keyCode !== Key.Backspace) {
+    if (keyCode !== Key.Backspace) {
       mention += characterPressed;
     }
     this.searchString = mention || '';
@@ -499,12 +531,6 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
     }
   }
 
-  private validateControl() {
-    if (!this.control) {
-      throw new Error('ngx-mentions must contain a NgxMentionsControl');
-    }
-  }
-
   private parseMarkup() {
     if (this.mentionMarkup.length === 0 || this.mentionMarkup[0] !== this.triggerChar) {
       throw new Error(`ngx-mentions markup pattern must start with the trigger character "${this.triggerChar}"`);
@@ -514,15 +540,14 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
   }
 
   private parseLines(value: string = '') {
-    if (value !== this.value) {
+    if (value !== this._value) {
       value = value || '';
       let lines = value.split(this.newLine).map((line: string) => this.formatMentions(line));
       let displayContent = lines.map(line => line.content).join('\n');
       if (this.displayContent !== displayContent) {
-        this.value = value;
         this.lines = lines;
         this.displayContent = displayContent;
-        this.control.value = value;
+        this.triggerChange(value);
       }
     }
   }
@@ -566,22 +591,6 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
     return lineObj;
   }
 
-  private refreshSourceInputElementStyleAndAttributes() {
-    let control = this.control;
-    this.textAreaClassNames = {};
-    this.textAreaAttributes = {};
-    Array.from(control.nativeElement.classList).forEach(className => {
-      this.textAreaClassNames[className] = true;
-    });
-    inputProperties.forEach(prop => {
-      if (control.nativeElement.hasAttribute(prop)) {
-        this.textAreaAttributes[prop] = control.nativeElement.getAttribute(prop);
-      } else if (control.nativeElement[prop]) {
-        this.textAreaAttributes[prop] = control.nativeElement[prop];
-      }
-    });
-  }
-
   private refreshStyles() {
     let element = this.textAreaInputElement.nativeElement;
     let computedStyle: any = getComputedStyle(element);
@@ -593,8 +602,12 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterContentInit
   }
 
   private updateStylesAndProperties() {
-    this.refreshSourceInputElementStyleAndAttributes();
-    this.changeDetector.detectChanges();
     this.refreshStyles();
+  }
+
+  private triggerChange(value: string) {
+    this._value = value;
+    this.valueChanges.emit(this._value);
+    this.changeDetector.detectChanges();
   }
 }

@@ -1,8 +1,8 @@
 import {Component, DebugElement} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {FormsModule} from '@angular/forms';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import {createGenericTestComponent} from './test/common';
+import {createGenericTestComponent, createKeyEvent, expectResults} from './test/common';
 
 import {NgxMentionsComponent, NgxMentionsModule} from './index';
 import {By} from "@angular/platform-browser";
@@ -12,52 +12,108 @@ import {Key} from "./key";
 @Component({selector: 'test-cmp', template: ''})
 class TestComponent {
   model: any = '';
-  mentions: any;
+  mentions: any = [];
 }
 
 const createTestComponent = (html: string) =>
     createGenericTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
 
-function createKeyDownEvent(key: number) {
-  const event = {which: key, preventDefault: () => {}, stopPropagation: () => {}};
+function createKeyDownEvent(event: any) {
+  event.preventDefault = () => {console.log('preventDefault');};
+  event.stopPropagation = () => {console.log('stopPropagation');};
   spyOn(event, 'preventDefault');
   spyOn(event, 'stopPropagation');
   return event;
 }
 
-function getNativeInput(element: HTMLElement): HTMLTextAreaElement {
+function getNativeTextArea(element: HTMLElement): HTMLTextAreaElement {
   return <HTMLTextAreaElement>element.querySelector('textarea');
 }
 
-function changeInput(element: DebugElement, value: string) {
-  let input = getDebugInput(element).nativeElement;
-  input.value = value;
+function getDropDown(element: HTMLElement): HTMLDivElement {
+  return <HTMLDivElement>element.querySelector('mentions-list .dropdown-menu');
 }
 
-function blurInput(element: any) {
-  const input = getNativeInput(element);
-  const evt = document.createEvent('HTMLEvents');
-  evt.initEvent('blur', false, false);
-  input.dispatchEvent(evt);
+function changeTextArea(element: any, value: string, reset: boolean = false) {
+  const input = getNativeTextArea(element);
+  input.focus();
+  if (!reset) {
+    const evt = createKeyEvent(value.charCodeAt(0), {type: 'keydown', bubbles: true});
+    triggerTextAreaEvent(element, evt);
+    input.value += value;
+  } else {
+    input.value = value;
+  }
+  triggerTextAreaEvent(element, createKeyEvent(null, {type: 'input'}));
+  input.setSelectionRange(input.value.length, input.value.length);
+}
+
+function triggerTextAreaEvent(element: any, event: any) {
+  const input = getNativeTextArea(element);
+  input.focus();
+  input.dispatchEvent(event);
 }
 
 function getDebugInput(element: DebugElement): DebugElement {
-  return element.query(By.css('textarea.highlighter-input'));
+  return element.query(By.directive(NgxMentionsComponent));
 }
 
-function expectInputValue(element: DebugElement, value: string) {
-  expect(getDebugInput(element).nativeElement.value).toBe(value);
+function expectTextAreaValue(element: HTMLElement, value: string) {
+  expect(getNativeTextArea(element).value).toEqual(value);
+}
+
+function expectMentionListToBeHidden(element: DebugElement, hidden: boolean) {
+  let el = element.query(By.directive(MentionsListComponent));
+  let e = expect(el);
+  if (!hidden) {e = e.not;}
+  e.toBeNull();
+}
+
+function expectDropDownItems(element, expectedResults: string[]) {
+  const dropDown = getDropDown(element);
+  expect(dropDown).not.toBeNull();
+  expectResults(dropDown, expectedResults);
+}
+
+function tickFixture(fixture: ComponentFixture<TestComponent>) {
+  tick();
+  fixture.detectChanges();
 }
 
 describe('ngx-mentions', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule(
-        {declarations: [TestComponent], imports: [NgxMentionsModule, FormsModule]});
+    TestBed.configureTestingModule({
+      declarations: [TestComponent],
+      imports: [NgxMentionsModule, FormsModule, ReactiveFormsModule]
+    });
+  });
+
+  describe('value accessor', () => {
+    it('should format value', fakeAsync(() => {
+      const plainTextValue = 'Test value with Mentions formatted\nAnd New Lines';
+      const model = 'Test value with @[Mentions](type:1) formatted\nAnd @[New Lines](type:2)';
+
+      const fixture = createTestComponent(
+        `<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+
+      const el = fixture.nativeElement;
+      const comp = fixture.componentInstance;
+
+      expectTextAreaValue(el, '');
+
+      const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+
+      comp.model = model;
+      fixture.detectChanges();
+      tick();
+      expect(comp.model).toBe(model);
+      expect(mentionComp.displayContent).toEqual(plainTextValue);
+    }));
   });
 
   it('should initialize', () => {
     const fixture = createTestComponent(
-        `<ngx-mentions [mentions]="mentions"><textarea ngxMentionInput [(ngModel)]="model"></textarea></ngx-mentions>`);
+        `<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
 
     let originalValue = 'Test string @[Name](type:1)';
     fixture.componentInstance.model = originalValue;
@@ -68,85 +124,157 @@ describe('ngx-mentions', () => {
     expect(fixture.debugElement.query(By.directive(MentionsListComponent))).toBeNull();
   });
 
-  it('should select first mention on Enter', () => {
+  it('should select first mention on Enter', fakeAsync(() => {
     const fixture = createTestComponent(
-      `<ngx-mentions [mentions]="mentions"><textarea ngxMentionInput [(ngModel)]="model"></textarea></ngx-mentions>`);
+      `<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
 
-    fixture.componentInstance.mentions = [
-      {display: 'item1',id:1,type:'type'},
-      {display: 'item2',id:2,type:'type'},
-      {display: 'item3',id:3,type:'type'},
+    const el = fixture.nativeElement;
+    const comp = fixture.componentInstance;
+    comp.mentions = [
+      {display: 'item1', id: 1, type: 'type'},
+      {display: 'item2', id: 2, type: 'type'},
+      {display: 'item3', id: 3, type: 'type'},
     ];
     fixture.detectChanges();
-    expect(fixture.componentInstance.mentions.length).toBe(3);
-    let element = fixture.debugElement.query(By.directive(NgxMentionsComponent));
-    expect(element).not.toBeNull();
-    expect(element.componentInstance.mentions.length).toBe(3);
-    expect(fixture.debugElement.query(By.directive(MentionsListComponent))).toBeNull();
+    expect(comp.mentions.length).toEqual(3);
 
-    let event: any;
-    // changeInput(fixture.debugElement, '@');
-    event = {key: '@'};
-    getDebugInput(fixture.debugElement).triggerEventHandler('keydown', event);
+    const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+    expect(mentionComp.mentions.length).toEqual(3);
+    expectMentionListToBeHidden(fixture.debugElement, true);
+    tickFixture(fixture);
+
+    let triggerValue = '@';
+    triggerTextAreaEvent(el, createKeyEvent(Key.Shift, {type: 'keydown'}));
+    tickFixture(fixture);
+    changeTextArea(el, triggerValue);
+    tickFixture(fixture);
+
+    expectTextAreaValue(el, triggerValue);
+    expect(comp.model).toEqual(triggerValue);
+    expect(mentionComp.value).toEqual(triggerValue);
+    expect(mentionComp.displayContent).toEqual(triggerValue);
+    expect(mentionComp.selectionStart).toBeGreaterThan(0);
+    tickFixture(fixture);
+
+    const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
+    expect(mentionsList).not.toBeUndefined();
+    expect(mentionsList).not.toBeNull();
+    const mentionsListComp = mentionsList.componentInstance;
+    expect(mentionsListComp.show).toBeTruthy();
+    expect(mentionsListComp.activeIndex).toBe(0);
+    expect(mentionsListComp.selectedItem).not.toBeNull();
+    expect(mentionsListComp.selectedItem.display).toEqual('item1');
+    expect(mentionComp.selectionStart).toBeGreaterThan(0);
+    tickFixture(fixture);
+    expectDropDownItems(el, ['+item1', 'item2', 'item3']);
+
+    let event = createKeyEvent(Key.Enter, {type: 'keydown'});
+    triggerTextAreaEvent(el, event);
+    tickFixture(fixture);
+
+    expect(mentionComp.displayContent).toEqual('item1');
+    expect(comp.model).toEqual('@[item1](type:1)');
+  }));
+
+  it('should make previous/next result active with up/down arrow keys', fakeAsync(() => {
+    const fixture = createTestComponent(
+      `<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+
+    const el = fixture.nativeElement;
+    const comp = fixture.componentInstance;
+    comp.mentions = [
+      {display: 'item1', id: 1, type: 'type'},
+      {display: 'item2', id: 2, type: 'type'},
+      {display: 'item3', id: 3, type: 'type'},
+    ];
     fixture.detectChanges();
+    expect(comp.mentions.length).toEqual(3);
 
-    expect(fixture.componentInstance.model).toBe('@');
-    expect(fixture.debugElement.query(By.directive(MentionsListComponent))).not.toBeNull();
+    const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+    expect(mentionComp.mentions.length).toEqual(3);
+    expectMentionListToBeHidden(fixture.debugElement, true);
+    tickFixture(fixture);
+
+    const triggerValue = '@';
+    triggerTextAreaEvent(el, createKeyEvent(Key.Shift, {type: 'keydown'}));
+    tickFixture(fixture);
+    changeTextArea(el, triggerValue);
+    tickFixture(fixture);
+
+    expectTextAreaValue(el, triggerValue);
+    expect(comp.model).toEqual(triggerValue);
+    expect(mentionComp.value).toEqual(triggerValue);
+    expect(mentionComp.displayContent).toEqual(triggerValue);
+    expect(mentionComp.selectionStart).toBeGreaterThan(0);
+    tickFixture(fixture);
+
+    const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
+    expect(mentionsList).not.toBeUndefined();
+    expect(mentionsList).not.toBeNull();
+    const mentionsListComp = mentionsList.componentInstance;
+    expect(mentionsListComp.show).toBeTruthy();
+    expect(mentionsListComp.activeIndex).toBe(0);
+    expect(mentionsListComp.selectedItem).not.toBeNull();
+    expect(mentionsListComp.selectedItem.display).toEqual('item1');
+    expect(mentionComp.selectionStart).toBeGreaterThan(0);
+    tickFixture(fixture);
+
+    let event;
 
     // Down
-    // event = createKeyDownEvent(Key.ArrowDown);
-    // getDebugInput(fixture.debugElement).triggerEventHandler('keydown', event);
-    // fixture.detectChanges();
-    // expect(event.preventDefault).toHaveBeenCalled();
-  });
+    event = createKeyDownEvent(createKeyEvent(Key.ArrowDown, {type: 'keydown'}));
+    triggerTextAreaEvent(el, event);
+    tickFixture(fixture);
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(mentionsListComp.activeIndex).toBe(1);
 
-  // it('should make previous/next result active with up/down arrow keys', () => {
-  //   const fixture = createTestComponent(
-  //     `<ngx-mentions [mentions]="mentions"><textarea ngxMentionInput [(ngModel)]="model"></textarea></ngx-mentions>`);
-  //
-  //   fixture.componentInstance.mentions = [
-  //     {display: 'item1',id:1,type:'type'},
-  //     {display: 'item2',id:2,type:'type'},
-  //     {display: 'item3',id:3,type:'type'},
-  //   ];
-  //   fixture.detectChanges();
-  //   expect(fixture.componentInstance.mentions.length).toBe(3);
-  //   let element = fixture.debugElement.query(By.directive(NgxMentionsComponent));
-  //   expect(element).not.toBeNull();
-  //   expect(element.componentInstance.mentions.length).toBe(3);
-  //   expect(fixture.debugElement.query(By.directive(MentionsListComponent))).toBeNull();
-  //
-  //   let event: any;
-  //   // changeInput(fixture.debugElement, '@');
-  //   event = {key: '@'};
-  //   getDebugInput(fixture.debugElement).triggerEventHandler('keydown', event);
-  //   fixture.detectChanges();
-  //
-  //   // expectInputValue(fixture.debugElement, '@');
-  //   expect(fixture.debugElement.query(By.directive(MentionsListComponent))).not.toBeNull();
-  //
-  //   // Down
-  //   // event = createKeyDownEvent(Key.ArrowDown);
-  //   // getDebugInput(fixture.debugElement).triggerEventHandler('keydown', event);
-  //   // fixture.detectChanges();
-  //   // expect(event.preventDefault).toHaveBeenCalled();
-  // });
+    // Up
+    event = createKeyDownEvent(createKeyEvent(Key.ArrowUp, {type: 'keydown'}));
+    triggerTextAreaEvent(el, event);
+    tickFixture(fixture);
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(mentionsListComp.activeIndex).toBe(0);
 
-  // it('should remove mention on backspace into mention', async(() => {
-  //   const fixture = createTestComponent(
-  //     `<ngx-mentions [mentions]="mentions"><textarea ngxMentionInput [(ngModel)]="model"></textarea></ngx-mentions>`);
-  //   const event = createKeyDownEvent(Key.Backspace);
-  //
-  //   let originalValue = 'Test string @[Name](type:1)';
-  //   let expectedValue = 'Test string ';
-  //   fixture.componentInstance.model = originalValue;
-  //   fixture.detectChanges();
-  //   fixture.whenStable()
-  //     .then(() => {
-  //       getDebugInput(fixture.debugElement).nativeElement.focus();
-  //       getDebugInput(fixture.debugElement).triggerEventHandler('keydown', event);
-  //       fixture.detectChanges();
-  //       expect(fixture.componentInstance.model).toBe(expectedValue);
-  //     });
-  // }));
+    // End
+    event = createKeyDownEvent(createKeyEvent(Key.End, {type: 'keydown'}));
+    triggerTextAreaEvent(el, event);
+    tickFixture(fixture);
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(mentionsListComp.activeIndex).toBe(2);
+
+    // Home
+    event = createKeyDownEvent(createKeyEvent(Key.Home, {type: 'keydown'}));
+    triggerTextAreaEvent(el, event);
+    tickFixture(fixture);
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(mentionsListComp.activeIndex).toBe(0);
+  }));
+
+  it('should remove mention on backspace into mention', fakeAsync(() => {
+    const fixture = createTestComponent(
+      `<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+    const comp = fixture.componentInstance;
+    const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+
+    const originalValue = '@[Name](type:1)';
+    const plainTextValue = 'Nam';
+    const expectedValue = '';
+    fixture.componentInstance.model = originalValue;
+    tickFixture(fixture);
+    tickFixture(fixture);
+
+    const textAreaElement = mentionComp.textAreaInputElement.nativeElement as HTMLTextAreaElement;
+    const selection = textAreaElement.value.length - 1;
+    textAreaElement.setSelectionRange(selection, selection);
+    tickFixture(fixture);
+    mentionComp.onSelect({target: textAreaElement});
+    tickFixture(fixture);
+    // mentionComp.displayContent = plainTextValue;
+    mentionComp.onChange(plainTextValue);
+    fixture.detectChanges();
+    tickFixture(fixture);
+
+    expect(mentionComp.displayContent).toEqual(expectedValue);
+    expect(comp.model).toEqual(expectedValue);
+  }));
 });

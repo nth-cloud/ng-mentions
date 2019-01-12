@@ -157,7 +157,7 @@ export function getCaretCoordinates(element: HTMLInputElement, position: number)
 }
 
 export function setCaretPosition(element: HTMLInputElement, position: number): void {
-  if (isInputOrTextAreaElement(element) && element.selectionStart) {
+  if (isInputOrTextAreaElement(element) && element.selectionStart !== undefined) {
     element.focus();
     element.setSelectionRange(position, position);
   } else {

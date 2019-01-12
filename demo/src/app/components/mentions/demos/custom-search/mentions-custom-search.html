@@ -1,13 +1,13 @@
 <div>
-    <ngx-mentions [mentions]="model.mentions" (search)="onSearch($event)" [disableSearch]="true">
-        <textarea
-            class="form-control"
-            ngxMentionInput
-            [(ngModel)]="model.value"
-            rows="5"
-            placeholder="Type text here..."
-        ></textarea>
-    </ngx-mentions>
+    <ngx-mentions
+        [mentions]="model.mentions"
+        formClass="form-control"
+        rows="5"
+        [(ngModel)]="model.value"
+        placeholder="Type text here..."
+        (search)="onSearch($event)"
+        [disableSearch]="true"
+    ></ngx-mentions>
 </div>
 <pre class="my-2">{{model | json}}</pre>
 <p>Available names: {{names}}</p>
