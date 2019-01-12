@@ -329,7 +329,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
     let characterPressed = event.key;
     let keyCode = event.which || event.keyCode;
     if (!characterPressed) {
-      let characterCode = event.which || keyCode;
+      let characterCode = event.which || event.keyCode;
       characterPressed = String.fromCharCode(characterCode);
       if (!event.shiftKey && (characterCode >= 65 && characterCode <= 90)) {
         characterPressed = String.fromCharCode(characterCode + 32);

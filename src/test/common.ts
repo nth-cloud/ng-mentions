@@ -66,29 +66,39 @@ export function isBrowser(browsers: Browser|Browser[], ua = window.navigator.use
 }
 
 export function createKeyEvent(
-    key: Key|number = null, options: {type: 'keyup'|'keydown'|'input', bubbles?: boolean, cancelable?: boolean} = {
+    options: {key?: Key, type: 'keyup'|'keydown'|'input', bubbles?: boolean, cancelable?: boolean} = {
+      key: null,
       type: 'keyup',
       bubbles: true,
       cancelable: true
-    }): KeyboardEvent {
+    }): Event {
   let eventInitDict: any = {bubbles: options.bubbles, cancelable: options.cancelable};
-  if (key) {
-    eventInitDict.key = String.fromCharCode(key);
-  }
-  if (key === Key.Shift) {
+  if (options.key === Key.Shift) {
     eventInitDict.shiftKey = true;
-    key = null;
+    options.key = null;
   }
   let event;
-  if (isBrowser(['ie10', 'ie11'])) {
-    event = document.createEvent('KeyboardEvent') as KeyboardEvent;
-    event.initKeyboardEvent(options.type, options.cancelable, options.bubbles, window, key, 0, 0, 0, 0);
+  const isIE = isBrowser(['ie10', 'ie11']);
+  if (isIE && options.type === 'input') {
+    event = document.createEvent('MouseEvent');
+    event.initEvent(options.type, options.bubbles, options.cancelable);
+  } else if (isIE) {
+    event = document.createEvent('KeyboardEvent');
+    event.initEvent(options.type, options.cancelable, options.bubbles);
+    // event.initKeyboardEvent(options.type, options.cancelable, options.bubbles, window, 0, 0, 0, 0, 0);
   } else {
     event = new KeyboardEvent(options.type, eventInitDict)
   }
-  if (key) {
-    Object.defineProperties(event, {which: {get: () => key}});
-    Object.defineProperties(event, {keyCode: {get: () => key}});
+  if (options.key) {
+    delete event.keyCode;
+    Object.defineProperties(event, {
+      which: {get: () => options.key},
+      keyCode: {get: () => options.key},
+      shiftKey: {get: () => options.key === Key.Shift},
+      altKey: {get: () => false},
+      ctrlKey: {get: () => false},
+      metaKey: {get: () => false},
+    });
   }
 
   return event;
