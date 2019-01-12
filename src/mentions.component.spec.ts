@@ -6,7 +6,7 @@ import {By} from '@angular/platform-browser';
 import {NgxMentionsComponent, NgxMentionsModule} from './index';
 import {Key} from './key';
 import {MentionsListComponent} from './mentions-list.component';
-import {createGenericTestComponent, createKeyEvent, expectResults, isBrowser} from './test/common';
+import {createGenericTestComponent, createKeyEvent, expectResults} from './test/common';
 
 @Component({selector: 'test-cmp', template: ''})
 class TestComponent {
@@ -59,13 +59,14 @@ function expectTextAreaValue(element: HTMLElement, value: string) {
   expect(getNativeTextArea(element).value).toEqual(value);
 }
 
-function expectMentionListToBeHidden(element: DebugElement, hidden: boolean) {
+function expectMentionListToBeHidden(element: DebugElement, hidden: boolean, exceptionFailOutput?: string) {
   let el = element.query(By.directive(MentionsListComponent));
-  let e = expect(el);
+  expect(el).toBeDefined(exceptionFailOutput);
   if (!hidden) {
-    e = e.not;
+    expect(el).not.toBeNull(exceptionFailOutput);
+  } else {
+    expect(el).toBeNull(exceptionFailOutput);
   }
-  e.toBeNull();
 }
 
 function expectDropDownItems(element, expectedResults: string[]) {
@@ -75,12 +76,8 @@ function expectDropDownItems(element, expectedResults: string[]) {
 }
 
 function tickFixture(fixture: ComponentFixture<TestComponent>) {
-  const iterations = isBrowser(['ie10', 'ie11']) ? 2 : 1;
-  for (let i = 0; i < iterations; i++) {
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
-  }
+  tick();
+  fixture.detectChanges();
 }
 
 describe('ngx-mentions', () => {
@@ -117,10 +114,10 @@ describe('ngx-mentions', () => {
     let originalValue = 'Test string @[Name](type:1)';
     fixture.componentInstance.model = originalValue;
     fixture.componentInstance.mentions = [{display: 'Name2', type: 'type', id: 2}];
-    tickFixture(fixture);
+    fixture.detectChanges();
     expect(fixture.componentInstance.model).toBe(originalValue);
     expect(fixture.componentInstance.mentions.length).toBe(1);
-    expect(fixture.debugElement.query(By.directive(MentionsListComponent))).toBeNull();
+    expectMentionListToBeHidden(fixture.debugElement, true);
   });
 
   it('should select first mention on Enter', fakeAsync(() => {
@@ -155,9 +152,8 @@ describe('ngx-mentions', () => {
        expect(mentionComp.selectionStart).toBeGreaterThan(0);
        tickFixture(fixture);
 
+       expectMentionListToBeHidden(fixture.debugElement, false, 'MentionList should be shown');
        const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
-       expect(mentionsList).not.toBeUndefined('MentionList should not be undefined');
-       expect(mentionsList).not.toBeNull('MentionList should not be null');
        const mentionsListComp = mentionsList.componentInstance;
        expect(mentionsListComp.show).toBeTruthy('MentionList should be shown');
        expect(mentionsListComp.activeIndex).toBe(0, 'MentionList activeIndex should be 0');
@@ -208,9 +204,8 @@ describe('ngx-mentions', () => {
            .toBeGreaterThan(0, 'MentionsComponent selectionStart should be greater then @');
        tickFixture(fixture);
 
+       expectMentionListToBeHidden(fixture.debugElement, false, 'MentionList should be shown');
        const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
-       expect(mentionsList).not.toBeUndefined('MentionList should not be undefined');
-       expect(mentionsList).not.toBeNull('MentionList should not be null');
        const mentionsListComp = mentionsList.componentInstance;
        expect(mentionsListComp.show).toBeTruthy('MentionList should be shown');
        expect(mentionsListComp.activeIndex).toBe(0, 'MentionList activeIndex should be 0');
