@@ -152,12 +152,12 @@ describe('ngx-mentions', () => {
        tickFixture(fixture);
 
        const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
-       expect(mentionsList).not.toBeUndefined();
-       expect(mentionsList).not.toBeNull();
+       expect(mentionsList).not.toBeUndefined('MentionList should not be undefined');
+       expect(mentionsList).not.toBeNull('MentionList should not be null');
        const mentionsListComp = mentionsList.componentInstance;
-       expect(mentionsListComp.show).toBeTruthy();
-       expect(mentionsListComp.activeIndex).toBe(0);
-       expect(mentionsListComp.selectedItem).not.toBeNull();
+       expect(mentionsListComp.show).toBeTruthy('MentionList should be shown');
+       expect(mentionsListComp.activeIndex).toBe(0, 'MentionList activeIndex should be 0');
+       expect(mentionsListComp.selectedItem).not.toBeNull('MentionList selectedItem should not be null');
        expect(mentionsListComp.selectedItem.display).toEqual('item1');
        expect(mentionComp.selectionStart).toBeGreaterThan(0);
        tickFixture(fixture);
@@ -197,19 +197,20 @@ describe('ngx-mentions', () => {
        tickFixture(fixture);
 
        expectTextAreaValue(el, triggerValue);
-       expect(comp.model).toEqual(triggerValue);
-       expect(mentionComp.value).toEqual(triggerValue);
-       expect(mentionComp.displayContent).toEqual(triggerValue);
-       expect(mentionComp.selectionStart).toBeGreaterThan(0);
+       expect(comp.model).toEqual(triggerValue, 'TestComponent model should be @');
+       expect(mentionComp.value).toEqual(triggerValue, 'MentionsComponent value should be @');
+       expect(mentionComp.displayContent).toEqual(triggerValue, 'MentionsComponent displayContent should be @');
+       expect(mentionComp.selectionStart)
+           .toBeGreaterThan(0, 'MentionsComponent selectionStart should be greater then @');
        tickFixture(fixture);
 
        const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
-       expect(mentionsList).not.toBeUndefined();
-       expect(mentionsList).not.toBeNull();
+       expect(mentionsList).not.toBeUndefined('MentionList should not be undefined');
+       expect(mentionsList).not.toBeNull('MentionList should not be null');
        const mentionsListComp = mentionsList.componentInstance;
-       expect(mentionsListComp.show).toBeTruthy();
-       expect(mentionsListComp.activeIndex).toBe(0);
-       expect(mentionsListComp.selectedItem).not.toBeNull();
+       expect(mentionsListComp.show).toBeTruthy('MentionList should be shown');
+       expect(mentionsListComp.activeIndex).toBe(0, 'MentionList activeIndex should be 0');
+       expect(mentionsListComp.selectedItem).not.toBeNull('MentionList selectedItem should not be null');
        expect(mentionsListComp.selectedItem.display).toEqual('item1');
        expect(mentionComp.selectionStart).toBeGreaterThan(0);
        tickFixture(fixture);
