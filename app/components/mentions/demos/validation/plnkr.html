@@ -96,7 +96,7 @@ import { BrowserModule } from &#x27;@angular/platform-browser&#x27;;
 import { FormsModule, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
 import { HttpClientModule } from &#x27;@angular/common/http&#x27;;
 import { NgxToggleModule } from &#x27;ng-mentions&#x27;;
-import { NgtsdMentionsCustom-search } from &#x27;./mentions-custom-search&#x27;;
+import { NgtsdMentionsValidation } from &#x27;./mentions-validation&#x27;;
 
 @Component({
   selector: &#x27;my-app&#x27;,
@@ -110,7 +110,7 @@ import { NgtsdMentionsCustom-search } from &#x27;./mentions-custom-search&#x27;;
     &#x3C;/p&#x3E;
     &#x3C;hr&#x3E;
 
-    &#x3C;ngtsd-mentions-custom-search&#x3E;&#x3C;/ngtsd-mentions-custom-search&#x3E;
+    &#x3C;ngtsd-mentions-validation&#x3E;&#x3C;/ngtsd-mentions-validation&#x3E;
   &#x3C;/div&#x3E;
   &#x60;
 })
@@ -119,72 +119,63 @@ export class App {
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, NgxToggleModule], 
-  declarations: [App, NgtsdMentionsCustom-search],
+  declarations: [App, NgtsdMentionsValidation],
   bootstrap: [App]
 }) 
 export class AppModule {}
 ">
-    <input type="hidden" name="files[src/mentions-custom-search.ts]" value="import {Component} from &#x27;@angular/core&#x27;;
+    <input type="hidden" name="files[src/mentions-validation.ts]" value="import {Component} from &#x27;@angular/core&#x27;;
 
 @Component({
-    selector: &#x27;nthd-mentions-custom-search&#x27;,
-    templateUrl: &#x27;src/mentions-custom-search.html&#x27;
+    selector: &#x27;nthd-mentions-validation&#x27;,
+    templateUrl: &#x27;src/mentions-validation.html&#x27;
 })
-export class NthdMentionsCustomSearch {
+export class NthdMentionsValidation {
+    required: boolean = false;
     model: any = {
         value: &#x27;&#x27;,
-        mentions: []
+        mentions: [
+            {
+                display: &#x27;Dave&#x27;,
+                id: 1,
+                type: &#x27;contact&#x27;
+            },
+            {
+                display: &#x27;Bob Ross&#x27;,
+                id: 2,
+                type: &#x27;contact&#x27;
+            },
+            {
+                display: &#x27;Carl&#x27;,
+                id: 3,
+                type: &#x27;contact&#x27;
+            },
+            {
+                display: &#x27;Sue&#x27;,
+                id: 4,
+                type: &#x27;contact&#x27;
+            },
+        ]
     };
-    items: any[] = [
-        {
-            display: &#x27;Dave&#x27;,
-            id: 1,
-            type: &#x27;contact&#x27;
-        },
-        {
-            display: &#x27;Bob Ross&#x27;,
-            id: 2,
-            type: &#x27;contact&#x27;
-        },
-        {
-            display: &#x27;Carl&#x27;,
-            id: 3,
-            type: &#x27;contact&#x27;
-        },
-        {
-            display: &#x27;Sue&#x27;,
-            id: 4,
-            type: &#x27;contact&#x27;
-        },
-    ];
-
-    get names(): string {
-        return this.items.map(item =&#x3E; item.display).join(&#x27;, &#x27;);
-    }
-
-    onSearch(searchTerm: string) {
-        this.model.mentions = [];
-        if (searchTerm.length === 0) {
-            return;
-        }
-
-        this.model.mentions = Array.from(this.items).filter(item =&#x3E; item.display.toLowerCase().startsWith(searchTerm));
-    }
 }
 ">
-    <input type="hidden" name="files[src/mentions-custom-search.html]" value="&#x3C;div&#x3E;
+    <input type="hidden" name="files[src/mentions-validation.html]" value="&#x3C;label class=&#x22;m-2&#x22;&#x3E;
+    &#x3C;input type=&#x22;checkbox&#x22; [(ngModel)]=&#x22;required&#x22; class=&#x22;mr-2&#x22;/&#x3E;
+    Required
+&#x3C;/label&#x3E;
+&#x3C;pre class=&#x22;my-2&#x22;&#x3E;Validation: {{validation.status}} {{!validation.pristine ? &#x27;TOUCHED&#x27; : &#x27;PRISTINE&#x27;}}&#x3C;/pre&#x3E;
+&#x3C;div class=&#x22;basic-example&#x22; [class.was-validated]=&#x22;required &#x26;&#x26; !validation.pristine&#x22;&#x3E;
     &#x3C;ng-mentions
         [mentions]=&#x22;model.mentions&#x22;
         formClass=&#x22;form-control&#x22;
         rows=&#x22;5&#x22;
         [(ngModel)]=&#x22;model.value&#x22;
+        [required]=&#x22;required&#x22;
+        #validation=&#x22;ngModel&#x22;
         placeholder=&#x22;Type text here...&#x22;
-        (search)=&#x22;onSearch($event)&#x22;
-        [disableSearch]=&#x22;true&#x22;
     &#x3E;&#x3C;/ng-mentions&#x3E;
 &#x3C;/div&#x3E;
 &#x3C;pre class=&#x22;my-2&#x22;&#x3E;{{model | json}}&#x3C;/pre&#x3E;
-&#x3C;p&#x3E;Available names: {{names}}&#x3C;/p&#x3E;
 ">
   </form>
   <script>document.getElementById("mainForm").submit();</script>

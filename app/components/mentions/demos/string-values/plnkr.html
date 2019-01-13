@@ -2,17 +2,17 @@
 <html lang="en">
 <body>
   <form id="mainForm" method="post" action="http://plnkr.co/edit/?p=preview">
-    <input type="hidden" name="description" value="Example usage of the mentions widget from https://nth-cloud.github.io/ngx-mentions">
+    <input type="hidden" name="description" value="Example usage of the mentions widget from https://nth-cloud.github.io/ng-mentions">
     <input type="hidden" name="tags[0]" value="Angular">
     <input type="hidden" name="tags[1]" value="Bootstrap">
-    <input type="hidden" name="tags[2]" value="ngx-mentions">
+    <input type="hidden" name="tags[2]" value="ng-mentions">
     <input type="hidden" name="tags[3]" value="Mentions">  
     <input type="hidden" name="files[index.html]" value="&#x3C;!DOCTYPE html&#x3E;
 &#x3C;html&#x3E;
 
   &#x3C;head&#x3E;
   &#x3C;base href=&#x22;.&#x22; /&#x3E;
-    &#x3C;title&#x3E;ngx-mentions demo&#x3C;/title&#x3E;
+    &#x3C;title&#x3E;ng-mentions demo&#x3C;/title&#x3E;
     &#x3C;link rel=&#x22;stylesheet&#x22; href=&#x22;https://maxcdn.bootstrapcdn.com/bootstrap/^4.2.1/css/bootstrap.min.css&#x22; /&#x3E;
     &#x3C;script src=&#x22;https://unpkg.com/core-js@^2.6.1/client/shim.js&#x22;&#x3E;&#x3C;/script&#x3E;
     &#x3C;script src=&#x22;https://unpkg.com/zone.js@^0.8.26/dist/zone.js&#x22;&#x3E;&#x3C;/script&#x3E;
@@ -67,7 +67,7 @@
     &#x27;tslib&#x27;: &#x27;npm:tslib/tslib.js&#x27;,
     &#x27;typescript&#x27;: &#x27;npm:typescript@~2.6.2/lib/typescript.js&#x27;,
 
-    &#x27;ngx-mentions&#x27;: &#x27;npm:ngx-mentions@undefined/bundles/ngx-mentions.js&#x27;
+    &#x27;ng-mentions&#x27;: &#x27;npm:ng-mentions@undefined/bundles/ng-mentions.js&#x27;
   },
   packages: {
     app: {
@@ -95,7 +95,7 @@ import { Component, NgModule } from &#x27;@angular/core&#x27;;
 import { BrowserModule } from &#x27;@angular/platform-browser&#x27;;
 import { FormsModule, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
 import { HttpClientModule } from &#x27;@angular/common/http&#x27;;
-import { NgxToggleModule } from &#x27;ngx-mentions&#x27;;
+import { NgxToggleModule } from &#x27;ng-mentions&#x27;;
 import { NgtsdMentionsString-values } from &#x27;./mentions-string-values&#x27;;
 
 @Component({
@@ -105,8 +105,8 @@ import { NgtsdMentionsString-values } from &#x27;./mentions-string-values&#x27;;
     
     &#x3C;hr&#x3E;
     &#x3C;p&#x3E;
-      This is a demo plnkr forked from the &#x3C;strong&#x3E;ngx-mentions&#x3C;/strong&#x3E; project: Angular powered Bootstrap.
-      Visit &#x3C;a href=&#x22;https://nth-cloud.github.io/ngx-mentions/&#x22; target=&#x22;_blank&#x22;&#x3E;https://nth-cloud.github.io/ngx-mentions&#x3C;/a&#x3E; for more widgets and demos.
+      This is a demo plnkr forked from the &#x3C;strong&#x3E;ng-mentions&#x3C;/strong&#x3E; project: Angular powered Bootstrap.
+      Visit &#x3C;a href=&#x22;https://nth-cloud.github.io/ng-mentions/&#x22; target=&#x22;_blank&#x22;&#x3E;https://nth-cloud.github.io/ng-mentions&#x3C;/a&#x3E; for more widgets and demos.
     &#x3C;/p&#x3E;
     &#x3C;hr&#x3E;
 
@@ -127,10 +127,10 @@ export class AppModule {}
     <input type="hidden" name="files[src/mentions-string-values.ts]" value="import {Component} from &#x27;@angular/core&#x27;;
 
 @Component({
-    selector: &#x27;ngxd-mentions-string-values&#x27;,
+    selector: &#x27;nthd-mentions-string-values&#x27;,
     templateUrl: &#x27;src/mentions-string-values.html&#x27;
 })
-export class NgxdMentionsStringValues {
+export class NthdMentionsStringValues {
     model: any = {
         markup: &#x27;@__display__&#x27;,
         value: &#x27;&#x27;,
@@ -146,19 +146,20 @@ export class NgxdMentionsStringValues {
 }
 ">
     <input type="hidden" name="files[src/mentions-string-values.html]" value="&#x3C;div&#x3E;
-    &#x3C;ngx-mentions
+    &#x3C;ng-mentions
         [mentions]=&#x22;model.mentions&#x22;
         [markup]=&#x22;model.markup&#x22;
         formClass=&#x22;form-control&#x22;
         rows=&#x22;5&#x22;
         [(ngModel)]=&#x22;model.value&#x22;
         placeholder=&#x22;Type text here...&#x22;
-    &#x3E;&#x3C;/ngx-mentions&#x3E;
+    &#x3E;&#x3C;/ng-mentions&#x3E;
 &#x3C;/div&#x3E;
 &#x3C;pre class=&#x22;my-2&#x22;&#x3E;{{model | json}}&#x3C;/pre&#x3E;
 &#x3C;p class=&#x22;text-danger&#x22;&#x3E;
     A limitation of plain string values is that the mention value cannot contain any spaces.
-&#x3C;/p&#x3E;">
+&#x3C;/p&#x3E;
+">
   </form>
   <script>document.getElementById("mainForm").submit();</script>
 </body>
