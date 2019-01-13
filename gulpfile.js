@@ -49,7 +49,7 @@ gulp.task('generate-plunks', () => {
 });
 
 gulp.task('statics', () => {
-  return gulp.src(['LICENSE', 'README.md']).pipe(gulp.dest('dist/ngx-mentions'));
+  return gulp.src(['LICENSE', 'README.md']).pipe(gulp.dest('dist'));
 });
 
 gulp.task('generate-demo-statics', gulp.parallel(['generate-docs', 'generate-plunks']));

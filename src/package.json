@@ -1,6 +1,6 @@
 {
   "name": "ngx-mentions",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Angular v2+ Mentions",
   "repository": {
     "type": "git",
@@ -8,6 +8,7 @@
   },
   "author": "https://github.com/nth-cloud/ngx-mentions/graphs/contributors",
   "license": "MIT",
+  "readme": "README.md",
   "bugs": "https://github.com/nth-cloud/ngx-mentions/issues",
   "homepage": "https://github.com/nth-cloud/ngx-mentions#readme",
   "peerDependencies": {

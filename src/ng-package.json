@@ -6,6 +6,7 @@
     "flatModuleFile": "ngx-mentions",
     "entryFile": "./index.ts",
     "umdId": "ngx",
-    "amdId": "ngx"
+    "amdId": "ngx",
+    "licensePath": "../LICENSE"
   }
 }
