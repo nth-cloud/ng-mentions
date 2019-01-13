@@ -1,6 +1,6 @@
 # NGX-MENTIONS
 
-[![npm version](https://badge.fury.io/js/ng-mentions.svg)](https://badge.fury.io/js/ng-mentions)
+[![npm version](https://badge.fury.io/js/%40nth-cloud%2Fng-mentions.svg)](https://badge.fury.io/js/%40nth-cloud%2Fng-mentions)
 [![Build Status](https://travis-ci.org/nth-cloud/ng-mentions.svg?branch=master)](https://travis-ci.org/nth-cloud/ng-mentions)
 [![dependency Status](https://david-dm.org/nth-cloud/ng-mentions.svg?branch=master)](https://david-dm.org/nth-cloud/ng-mentions)
 [![devDependency Status](https://david-dm.org/nth-cloud/ng-mentions/dev-status.svg?branch=master)](https://david-dm.org/nth-cloud/ng-mentions#info=devDependencies)
