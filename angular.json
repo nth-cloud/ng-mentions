@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "",
   "projects": {
-    "ngx-mentions": {
+    "ng-mentions": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "library",
@@ -110,6 +110,6 @@
     }
   },
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "yarn"
   }
 }

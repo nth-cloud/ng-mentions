@@ -114,7 +114,7 @@ export function getCaretPosition(element: HTMLInputElement): number {
   return 0;
 }
 
-export function getCaretCoordinates(element: HTMLInputElement, position: number): {top: number, left: number} {
+export function getCaretCoordinates(element: HTMLTextAreaElement, position: number): {top: number, left: number} {
   let coords = {top: 0, left: 0};
   if (!isBrowser) {
     return coords;

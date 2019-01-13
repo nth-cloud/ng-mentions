@@ -1,0 +1,17 @@
+<label class="m-2">
+    <input type="checkbox" [(ngModel)]="required" class="mr-2"/>
+    Required
+</label>
+<pre class="my-2">Validation: {{validation.status}} {{!validation.pristine ? 'TOUCHED' : 'PRISTINE'}}</pre>
+<div class="basic-example" [class.was-validated]="required && !validation.pristine">
+    <ng-mentions
+        [mentions]="model.mentions"
+        formClass="form-control"
+        rows="5"
+        [(ngModel)]="model.value"
+        [required]="required"
+        #validation="ngModel"
+        placeholder="Type text here..."
+    ></ng-mentions>
+</div>
+<pre class="my-2">{{model | json}}</pre>

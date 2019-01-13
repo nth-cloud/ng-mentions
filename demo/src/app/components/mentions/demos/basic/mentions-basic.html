@@ -1,17 +1,35 @@
-<div>
-    <label>
-        <input type="checkbox" [(ngModel)]="disabled"/>
+<div class="form-inline align-items-center">
+    <label class="m-2">
+        <input type="checkbox" [(ngModel)]="disabled" class="mr-2"/>
         Disabled
     </label>
+    <label class="m-2">
+        <input type="checkbox" [(ngModel)]="required" class="mr-2"/>
+        Required
+    </label>
+    <label class="m-2">
+        <input type="checkbox" [(ngModel)]="dropUp" class="mr-2"/>
+        Drop-Up
+    </label>
+    <div class="w-100"></div>
+    <label class="m-2">
+        Rows: <input type="number" class="ml-2 form-control form-control-sm" min="1" max="10" [(ngModel)]="rows" size="3"/>&nbsp;
+    </label>
+    <label class="m-2">
+        Columns: <input type="number" class="ml-2 form-control form-control-sm" min="1" max="35" [(ngModel)]="cols" size="3"/>
+    </label>
 </div>
-<div>
-    <ngx-mentions
+<div class="basic-example">
+    <ng-mentions
         [mentions]="model.mentions"
         formClass="form-control"
-        rows="5"
         [(ngModel)]="model.value"
         [disabled]="disabled"
+        [required]="required"
+        [rows]="rows"
+        [cols]="cols"
+        [dropUp]="dropUp"
         placeholder="Type text here..."
-    ></ngx-mentions>
+    ></ng-mentions>
 </div>
 <pre class="my-2">{{model | json}}</pre>

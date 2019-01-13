@@ -8,7 +8,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ComponentWrapper} from './component-wrapper/component-wrapper.component';
 import {PageWrapper} from './page-wrapper/page-wrapper.component';
 import {Analytics} from './analytics/analytics';
-import {NgxdCodeComponent} from './code/code.component';
+import {NthdCodeComponent} from './code/code.component';
 import {CodeHighlightService} from './code/code-highlight.service';
 
 @NgModule({
@@ -18,7 +18,7 @@ import {CodeHighlightService} from './code/code-highlight.service';
         RouterModule,
         ComponentWrapper,
         PageWrapper,
-        NgxdCodeComponent,
+        NthdCodeComponent,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule
@@ -26,9 +26,9 @@ import {CodeHighlightService} from './code/code-highlight.service';
     declarations: [
         ComponentWrapper,
         PageWrapper,
-        NgxdCodeComponent
+        NthdCodeComponent
     ],
     providers: [Analytics, CodeHighlightService]
 })
-export class NgxdSharedModule {
+export class NthdSharedModule {
 }

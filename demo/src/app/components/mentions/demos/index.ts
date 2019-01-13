@@ -1,8 +1,9 @@
-import {NgxdMentionsBasic} from './basic/mentions-basic';
-import {NgxdMentionsCustomSearch} from './custom-search/mentions-custom-search';
-import {NgxdMentionsStringValues} from './string-values/mentions-string-values';
+import {NthdMentionsBasic} from './basic/mentions-basic';
+import {NthdMentionsCustomSearch} from './custom-search/mentions-custom-search';
+import {NthdMentionsStringValues} from './string-values/mentions-string-values';
+import {NthdMentionsValidation} from './validation/mentions-validation';
 
-export const DEMO_DIRECTIVES = [NgxdMentionsBasic, NgxdMentionsCustomSearch, NgxdMentionsStringValues];
+export const DEMO_DIRECTIVES = [NthdMentionsBasic, NthdMentionsCustomSearch, NthdMentionsStringValues, NthdMentionsValidation];
 
 export const DEMO_SNIPPETS = {
     'basic': {
@@ -16,5 +17,9 @@ export const DEMO_SNIPPETS = {
     'string-values': {
         'code': require('!!raw-loader!./string-values/mentions-string-values'),
         'markup': require('!!raw-loader!./string-values/mentions-string-values.html')
+    },
+    'validation': {
+        'code': require('!!raw-loader!./validation/mentions-validation'),
+        'markup': require('!!raw-loader!./validation/mentions-validation.html')
     }
 };

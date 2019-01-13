@@ -3,7 +3,7 @@ import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 
-import {NgxMentionsComponent, NgxMentionsModule} from './index';
+import {MentionsComponent, MentionsModule} from './index';
 import {Key} from './key';
 import {MentionsListComponent} from './mentions-list.component';
 import {createGenericTestComponent, createKeyEvent, expectResults} from './test/common';
@@ -52,7 +52,7 @@ function triggerTextAreaEvent(element: any, event: any) {
 }
 
 function getDebugInput(element: DebugElement): DebugElement {
-  return element.query(By.directive(NgxMentionsComponent));
+  return element.query(By.directive(MentionsComponent));
 }
 
 function expectTextAreaValue(element: HTMLElement, value: string, exceptionFailOutput?: string) {
@@ -80,10 +80,10 @@ function tickFixture(fixture: ComponentFixture<TestComponent>) {
   fixture.detectChanges();
 }
 
-describe('ngx-mentions', () => {
+describe('ng-mentions', () => {
   beforeEach(() => {
     TestBed.configureTestingModule(
-        {declarations: [TestComponent], imports: [NgxMentionsModule, FormsModule, ReactiveFormsModule]});
+        {declarations: [TestComponent], imports: [MentionsModule, FormsModule, ReactiveFormsModule]});
   });
 
   describe('value accessor', () => {
@@ -91,14 +91,14 @@ describe('ngx-mentions', () => {
          const plainTextValue = 'Test value with Mentions formatted\nAnd New Lines';
          const model = 'Test value with @[Mentions](type:1) formatted\nAnd @[New Lines](type:2)';
 
-         const fixture = createTestComponent(`<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+         const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
 
          const el = fixture.nativeElement;
          const comp = fixture.componentInstance;
 
          expectTextAreaValue(el, '');
 
-         const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+         const mentionComp: MentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
 
          comp.model = model;
          fixture.detectChanges();
@@ -109,7 +109,7 @@ describe('ngx-mentions', () => {
   });
 
   it('should initialize', () => {
-    const fixture = createTestComponent(`<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+    const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
 
     let originalValue = 'Test string @[Name](type:1)';
     fixture.componentInstance.model = originalValue;
@@ -121,7 +121,7 @@ describe('ngx-mentions', () => {
   });
 
   it('should select first mention on Enter', fakeAsync(() => {
-       const fixture = createTestComponent(`<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+       const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
 
        const el = fixture.nativeElement;
        const comp = fixture.componentInstance;
@@ -134,7 +134,7 @@ describe('ngx-mentions', () => {
        expect(comp.mentions.length).toEqual(3);
        tickFixture(fixture);
 
-       const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+       const mentionComp: MentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
        expect(mentionComp.mentions.length).toEqual(3);
        expectMentionListToBeHidden(fixture.debugElement, true);
        tickFixture(fixture);
@@ -176,7 +176,7 @@ describe('ngx-mentions', () => {
      }));
 
   it('should make previous/next result active with up/down arrow keys', fakeAsync(() => {
-       const fixture = createTestComponent(`<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+       const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
 
        const el = fixture.nativeElement;
        const comp = fixture.componentInstance;
@@ -189,7 +189,7 @@ describe('ngx-mentions', () => {
        expect(comp.mentions.length).toEqual(3);
        tickFixture(fixture);
 
-       const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+       const mentionComp: MentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
        expect(mentionComp.mentions.length).toEqual(3);
        expectMentionListToBeHidden(fixture.debugElement, true);
        tickFixture(fixture);
@@ -245,9 +245,9 @@ describe('ngx-mentions', () => {
      }));
 
   it('should remove mention on backspace into mention', fakeAsync(() => {
-       const fixture = createTestComponent(`<ngx-mentions [mentions]="mentions" [(ngModel)]="model"></ngx-mentions>`);
+       const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
        const comp = fixture.componentInstance;
-       const mentionComp: NgxMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+       const mentionComp: MentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
 
        const originalValue = '@[Name](type:1)';
        const plainTextValue = 'Nam';

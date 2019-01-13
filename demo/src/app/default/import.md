@@ -1,1 +1,1 @@
-import {NgxMentionsModule} from 'ngx-mentions';
+import {MentionsModule} from '@nth-cloud/ng-mentions';

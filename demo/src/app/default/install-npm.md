@@ -1,1 +1,1 @@
-npm install --save ngx-mentions
+npm install --save @nth-cloud/ng-mentions

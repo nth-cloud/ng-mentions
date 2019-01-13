@@ -25,7 +25,7 @@ import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxToggleModule } from 'ngx-mentions';
+import { NgxToggleModule } from 'ng-mentions';
 import { ${demoImports} } from '${demoImport}';
 
 @Component({
@@ -35,8 +35,8 @@ import { ${demoImports} } from '${demoImport}';
     
     <hr>
     <p>
-      This is a demo plnkr forked from the <strong>ngx-mentions</strong> project: Angular powered Bootstrap.
-      Visit <a href="https://nth-cloud.github.io/ngx-mentions/" target="_blank">https://nth-cloud.github.io/ngx-mentions</a> for more widgets and demos.
+      This is a demo plnkr forked from the <strong>ng-mentions</strong> project: Angular powered Bootstrap.
+      Visit <a href="https://nth-cloud.github.io/ng-mentions/" target="_blank">https://nth-cloud.github.io/ng-mentions</a> for more widgets and demos.
     </p>
     <hr>
 
@@ -75,8 +75,8 @@ function generatePlnkrContent(componentName, demoName) {
 <html lang="en">
 <body>
   <form id="mainForm" method="post" action="${plnkrUrl}">
-    <input type="hidden" name="description" value="Example usage of the ${componentName} widget from https://nth-cloud.github.io/ngx-mentions">
-${generateTags(['Angular', 'Bootstrap', 'ngx-mentions', capitalize(componentName)])}  
+    <input type="hidden" name="description" value="Example usage of the ${componentName} widget from https://nth-cloud.github.io/ng-mentions">
+${generateTags(['Angular', 'Bootstrap', 'ng-mentions', capitalize(componentName)])}  
     <input type="hidden" name="files[index.html]" value="${he.encode(generateIndexHtml())}">
     <input type="hidden" name="files[config.js]" value="${he.encode(generateConfigJs())}">
     <input type="hidden" name="files[src/main.ts]" value="${he.encode(contentMainTs)}">
@@ -95,7 +95,7 @@ function generateIndexHtml() {
 
   <head>
   <base href="." />
-    <title>ngx-mentions demo</title>
+    <title>ng-mentions demo</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/${versions.bootstrap}/css/bootstrap.min.css" />
     <script src="https://unpkg.com/core-js@${versions.coreJs}/client/shim.js"></script>
     <script src="https://unpkg.com/zone.js@${versions.zoneJs}/dist/zone.js"></script>
@@ -153,7 +153,7 @@ function generateConfigJs() {
     'tslib': 'npm:tslib/tslib.js',
     'typescript': 'npm:typescript@${versions.typescript}/lib/typescript.js',
 
-    'ngx-mentions': 'npm:ngx-mentions@${versions.ngBootstrap}/bundles/ngx-mentions.js'
+    'ng-mentions': 'npm:ng-mentions@${versions.ngBootstrap}/bundles/ng-mentions.js'
   },
   packages: {
     app: {

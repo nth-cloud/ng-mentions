@@ -1,32 +1,32 @@
 {
-  "name": "ngx-mentions",
-  "version": "0.1.2",
-  "description": "Angular v2+ Mentions",
+  "name": "@nth-cloud/ng-mentions",
+  "version": "0.1.3",
+  "description": "Angular v5+ components & directives for customizable mentions",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nth-cloud/ngx-mentions"
+    "url": "git+https://github.com/nth-cloud/ng-mentions.git"
   },
-  "author": "https://github.com/nth-cloud/ngx-mentions/graphs/contributors",
+  "author": "https://github.com/nth-cloud/ng-mentions/graphs/contributors",
   "license": "MIT",
-  "readme": "README.md",
-  "bugs": "https://github.com/nth-cloud/ngx-mentions/issues",
-  "homepage": "https://github.com/nth-cloud/ngx-mentions#readme",
-  "main": "src/index.ts",
+  "bugs": {
+    "url": "https://github.com/nth-cloud/ng-mentions/issues"
+  },
+  "homepage": "https://github.com/nth-cloud/ng-mentions#readme",
   "engines": {
     "node": ">=6.9.4 <7.0.0",
-    "npm": ">=3.10.7 <4.0.0"
+    "npm": ">=3.10.7 <4.0.0",
+    "yarn": ">=1.3.0 <2.0.0"
   },
-  "dependencies": {
-    "@angular/common": "^5.2.11",
-    "@angular/core": "^5.2.11",
-    "@angular/forms": "^5.2.11"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.7.5",
     "@angular-devkit/build-ng-packagr": "^0.7.5",
     "@angular/cli": "^6.1.5",
+    "@angular/common": "^5.2.11",
     "@angular/compiler": "^5.2.11",
     "@angular/compiler-cli": "^5.2.11",
+    "@angular/core": "^5.2.11",
+    "@angular/forms": "^5.2.11",
     "@angular/http": "^5.2.11",
     "@angular/platform-browser": "^5.2.11",
     "@angular/platform-browser-dynamic": "^5.2.11",
@@ -73,36 +73,29 @@
   },
   "scripts": {
     "commitmsg": "node misc/validate-commit.js",
-    "build": "npm run app:build",
-    "test": "npm run check-format && npm run lint && npm run app:test",
-    "tdd": "ng test ngx-mentions --source-map false",
-    "demo": "gulp generate-demo-statics && npm run demo:serve",
+    "build": "yarn app:build",
+    "test": "yarn check-format && yarn lint && yarn app:test",
+    "tdd": "ng test ng-mentions --source-map false",
     "check-format": "gulp check-format",
-    "saucelabs": "ng test ngx-mentions --karma-config src/karma.sauce.conf.js --source-map false --progress false",
+    "saucelabs": "ng test ng-mentions --karma-config src/karma.sauce.conf.js --source-map false --progress false",
     "api-doc:tdd": "jasmine-node misc/api-doc.spec.js --autotest --watch misc/api-doc-test-cases/*.ts misc/api-doc.js",
     "api-doc:test": "jasmine-node misc/api-doc.spec.js",
-    "app:build": "npm run static && ng build ngx-mentions --prod",
-    "app:test": "ng test ngx-mentions --code-coverage --source-map false --progress false --watch false",
+    "app:build": "yarn static && ng build ng-mentions --prod",
+    "app:test": "ng test ng-mentions --code-coverage --source-map false --progress false --watch false",
     "static": "gulp statics",
-    "lint": "ng lint ngx-mentions",
+    "lint": "ng lint ng-mentions",
+    "demo": "gulp generate-demo-statics && yarn demo:serve",
     "demo:serve": "ng serve demo --host 0.0.0.0",
     "demo:static": "gulp generate-demo-statics",
     "demo:build": "gulp generate-demo-statics && ng build demo --prod",
-    "demo:deploy": "npm run demo:build && gulp demo-push",
-    "clean": "npm run clean:dist & npm run clean:test & npm run clean:demo & npm run clean:demo:deploy && npm run clean:demo:plunks",
+    "demo:deploy": "yarn demo:build && gulp demo-push",
+    "clean": "yarn clean:dist & yarn clean:test & yarn clean:demo & yarn clean:demo:deploy && yarn clean:demo:plunks",
     "clean:dist": "([[ ! -e dist/ ]] || rm -r dist/) && ([[ ! -e dist.tgz ]] || rm dist.tgz)",
     "clean:test": "[[ ! -e coverage/ ]] || rm -r coverage/",
     "clean:demo": "[[ ! -e demo/dist/ ]] || rm -r demo/dist",
     "clean:demo:deploy": "[[ ! -e .publish/ ]] || rm -fr .publish/",
     "clean:demo:plunks": "[[ ! -e demo/src/public/app/components ]] || rm -r demo/src/public/app/components",
-    "ci": "npm run test && npm run build",
+    "ci": "yarn test && yarn build",
     "changelog": "gulp changelog"
-  },
-  "keywords": [
-    "angular",
-    "mention",
-    "mentions",
-    "highlight",
-    "components"
-  ]
+  }
 }

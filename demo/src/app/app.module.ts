@@ -8,8 +8,8 @@ import {DefaultComponent} from './default';
 import {SupportComponent} from './support';
 import {AppComponent} from './app.component';
 import {routing} from './app.routing';
-import {NgxdDemoModule} from './components';
-import {NgxdSharedModule} from './shared';
+import {NthdDemoModule} from './components';
+import {NthdSharedModule} from './shared';
 
 @NgModule({
     declarations: [
@@ -23,10 +23,10 @@ import {NgxdSharedModule} from './shared';
         FormsModule,
         routing,
         NgbModule.forRoot(),
-        NgxdDemoModule,
-        NgxdSharedModule
+        NthdDemoModule,
+        NthdSharedModule
     ],
     bootstrap: [AppComponent]
 })
-export class NgxdModule {
+export class NthdModule {
 }

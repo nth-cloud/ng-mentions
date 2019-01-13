@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   ChangeDetectorRef,
   Component,
@@ -63,8 +64,8 @@ export class HighlightedDirective {
  */
 @Component({
   moduleId: module.id,
-  exportAs: 'ngxMentions',
-  selector: 'ngx-mentions',
+  exportAs: 'ngMentions',
+  selector: 'ng-mentions',
   template: `
       <div #highlighter class="highlighter" [ngClass]="textAreaClassNames" [attr.readonly]="readonly"
            [ngStyle]="highlighterStyle">
@@ -94,8 +95,8 @@ export class HighlightedDirective {
       ></textarea>
   `,
   styles: [
-    'ngx-mentions {position: relative;}',
-    'ngx-mentions textarea {position:relative; background-color: transparent !important;}', `ngx-mentions .highlighter {
+    'ng-mentions {position: relative;}',
+    'ng-mentions textarea {position:relative; background-color: transparent !important;}', `ng-mentions .highlighter {
         position: absolute;
         top:      0;
         left:     0;
@@ -104,7 +105,7 @@ export class HighlightedDirective {
         color:    transparent;
         overflow: hidden !important;
     }`,
-    `ngx-mentions highlighted {
+    `ng-mentions highlighted {
         display:          inline;
         border-radius:    3px;
         padding:          1px;
@@ -116,7 +117,7 @@ export class HighlightedDirective {
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
-export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+export class MentionsComponent implements OnChanges, OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
   /**
    * The character to trigger the mentions list when a user is typing in the input field
    */
@@ -175,7 +176,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
 
   set required(value: boolean) {
     this._required = value;
-    this.updateStylesAndProperties();
+    this.refreshStyles();
   }
 
   @Input('disabled')
@@ -185,27 +186,27 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
 
   set disabled(value: boolean) {
     this._disabled = value;
-    this.updateStylesAndProperties();
+    this.refreshStyles();
   }
 
   @Input('rows')
-  get rows(): any {
+  get rows(): number|string {
     return this._rows;
   }
 
-  set rows(value: any) {
+  set rows(value: number|string) {
     this._rows = Math.max(1, <number>value);
-    this.updateStylesAndProperties();
+    this.refreshStyles();
   }
 
   @Input('cols')
-  get columns(): any {
+  get columns(): number|string {
     return this._columns;
   }
 
-  set columns(value: any) {
+  set columns(value: number|string) {
     this._columns = Math.max(1, <number>value);
-    this.updateStylesAndProperties();
+    this.refreshStyles();
   }
 
   /**
@@ -277,7 +278,11 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
 
   ngAfterViewInit(): void {
     this.parseLines(this._value);
-    this.updateStylesAndProperties();
+    this.refreshStyles();
+  }
+
+  ngAfterViewChecked(): void {
+    this.refreshStyles();
   }
 
   ngOnDestroy(): void {
@@ -360,6 +365,12 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
   }
 
   public onBlur(event: MouseEvent|KeyboardEvent) {
+    if (event instanceof FocusEvent && event.relatedTarget) {
+      let element = event.relatedTarget as HTMLElement;
+      if (element.classList.contains('dropdown-item')) {
+        return;
+      }
+    }
     this.stopEvent(event);
     if (this.mentionsList) {
       this.mentionsList.show = false;
@@ -433,6 +444,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
         this.startPos = -1;
         this.searchString = '';
         this.stopSearch = true;
+        this.mentionsList.show = false;
         this.changeDetector.detectChanges();
         setTimeout(() => {
           setCaretPosition(this.textAreaInputElement.nativeElement, caretPosition);
@@ -500,10 +512,11 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
       });
       this.mentionsList.displayTransform = this.getDisplayValue.bind(this);
     }
+    this.mentionsList.textAreaElement = this.textAreaInputElement.nativeElement;
     this.mentionsList.show = true;
     this.mentionsList.dropUp = this.dropUp;
     this.mentionsList.activeIndex = 0;
-    this.mentionsList.position(this.textAreaInputElement.nativeElement);
+    this.mentionsList.position();
     this.ngZone.run(() => this.mentionsList.resetScroll());
   }
 
@@ -529,7 +542,7 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
 
   private parseMarkup() {
     if (this.mentionMarkup.length === 0 || this.mentionMarkup[0] !== this.triggerChar) {
-      throw new Error(`ngx-mentions markup pattern must start with the trigger character "${this.triggerChar}"`);
+      throw new Error(`ng-mentions markup pattern must start with the trigger character "${this.triggerChar}"`);
     }
 
     this.markupSearch = markupToRegExp(this.mentionMarkup);
@@ -595,10 +608,6 @@ export class NgxMentionsComponent implements OnChanges, OnInit, AfterViewInit, O
       this.highlighterStyle[prop] = computedStyle[prop];
     });
     this.changeDetector.detectChanges();
-  }
-
-  private updateStylesAndProperties() {
-    this.refreshStyles();
   }
 
   private triggerChange(value: string) {

@@ -19,7 +19,7 @@ gulp.task('check-format', () => {
   return gulp.src(['gulpfile.js', 'misc/api-doc.js', 'misc/api-doc.spec.js', 'misc/demo-gen.js', 'src/**/*.ts'])
       .pipe(gulpFormat.checkFormat('file', clangFormat))
       .on('warning', function() {
-        console.log('See https://github.com/nth-cloud/ngx-mentions/blob/master/DEVELOPER.md#clang-format');
+        console.log('See https://github.com/nth-cloud/ng-mentions/blob/master/DEVELOPER.md#clang-format');
         process.exit(1);
       });
 });

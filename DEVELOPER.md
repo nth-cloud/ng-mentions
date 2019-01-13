@@ -1,106 +1,106 @@
-# Building and Testing ngx-mentions
+# Building and Testing ng-mentions
 
-This document describes how to set up your development environment to build and test ngx-mentions.
-It also explains the basic mechanics of using `git`, `node`, and `npm`.
+This document describes how to set up your development environment to build and test ng-mentions.
+It also explains the basic mechanics of using `git`, `node` and `yarn`.
 
 * [Prerequisite Software](#prerequisite-software)
 * [Getting the Sources](#getting-the-sources)
-* [Installing NPM Modules](#installing-npm-modules)
-* [Build commands](#build-commands)
-* [Running Tests Locally](#running-tests-locally)
+* [Installing Dependencies](#installing-dependencies)
+* [Project Structure](#project-structure)
+* [Useful commands](#useful-commands)
 * [Formatting](#clang-format)
 
-See the [contribution guidelines](https://github.com/nth-cloud/ngx-mentions/blob/master/CONTRIBUTING.md)
-if you'd like to contribute to ngx-mentions.
+See the [contribution guidelines](https://github.com/nth-cloud/ng-mentions/blob/master/CONTRIBUTING.md)
+if you'd like to contribute to ng-mentions.
 
 ## Prerequisite Software
 
-Before you can build and test ngx-mentions, you must install and configure the
+Before you can build and test ng-mentions, you must install and configure the
 following products on your development machine:
 
 * [Git](http://git-scm.com) and/or the **GitHub app** (for [Mac](http://mac.github.com) or
   [Windows](http://windows.github.com)); [GitHub's Guide to Installing
   Git](https://help.github.com/articles/set-up-git) is a good source of information.
 
-* [Node.js](http://nodejs.org), (version `>=4.2.1 <6`) which is used to run tests, and generate distributable files. We also use Node's Package Manager, `npm` 
-  (version `>3.8.x`), which comes with Node. Depending on your system, you can install Node either from 
+* [Node.js](https://nodejs.org), (version `>=8.9.0`) which is used to run tests, and generate distributable files. Depending on your system, you can install Node either from 
   source or as a pre-packaged bundle.
 
-* [Chrome](https://www.google.es/chrome/browser/desktop/index.html), we use Chrome to run our tests.
+* We use [Yarn](https://yarnpkg.com) (version `>=1.3.0`) to manage dependencies. Please, see installation instructions on their site.
+
+* We use [Chrome](https://www.google.com/chrome/) to run our tests.
 
 ## Getting the Sources
 
-Fork and clone the ngx-mentions repository:
+Fork and clone the ng-mentions repository:
 
 1. Login to your GitHub account or create one by following the instructions given
    [here](https://github.com/signup/free).
-2. [Fork](http://help.github.com/forking) the [main ngx-mentions
-   repository](https://github.com/nth-cloud/ngx-mentions).
-3. Clone your fork of the ngx-mentions repository and define an `upstream` remote pointing back to
-   the ngx-mentions repository that you forked in the first place.
+2. [Fork](http://help.github.com/forking) the [main ng-mentions
+   repository](https://github.com/nth-cloud/ng-mentions).
+3. Clone your fork of the ng-mentions's ng-mentions repository and define an `upstream` remote pointing back to
+   the ng-mentions's ng-mentions repository that you forked in the first place.
 
-```shell
+```bash
 # Clone your GitHub repository:
-git clone git@github.com:<github username>/ngx-mentions.git ngx-mentions
+git clone git@github.com:<github username>/ng-mentions.git ng-mentions
 
-# Go to the ngx-mentions directory:
-cd ngx-mentions
+# Go to the ng-mentions directory:
+cd ng-mentions
 
-# Add the main ngx-mentions repository as an upstream remote to your repository:
-git remote add upstream https://github.com/nth-cloud/ngx-mentions.git
+# Add the main ng-mentions repository as an upstream remote to your repository:
+git remote add upstream https://github.com/nth-cloud/ng-mentions.git
 ```
 
-## Installing NPM Modules
+## Installing Dependencies
 
-Next, install the JavaScript modules needed to build and test ngx-mentions:
+Next, install the JavaScript modules needed to build and test ng-mentions:
 
-```shell
-# Install ngx-mentions project dependencies (package.json)
-npm install
+```bash
+# Install ng-mentions project dependencies (package.json)
+yarn
 ```
 
-Globally install gulp as follows:
+## Project Structure
 
-* `npm install -g gulp` (you might need to prefix this command with `sudo`)
+We use [`@angular/cli`](https://cli.angular.io) to build both ng-mentions library and demo site. There are two main projects:
+* `ng-mentions` - the ng-mentions library itself; sources are located in `src` folder
+* `demo` - the demo site deployed at [https://nth-cloud.github.io/ng-mentions](https://nth-cloud.github.io/ng-mentions); sources are located in `demo/src` folder
 
-## Build commands
+## Useful Commands
 
-To build ngx-mentions, run:
+The most useful commands are:
 
-```shell
-$(npm bin)/gulp build
-```
+#### `yarn demo`
 
-Notes:
-* Results are put in the `dist` folder in `cjs` format. A `esm` folder and a `UMD` build at `bundles`.
+Serves the demo site locally in dev mode at [http://localhost:9090/](http://localhost:9090/). You can optionally add `--prod` argument to serve demo in production mode or `--aot` to serve demo in dev mode, but with AOT
 
-To clean out the `dist` folder, run:
+#### `yarn build`
 
-```shell
-$(npm bin)/gulp clean:build
-```
+Builds both library and demo site in production mode. The library will be built in Angular Package format in `dist` folder. The demo site will be built in `demo/dist` folder.   
 
-## Running tests locally
+#### `yarn tdd`
 
-* `$(npm bin)/gulp`
-
-That will check the formatting and run the full test suite.
-
-If you want to run your tests in **watch mode**, you can use:
-
-* `$(npm bin)/gulp tdd`
-
-The task updates the `temp` folder with transpiled code whenever a source or test file changes, and
-Karma is run against the new output.
+Runs unit tests for the library in watch mode without any additional checks
 
 **Note**: If you want to only run a single test you can alter the test you wish to run by changing
-`it` to `fit` or `describe` to `fdescribe`. This will only run that individual test and make it
-much easier to debug. `xit` and `xdescribe` can also be useful to exclude a test and a group of
-tests respectively.
+ `it` to `fit` or `describe` to `fdescribe`. This will only run that individual test and make it
+ much easier to debug. `xit` and `xdescribe` can also be useful to exclude a test and a group of
+ tests respectively.
 
-## Running demo locally
+#### `yarn test`
 
-* `$(npm bin)/gulp demo-server` and go to [http://localhost:9090/](http://localhost:9090/)
+Checks formatting, linting and runs all tests for the library with coverage
+
+#### `yarn ci`
+
+Runs exactly the same suite of actions as the CI server, so you might want to do it before opening a PR
+
+
+#### `yarn check-format`
+
+Checks that your source code is properly formatted without running anything else (see next section)
+
+You can inspect `package.json` scripts section for a full list of commands available. 
 
 ## Formatting with <a name="clang-format">clang-format</a>
 
@@ -111,10 +111,9 @@ repository, allowing many tools and editors to share our settings.
 
 To check the formatting of your code, run
 
-    gulp check-format
-
-Note that the continuous build on Travis runs `gulp enforce-format`. Unlike the `check-format` task,
-this will actually fail the build if files aren't formatted according to the style guide.
+```bash
+yarn check-format
+```
 
 Your life will be easier if you include the formatter in your standard workflow. Otherwise, you'll
 likely forget to check the formatting, and waste time waiting for a build on Travis that fails due
@@ -126,12 +125,12 @@ to some whitespace difference.
   formatted, or from the `$CWD`, and only then uses the globally installed one - so the version used
   should automatically match the one required by the project.
   Use `clang-format -version` in case you get confused.
-* Use `gulp enforce-format` to check if your code is `clang-format` clean. This also gives
+* Use `yarn check-format` to check if your code is `clang-format` clean. This also gives
   you a command line to format your code.
 * `clang-format` also includes a git hook, run `git clang-format` to format all files you
   touched.
 * You can run this as a **git pre-commit hook** to automatically format your delta regions when you
-  commit a change. In the ngx-mentions repo, run
+  commit a change. In the ng-mentions repo, run
 
 ```shell
     $ echo -e '#!/bin/sh\nexec git clang-format' > .git/hooks/pre-commit

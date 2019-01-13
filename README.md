@@ -1,36 +1,36 @@
 # NGX-MENTIONS
 
-[![npm version](https://badge.fury.io/js/ngx-mentions.svg)](https://badge.fury.io/js/ngx-mentions)
-[![Build Status](https://travis-ci.org/nth-cloud/ngx-mentions.svg?branch=master)](https://travis-ci.org/nth-cloud/ngx-mentions)
-[![dependency Status](https://david-dm.org/nth-cloud/ngx-mentions.svg?branch=master)](https://david-dm.org/nth-cloud/ngx-mentions)
-[![devDependency Status](https://david-dm.org/nth-cloud/ngx-mentions/dev-status.svg?branch=master)](https://david-dm.org/nth-cloud/ngx-mentions#info=devDependencies)
+[![npm version](https://badge.fury.io/js/ng-mentions.svg)](https://badge.fury.io/js/ng-mentions)
+[![Build Status](https://travis-ci.org/nth-cloud/ng-mentions.svg?branch=master)](https://travis-ci.org/nth-cloud/ng-mentions)
+[![dependency Status](https://david-dm.org/nth-cloud/ng-mentions.svg?branch=master)](https://david-dm.org/nth-cloud/ng-mentions)
+[![devDependency Status](https://david-dm.org/nth-cloud/ng-mentions/dev-status.svg?branch=master)](https://david-dm.org/nth-cloud/ng-mentions#info=devDependencies)
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/trickeyone.svg)](https://saucelabs.com/u/trickeyone)
 
-[![NPM](https://nodei.co/npm/ngx-mentions.png?compact=true)](https://www.npmjs.com/package/ngx-mentions)
+[![NPM](https://nodei.co/npm/ng-mentions.png?compact=true)](https://www.npmjs.com/package/ng-mentions)
 
 Native Angular v5+ components & directives for customizable mentions. Allowing for customizable search results and mention formatting.
 
 ## Demo and Docs
 
-View it in action at https://nth-cloud.github.io/ngx-mentions
+View it in action at https://nth-cloud.github.io/ng-mentions
 
 ## Dependencies
 * [Angular](https://angular.io) (tested with 5.1.0)
 
 ## Installation
-After installing the above dependencies, install `ngx-mentions` via:
+After installing the above dependencies, install `ng-mentions` via:
 ```shell
-npm install --save ngx-mentions
+npm install --save @nth-cloud/ng-mentions
 ```
 
 Import the main module into your project:
 ```js
-import {NgxMentionsModule} from "ngx-mentions";
+import {NgxMentionsModule} from "@nth-cloud/ng-mentions";
 ```
 
 Import the module into your application:
 ```js
-import {NgxMentionsModule} from "ngx-mentions";
+import {NgxMentionsModule} from "@nth-cloud/ng-mentions";
 
 @NgModule({
     ...
@@ -43,10 +43,10 @@ export class AppModule {
 
 If you are using SystemJS, you should adjust your configuration to point to the UMD bundle.
 
-In your systemJS config file, `map` needs to tell the System loader where to look for `ngx-mentions`:
+In your systemJS config file, `map` needs to tell the System loader where to look for `ng-mentions`:
 ```js
 map: {
-   'ngx-mentions': 'node_modules/ngx-mentions/dist/bundles/ngx-mentions.js'
+   '@nth-cloud/ng-mentions': 'npm:@nth-cloud/ng-mentions/dist/bundles/ng-mentions.js'
 }
 ```
 

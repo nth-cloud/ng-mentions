@@ -1,3 +1,3 @@
 map: {
-  'ngx-mentions': 'node_modules/ngx-mentions/dist/bundles/ngx-mentions.js',
+  '@nth-cloud/ng-mentions': 'npm:@nth-cloud/ng-mentions/dist/bundles/ng-mentions.js',
 }

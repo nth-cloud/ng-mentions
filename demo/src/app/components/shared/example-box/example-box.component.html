@@ -20,7 +20,7 @@
           <span class="ml-2">{{component}}-{{demo}}.html</span>
         </ng-template>
         <ng-template ngbTabContent>
-          <ngxd-code [code]="snippets[demo]['markup']" lang="html"></ngxd-code>
+          <nthd-code [code]="snippets[demo]['markup']" lang="html"></nthd-code>
         </ng-template>
       </ngb-tab>
       <ngb-tab id="{{component}}-{{demo}}-typescript">
@@ -29,7 +29,7 @@
           <span class="ml-2">{{component}}-{{demo}}.ts</span>
         </ng-template>
         <ng-template ngbTabContent>
-          <ngxd-code [code]="snippets[demo]['code']" lang="typescript"></ngxd-code>
+          <nthd-code [code]="snippets[demo]['code']" lang="typescript"></nthd-code>
         </ng-template>
       </ngb-tab>
     </ngb-tabset>

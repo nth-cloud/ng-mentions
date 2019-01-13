@@ -2,11 +2,14 @@ import {Component} from '@angular/core';
 import {environment} from '../../environments/environment';
 
 const prism = require('prismjs');
-import 'prismjs/components/prism-clike';
-import 'prismjs/components/prism-typescript';
+const types = (Prism: any) => {
+    require('prismjs/components/prism-clike');
+    require('prismjs/components/prism-typescript');
+};
+types(prism);
 
 @Component({
-    selector: 'ngxd-default',
+    selector: 'nthd-default',
     templateUrl: './default.component.html'
 })
 export class DefaultComponent {

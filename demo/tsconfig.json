@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "outDir": "temp",
     "paths": {
-      "ngx-mentions": ["../src/index"]
+      "@nth-cloud/ng-mentions": ["../src/index"]
     }
   },
   "include": [

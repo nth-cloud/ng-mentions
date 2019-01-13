@@ -5,7 +5,7 @@ import {Analytics} from './shared/analytics/analytics';
 import '../style/app.scss';
 
 @Component({
-  selector: 'ngtsd-app',
+  selector: 'nthd-app',
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {

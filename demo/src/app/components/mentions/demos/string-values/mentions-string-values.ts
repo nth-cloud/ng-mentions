@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 
 @Component({
-    selector: 'ngxd-mentions-string-values',
+    selector: 'nthd-mentions-string-values',
     templateUrl: './mentions-string-values.html'
 })
-export class NgxdMentionsStringValues {
+export class NthdMentionsStringValues {
     model: any = {
         markup: '@__display__',
         value: '',

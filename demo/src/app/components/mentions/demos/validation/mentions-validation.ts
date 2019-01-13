@@ -1,22 +1,13 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-    selector: 'nthd-mentions-basic',
-    templateUrl: './mentions-basic.html',
-    styles: [
-      '.basic-example mentions-list .scrollable-menu {max-height:100px;}'
-    ],
-    encapsulation: ViewEncapsulation.None
+    selector: 'nthd-mentions-validation',
+    templateUrl: './mentions-validation.html'
 })
-export class NthdMentionsBasic {
-    disabled: boolean = false;
+export class NthdMentionsValidation {
     required: boolean = false;
-    rows: number = 5;
-    cols: number;
-    dropUp: boolean = false;
-
     model: any = {
-        value: 'Hello @[Dave](contact:1). How are you doing today?\n\nWould you like to play a game of chess?',
+        value: '',
         mentions: [
             {
                 display: 'Dave',

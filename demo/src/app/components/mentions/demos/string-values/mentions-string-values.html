@@ -1,12 +1,12 @@
 <div>
-    <ngx-mentions
+    <ng-mentions
         [mentions]="model.mentions"
         [markup]="model.markup"
         formClass="form-control"
         rows="5"
         [(ngModel)]="model.value"
         placeholder="Type text here..."
-    ></ngx-mentions>
+    ></ng-mentions>
 </div>
 <pre class="my-2">{{model | json}}</pre>
 <p class="text-danger">

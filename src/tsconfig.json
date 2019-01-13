@@ -13,5 +13,8 @@
   },
   "include": [
     "./**/*.ts"
+  ],
+  "typeRoots": [
+    "../node_modules/@types"
   ]
 }

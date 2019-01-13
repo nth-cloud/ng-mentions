@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 
 @Component({
-    selector: 'ngxd-mentions-custom-search',
+    selector: 'nthd-mentions-custom-search',
     templateUrl: './mentions-custom-search.html'
 })
-export class NgxdMentionsCustomSearch {
+export class NthdMentionsCustomSearch {
     model: any = {
         value: '',
         mentions: []

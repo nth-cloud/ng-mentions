@@ -3,10 +3,10 @@
   "dest": "../dist",
   "deleteDestPath": false,
   "lib": {
-    "flatModuleFile": "ngx-mentions",
+    "flatModuleFile": "ng-mentions",
     "entryFile": "./index.ts",
-    "umdId": "ngx",
-    "amdId": "ngx",
+    "umdId": "nthm",
+    "amdId": "nthm",
     "licensePath": "../LICENSE"
   }
 }

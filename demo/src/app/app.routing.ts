@@ -2,7 +2,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {ModuleWithProviders} from '@angular/core';
 import {DefaultComponent} from './default';
 import {SupportComponent} from './support';
-import {NgxdMentionsComponent} from './components';
+import {NthdMentionsComponent} from './components';
 import {DEFAULT_TAB} from './shared/component-wrapper/component-wrapper.component';
 
 const DEFAULT_API_PATH = {path: '', pathMatch: 'full', redirectTo: DEFAULT_TAB};
@@ -11,7 +11,7 @@ const componentRoutes = [{
     path: 'docs',
     children: [
       DEFAULT_API_PATH,
-      {path: ':tab', component: NgxdMentionsComponent}
+      {path: ':tab', component: NthdMentionsComponent}
     ]
   }
 ];
