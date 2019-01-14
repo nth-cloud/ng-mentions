@@ -5,11 +5,11 @@ import {takeUntil} from 'rxjs/operators';
 import {MentionsComponent} from './mentions.component';
 
 /**
- * The NgxMentionsAccessorDirective directive is used to indicate the input element.
+ * The MentionsAccessorDirective directive is used to indicate the input element.
  * This directive is required.
  */
 @Directive({
-  exportAs: 'ngxMentions',
+  exportAs: 'ngMentions',
   selector: 'ng-mentions',
   host: {'(change)': 'onChange($event)', '(touch)': 'onTouched()'},
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MentionsAccessorDirective), multi: true}]

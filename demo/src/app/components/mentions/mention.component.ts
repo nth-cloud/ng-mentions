@@ -4,7 +4,7 @@ import {DEMO_SNIPPETS} from './demos';
 @Component({
   selector: 'nthd-mention',
   template: `
-    <nthd-component-wrapper component="NgxMentions">
+    <nthd-component-wrapper component="NgMentions">
       <nthd-api-docs directive="MentionsComponent"></nthd-api-docs>
       <nthd-example-box demoTitle="Basic" [snippets]="snippets" component="mentions" demo="basic">
         <nthd-mentions-basic></nthd-mentions-basic>

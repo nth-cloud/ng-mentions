@@ -13,11 +13,11 @@ const ENTRY_CMPTS = {
 };
 
 function generateAppTsContent(componentName, demoName) {
-  const demoClassName = `Ngtsd${capitalize(componentName)}${capitalize(demoName)}`;
+  const demoClassName = `Nthd${capitalize(componentName)}${capitalize(demoName)}`;
   const demoImport = `./${componentName}-${demoName}`;
-  const demoSelector = `ngtsd-${componentName}-${demoName}`;
+  const demoSelector = `nthd-${componentName}-${demoName}`;
   const needsEntryCmpt = ENTRY_CMPTS.hasOwnProperty(componentName) && ENTRY_CMPTS[componentName].indexOf(demoName) > -1;
-  const entryCmptClass =  needsEntryCmpt ? `Ngtsd${capitalize(componentName)}Content` : null;
+  const entryCmptClass =  needsEntryCmpt ? `Nthd${capitalize(componentName)}Content` : null;
   const demoImports = needsEntryCmpt ? `${demoClassName}, ${entryCmptClass}` : demoClassName;
 
   return `
@@ -25,7 +25,7 @@ import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxToggleModule } from 'ng-mentions';
+import { MentionsModule } from '@nth-cloud/ng-mentions';
 import { ${demoImports} } from '${demoImport}';
 
 @Component({
@@ -48,7 +48,7 @@ export class App {
 }   
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, NgxToggleModule], 
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, MentionsModule], 
   declarations: [App, ${demoImports}]${needsEntryCmpt ? `,\n  entryComponents: [${entryCmptClass}],` : ','}
   bootstrap: [App]
 }) 
@@ -153,7 +153,7 @@ function generateConfigJs() {
     'tslib': 'npm:tslib/tslib.js',
     'typescript': 'npm:typescript@${versions.typescript}/lib/typescript.js',
 
-    'ng-mentions': 'npm:ng-mentions@${versions.ngBootstrap}/bundles/ng-mentions.js'
+    '@nth-cloud/ng-mentions': 'npm:@nth-cloud/ng-mentions@${versions.ngMentions}/dist/bundles/ng-mentions.js'
   },
   packages: {
     app: {
@@ -178,7 +178,7 @@ function getVersions() {
     angular: getVersion('@angular/core'),
     typescript: getVersion('typescript'),
     rxjs: getVersion('rxjs'),
-    ngxMentions: packageJson.version,
+    ngMentions: packageJson.version,
     zoneJs: getVersion('zone.js'),
     coreJs: getVersion('core-js'),
     systemjs: '^0.19.40',

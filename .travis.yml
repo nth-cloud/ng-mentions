@@ -4,8 +4,8 @@ node_js:
 
 env:
   global:
-  - SAUCE_USERNAME=trickeyone
-  - SAUCE_ACCESS_KEY=369325da35ad-bf6a-6a54-d2e8-e3efc892
+  - SAUCE_USERNAME=ng-mentions
+  - SAUCE_ACCESS_KEY=07515f712e6a-1878-0d84-01ed-d8216552
   - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
   - LOGS_DIR=/tmp/logs
 
@@ -23,6 +23,7 @@ install:
 
 script:
 - npm run ci && npm run api-doc:test
+- npm install -g codecov && codecov --disable=gcov -f coverage/lcov.info -F unit
 - npm run saucelabs
 
 sudo: false

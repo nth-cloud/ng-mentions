@@ -1,5 +1,20 @@
 // styles in src/style directory are applied to the whole page
 
+$header-link-color: #d9d9d9;
+$header-border-color: #1c1c1c;
+$header-bg: #363636;
+$banner-text-color: #ccc;
+$banner-lead-text-color: #fff;
+$page-footer-bg: #f7f7f7;
+$page-footer-link-color: #55595c;
+$api-docs-border-color: #999;
+$language-syntax-bg: #272822;
+$docs-nav-color: #999;
+$doc-nav-active-bg: #325e8a;
+$doc-nav-active-border-color: darken(#325e8a, 5%);
+$doc-nav-active-color: #eee;
+$doc-nav-hover-color: rgba(51, 94, 138, 0.1);
+
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
@@ -31,10 +46,8 @@ nthd-app {
 }
 
 header {
-    $header-link-color: #d9d9d9;
-
-    background:    #363636;
-    border-bottom: 1px solid #1c1c1c;
+    background: $header-bg;
+    border-bottom: 1px solid $header-border-color;
     position:      fixed;
     top:           0;
     width:         100%;
@@ -119,13 +132,13 @@ main {
     padding:          1.5rem;
     margin-bottom:    0.75rem;
     text-align:       center;
-    color:            #ccc;
+    color: $banner-text-color;
 
     .lead {
         margin-right:  auto;
         margin-left:   auto;
         width:         80%;
-        color:         #fff;
+        color: $banner-lead-text-color;
 
         p {
             font-size: 0.8125rem;
@@ -136,15 +149,6 @@ main {
         }
         p:last-of-type {
             margin-bottom: 0;
-        }
-    }
-
-    .btn {
-        color:        #fff;
-        border-color: #fff;
-        &:hover {
-            background-color: #f7f7f7;
-            color:            #0273d4;
         }
     }
 
@@ -218,41 +222,6 @@ section {
 .active > .bd-toc-link {
     font-weight: 500;
     color:       #373a3c;
-}
-
-.bd-toc-item.active {
-    margin-top:    1rem;
-    margin-bottom: 1rem;
-}
-
-.bd-toc-item:first-child {
-    margin-top: 0;
-}
-
-.bd-toc-item:last-child {
-    margin-bottom: 2rem;
-}
-
-.bd-sidebar .nav > li > a {
-    display:   block;
-    padding:   .25rem .75rem;
-    font-size: 90%;
-    color:     #99979c;
-}
-
-.bd-sidebar .nav > li > a:focus,
-.bd-sidebar .nav > li > a:hover {
-    color:            #0275d8;
-    text-decoration:  none;
-    background-color: transparent;
-}
-
-.bd-sidebar .nav > .active:focus > a,
-.bd-sidebar .nav > .active:hover > a,
-.bd-sidebar .nav > .active > a {
-    font-weight:      500;
-    color:            #373a3c;
-    background-color: transparent;
 }
 
 div.api-doc-component {
@@ -358,7 +327,7 @@ div.component-demo {
     padding:          3rem 0;
     margin-top:       3rem;
     font-size:        85%;
-    background-color: #f7f7f7;
+    background-color: $page-footer-bg;
     text-align:       left;
 
     p {
@@ -367,7 +336,7 @@ div.component-demo {
 
     a {
         font-weight: 500;
-        color:       #55595c;
+        color: $page-footer-link-color;
     }
 }
 
@@ -376,7 +345,7 @@ nthd-api-docs, nthd-api-docs-class, nthd-api-docs-config {
 
     &:not(:first-child) {
         margin-top:  3rem;
-        border-top:  1px solid #999;
+        border-top:  1px solid $api-docs-border-color;
         padding-top: 1rem;
     }
 }
@@ -384,7 +353,7 @@ nthd-api-docs, nthd-api-docs-class, nthd-api-docs-config {
 // override prism theme background color to inline it with bootstrap colors
 code[class*="language-"],
 pre[class*="language-"] {
-    background-color: #272822; // same as bootstrap card header
+    background-color: $language-syntax-bg;
 }
 
 span.token.tag {
@@ -401,18 +370,17 @@ nthd-component-wrapper, nthd-page-wrapper {
 .root-nav {
     > .nav-tabs {
         .nav-link {
-            color: #999;
+            color: $docs-nav-color;
 
             &.active {
-                background-color: #325e8a;
-                border-color:     darken(#325e8a, 5%);
-                color:            #eee;
+                background-color: $doc-nav-active-bg;
+                border-color: $doc-nav-active-border-color;
+                color: $doc-nav-active-color;
             }
 
             &:not(.active):hover {
-                $tab-hover-color: rgba(51, 94, 138, 0.1);
-                background-color: $tab-hover-color;
-                border-color:     $tab-hover-color;
+                background-color: $doc-nav-hover-color;
+                border-color: $doc-nav-hover-color;
             }
         }
     }
