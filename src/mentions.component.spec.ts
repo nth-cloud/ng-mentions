@@ -3,10 +3,10 @@ import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 
-import {MentionsComponent, MentionsModule} from './index';
+import {NgMentionsComponent, NgMentionsModule} from './index';
 import {Key} from './key';
-import {MentionsListComponent} from './mentions-list.component';
 import {createGenericTestComponent, createKeyEvent, expectResults} from './test/common';
+import {NgMentionsListComponent} from './util/mentions-list.component';
 
 @Component({selector: 'test-cmp', template: ''})
 class TestComponent {
@@ -52,7 +52,7 @@ function triggerTextAreaEvent(element: any, event: any) {
 }
 
 function getDebugInput(element: DebugElement): DebugElement {
-  return element.query(By.directive(MentionsComponent));
+  return element.query(By.directive(NgMentionsComponent));
 }
 
 function expectTextAreaValue(element: HTMLElement, value: string, exceptionFailOutput?: string) {
@@ -60,7 +60,7 @@ function expectTextAreaValue(element: HTMLElement, value: string, exceptionFailO
 }
 
 function expectMentionListToBeHidden(element: DebugElement, hidden: boolean, exceptionFailOutput?: string) {
-  let el = element.query(By.directive(MentionsListComponent));
+  let el = element.query(By.directive(NgMentionsListComponent));
   expect(el).toBeDefined(exceptionFailOutput);
   if (!hidden) {
     expect(el).not.toBeNull(exceptionFailOutput);
@@ -83,7 +83,7 @@ function tickFixture(fixture: ComponentFixture<TestComponent>) {
 describe('ng-mentions', () => {
   beforeEach(() => {
     TestBed.configureTestingModule(
-        {declarations: [TestComponent], imports: [MentionsModule, FormsModule, ReactiveFormsModule]});
+        {declarations: [TestComponent], imports: [NgMentionsModule, FormsModule, ReactiveFormsModule]});
   });
 
   describe('value accessor', () => {
@@ -98,7 +98,7 @@ describe('ng-mentions', () => {
 
          expectTextAreaValue(el, '');
 
-         const mentionComp: MentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+         const mentionComp: NgMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
 
          comp.model = model;
          fixture.detectChanges();
@@ -134,7 +134,7 @@ describe('ng-mentions', () => {
        expect(comp.mentions.length).toEqual(3);
        tickFixture(fixture);
 
-       const mentionComp: MentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+       const mentionComp: NgMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
        expect(mentionComp.mentions.length).toEqual(3);
        expectMentionListToBeHidden(fixture.debugElement, true);
        tickFixture(fixture);
@@ -153,7 +153,7 @@ describe('ng-mentions', () => {
        tickFixture(fixture);
 
        fixture.whenStable().then(() => {
-         const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
+         const mentionsList = fixture.debugElement.query(By.directive(NgMentionsListComponent));
          expect(mentionsList).toBeDefined();
          expect(mentionsList).not.toBeNull();
          expectMentionListToBeHidden(fixture.debugElement, false, 'MentionList should be shown');
@@ -189,7 +189,7 @@ describe('ng-mentions', () => {
        expect(comp.mentions.length).toEqual(3);
        tickFixture(fixture);
 
-       const mentionComp: MentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+       const mentionComp: NgMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
        expect(mentionComp.mentions.length).toEqual(3);
        expectMentionListToBeHidden(fixture.debugElement, true);
        tickFixture(fixture);
@@ -202,7 +202,7 @@ describe('ng-mentions', () => {
 
        let event;
        fixture.whenStable().then(() => {
-         const mentionsList = fixture.debugElement.query(By.directive(MentionsListComponent));
+         const mentionsList = fixture.debugElement.query(By.directive(NgMentionsListComponent));
          expect(mentionsList).toBeDefined('MentionsList should be defined');
          expect(mentionsList).not.toBeNull('MentionsList should not be null');
          expectMentionListToBeHidden(fixture.debugElement, false, 'MentionList should be shown');
@@ -247,7 +247,7 @@ describe('ng-mentions', () => {
   it('should remove mention on backspace into mention', fakeAsync(() => {
        const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
        const comp = fixture.componentInstance;
-       const mentionComp: MentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+       const mentionComp: NgMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
 
        const originalValue = '@[Name](type:1)';
        const plainTextValue = 'Nam';

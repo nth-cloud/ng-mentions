@@ -6,7 +6,7 @@ import {Analytics} from '../../../shared/analytics/analytics';
 /**
  * Displays the API docs of a class, which is not a directive.
  *
- * For Config services, use NgxdApiDocsConfig instead.
+ * For Config services, use NthdApiDocsConfig instead.
  */
 @Component({
   selector: 'nthd-api-docs-class',

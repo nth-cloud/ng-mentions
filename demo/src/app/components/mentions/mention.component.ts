@@ -5,17 +5,17 @@ import {DEMO_SNIPPETS} from './demos';
   selector: 'nthd-mention',
   template: `
     <nthd-component-wrapper component="NgMentions">
-      <nthd-api-docs directive="MentionsComponent"></nthd-api-docs>
-      <nthd-example-box demoTitle="Basic" [snippets]="snippets" component="mentions" demo="basic">
+      <nthd-api-docs directive="NgMentionsComponent"></nthd-api-docs>
+      <nthd-example-box title="Basic" [snippets]="snippets" component="mentions" demo="basic" id="basic">
         <nthd-mentions-basic></nthd-mentions-basic>
       </nthd-example-box>
-      <nthd-example-box demoTitle="Validation" [snippets]="snippets" component="mentions" demo="validation">
+      <nthd-example-box title="Validation" [snippets]="snippets" component="mentions" demo="validation" id="validation">
         <nthd-mentions-validation></nthd-mentions-validation>
       </nthd-example-box>
-      <nthd-example-box demoTitle="Custom Search" [snippets]="snippets" component="mentions" demo="custom-search">
+      <nthd-example-box title="Custom Search" [snippets]="snippets" component="mentions" demo="custom-search" id="search">
         <nthd-mentions-custom-search></nthd-mentions-custom-search>
       </nthd-example-box>
-      <nthd-example-box demoTitle="String Values" [snippets]="snippets" component="mentions" demo="string-values">
+      <nthd-example-box title="String Values" [snippets]="snippets" component="mentions" demo="string-values" id="values">
         <nthd-mentions-string-values></nthd-mentions-string-values>
       </nthd-example-box>
     </nthd-component-wrapper>

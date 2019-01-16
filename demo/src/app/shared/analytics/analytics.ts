@@ -8,14 +8,14 @@ declare const ga: any;
 
 /**
  * Simple Google Analytics service. Note that all its methods don't do anything unless the app
- * is deployed on nth-cloud.github.io/ng-mentions. This avoids sending events and page views during development.
+ * is deployed on nth-cloud.github.io/ng-toggle. This avoids sending events and page views during development.
  */
 @Injectable()
 export class Analytics {
     private _enabled: boolean;
 
     constructor(private _location: Location, private _router: Router) {
-        this._enabled = window.location.href.indexOf('nth-cloud.github.io/ng-mentions') >= 0;
+        this._enabled = window.location.href.indexOf('nth-cloud.github.io/ng-toggle') >= 0;
     }
 
     /**

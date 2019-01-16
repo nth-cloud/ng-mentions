@@ -33,7 +33,7 @@ import {getCaretCoordinates} from './utils';
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class MentionsListComponent implements OnInit {
+export class NgMentionsListComponent implements OnInit {
   public items: any[];
   public itemTemplate: TemplateRef<any>;
   public displayTransform: (..._: string[]) => string;

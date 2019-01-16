@@ -1,8 +1,8 @@
-import {MentionsModule} from '@nth-cloud/ng-mentions';
+import {NgMentionsModule} from '@nth-cloud/ng-mentions';
 
 @NgModule({
   declarations: [AppComponent, ...],
-  imports: [MentionsModule, ...],
+  imports: [NgMentionsModule, ...],
   bootstrap: [AppComponent]
 })
 export class AppModule {

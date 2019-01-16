@@ -8,8 +8,6 @@ import {Analytics} from '../../../shared/analytics/analytics';
  *
  * The default values of its inputs are looked for in the directive api doc itself, or in the matching property
  * of associated Config service, if any.
- *
- * The config service of a directive NgbFoo is, by convention, named NgbFooConfig.
  */
 @Component({
   selector: 'nthd-api-docs',

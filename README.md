@@ -8,14 +8,19 @@
 [![Sauce Test Status](https://saucelabs.com/buildstatus/ng-mentions)](https://saucelabs.com/u/ng-mentions)
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/ng-mentions.svg)](https://saucelabs.com/u/ng-mentions)
 
-Native Angular v5+ components & directives for customizable mentions. Allowing for customizable search results and mention formatting.
+Native Angular components & directives for customizable mentions. Allowing for customizable search results and mention formatting.
 
 ## Demo and Docs
 
 View it in action at https://nth-cloud.github.io/ng-mentions
 
 ## Dependencies
-* [Angular](https://angular.io) (tested with 5.1.0)
+* [Angular](https://angular.io) (tested with 6.1.10)
+
+| ng-mentions | Angular |
+| ----------- | ------- |
+| 0.x.x       | 5.2.1   |
+| 1.x.x       | 6.1.0   |
 
 ## Installation
 After installing the above dependencies, install `ng-mentions` via:
@@ -25,16 +30,16 @@ npm install --save @nth-cloud/ng-mentions
 
 Import the main module into your project:
 ```js
-import {MentionsModule} from "@nth-cloud/ng-mentions";
+import {NgMentionsModule} from "@nth-cloud/ng-mentions";
 ```
 
 Import the module into your application:
 ```js
-import {MentionsModule} from "@nth-cloud/ng-mentions";
+import {NgMentionsModule} from "@nth-cloud/ng-mentions";
 
 @NgModule({
     ...
-    imports: [MentionsModule, ...],
+    imports: [NgMentionsModule, ...],
     ...
 })
 export class AppModule {
@@ -59,8 +64,6 @@ We strive to support the same browsers and versions as supported by Angular. Che
 * IE (10+)
 * Edge (20+)
 * Safari (7+)
-
-Also, check [Bootstrap 4's notes](https://getbootstrap.com/docs/4.0/getting-started/browsers-devices/#supported-browsers) on supported browsers.
 
 ### Big Thanks
 
