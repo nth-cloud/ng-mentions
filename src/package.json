@@ -1,6 +1,6 @@
 {
   "name": "@nth-cloud/ng-mentions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Angular components & directives for customizable mentions",
   "keywords": [
     "angular",
