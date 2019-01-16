@@ -14,16 +14,20 @@ addons:
   sause_connect: true
 
 before_install:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- npm install --quiet -g gulp
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 
 install:
-- npm install
+  - yarn
+
+cache: yarn
+
+before_script:
+  - mkdir -p $LOGS_DIR
 
 script:
-- npm run ci && npm run api-doc:test
-- npm install -g codecov && codecov --disable=gcov -f coverage/lcov.info -F unit
-- npm run saucelabs
+  - yarn ci && yarn api-doc:test
+  - yarn global add codecov && codecov --disable=gcov -f coverage/lcov.info -F unit
+  - yarn saucelabs
 
 sudo: false
