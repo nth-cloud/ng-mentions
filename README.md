@@ -6,6 +6,7 @@
 [![dependency Status](https://david-dm.org/nth-cloud/ng-mentions.svg?branch=master)](https://david-dm.org/nth-cloud/ng-mentions)
 [![devDependency Status](https://david-dm.org/nth-cloud/ng-mentions/dev-status.svg?branch=master)](https://david-dm.org/nth-cloud/ng-mentions#info=devDependencies)
 [![Sauce Test Status](https://saucelabs.com/buildstatus/ng-mentions)](https://saucelabs.com/u/ng-mentions)
+
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/ng-mentions.svg)](https://saucelabs.com/u/ng-mentions)
 
 Native Angular components & directives for customizable mentions. Allowing for customizable search results and mention formatting.
