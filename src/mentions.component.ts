@@ -39,17 +39,17 @@ import {
   styleProperties
 } from './utils';
 
-interface Tag {
+export interface Tag {
   indices: {start: number, end: number};
 }
 
-interface Line {
+export interface Line {
   originalContent: string;
   content: string;
   parts: Array<string|Mention>;
 }
 
-interface Mention {
+export interface Mention {
   contents: string;
   tag: Tag;
 }
