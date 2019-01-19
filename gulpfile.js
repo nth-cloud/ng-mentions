@@ -34,6 +34,7 @@ const runSequence = require('run-sequence');
 const exec = require('child_process').exec;
 const path = require('path');
 const os = require('os');
+const gulpFile = require('gulp-file');
 
 function platformPath(path) {
   return /^win/.test(os.platform()) ? `${path}.cmd` : path;
