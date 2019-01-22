@@ -22,8 +22,8 @@ import {
 } from '@angular/core';
 import {Subject} from 'rxjs';
 
-import {Key} from './key';
 import {Line, Mention, Tag} from './util/interfaces';
+import {Key} from './util/key';
 import {NgMentionsListComponent} from './util/mentions-list.component';
 import {
   applyChangeToValue,

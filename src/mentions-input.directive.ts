@@ -5,8 +5,7 @@ import {takeUntil} from 'rxjs/operators';
 import {NgMentionsComponent} from './mentions.component';
 
 /**
- * The MentionsAccessorDirective directive is used to indicate the input element.
- * This directive is required.
+ * The NgMentionsAccessorDirective directive is used to indicate the input element.
  */
 @Directive({
   exportAs: 'ngMentions',

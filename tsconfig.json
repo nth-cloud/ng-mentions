@@ -1,9 +1,8 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "target": "es5",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2015","es2017", "dom"],
     "module": "es2015",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
@@ -11,6 +10,13 @@
     "noEmitOnError": true,
     "outDir": "temp",
     "declaration": false,
-    "sourceMap": true
-  }
+    "sourceMap": true,
+    "paths": {
+      "@nth-cloud/ng-mentions": ["../src/index"]
+    }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "compileOnSave": false
 }

@@ -102,7 +102,6 @@
     "ng-packagr": "^4.2.0",
     "ngx-build-plus": "^7.5.0",
     "nyc": "13.1.0",
-    "popper.js": "^1.14.6",
     "prismjs": "^1.15.0",
     "rxjs": "^6.3.0",
     "ts-node": "^7.0.1",

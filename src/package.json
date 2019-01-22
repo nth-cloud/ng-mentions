@@ -20,7 +20,6 @@
   "peerDependencies": {
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0",
-    "@angular/forms": "^7.0.0",
-    "rxjs": "6.3.3"
+    "@angular/forms": "^7.0.0"
   }
 }
