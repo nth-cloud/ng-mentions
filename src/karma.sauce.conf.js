@@ -53,11 +53,11 @@ const BROWSERS = {
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    frameworks: ['jasmine', '@angular/cli'],
     plugins: [
       require('karma-jasmine'),
       require('karma-sauce-launcher'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('@angular/cli/plugins/karma'),
     ],
     angularCli: {
       environment: 'dev'

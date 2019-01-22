@@ -4,9 +4,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 
 import {NgMentionsComponent, NgMentionsModule} from './index';
+import {createGenericTestComponent, createKeyEvent, expectResults} from './test/common';
 import {Key} from './util/key';
 import {NgMentionsListComponent} from './util/mentions-list.component';
-import {createGenericTestComponent, createKeyEvent, expectResults} from './test/common';
 
 @Component({selector: 'test-cmp', template: ''})
 class TestComponent {

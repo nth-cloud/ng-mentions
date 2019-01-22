@@ -1457,10 +1457,19 @@ circular-json@^0.5.5:
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.5.9.tgz#932763ae88f4f7dead7a0d09c8a51a4743a53b1d"
   integrity sha512-4ivwqHpIFJZBuhN3g/pEcdbnGUywkBblloGbkglyloVjjR3uT6tieI89MVOfbP2tHX5sgb01FuLgAOzebNlJNQ==
 
-clang-format@^1.0.32, clang-format@^1.2.4:
+clang-format@^1.0.32:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/clang-format/-/clang-format-1.2.4.tgz#4bb4b0a98180428deb093cf20982e9fc1af20b6c"
   integrity sha512-sw+nrGUp3hvmANd1qF8vZPuezSYQAiXgGBiEtkXTtJnnu6b00fCqkkDIsnRKrNgg4nv6NYZE92ejvOMIXZoejw==
+  dependencies:
+    async "^1.5.2"
+    glob "^7.0.0"
+    resolve "^1.1.6"
+
+clang-format@~1.0.32:
+  version "1.0.55"
+  resolved "https://registry.yarnpkg.com/clang-format/-/clang-format-1.0.55.tgz#8031271329e27a779a5d08fc5dce24d7c52c14d5"
+  integrity sha1-gDEnEynieneaXQj8Xc4k18UsFNU=
   dependencies:
     async "^1.5.2"
     glob "^7.0.0"

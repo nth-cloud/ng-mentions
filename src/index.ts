@@ -3,9 +3,9 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 import {NgMentionsAccessorDirective} from './mentions-input.directive';
-import {NgMentionsListComponent} from './util/mentions-list.component';
 import {NgMentionsComponent} from './mentions.component';
 import {HighlightedDirective} from './util/highlight.directive';
+import {NgMentionsListComponent} from './util/mentions-list.component';
 
 export {NgMentionsAccessorDirective} from './mentions-input.directive';
 export {NgMentionsComponent} from './mentions.component';
@@ -19,5 +19,4 @@ const DECLARATIONS = [NgMentionsComponent, NgMentionsAccessorDirective, NgMentio
   declarations: DECLARATIONS,
   entryComponents: [NgMentionsListComponent]
 })
-export class NgMentionsModule {
-}
+export class NgMentionsModule {}

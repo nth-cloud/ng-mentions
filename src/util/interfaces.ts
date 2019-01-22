@@ -1,7 +1,5 @@
 
-export interface Tag {
-  indices: {start: number, end: number};
-}
+export interface Tag { indices: {start: number, end: number}; }
 
 export interface Line {
   originalContent: string;
