@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {Key} from '../key';
+import {Key} from '../util/key';
 
 function normalizeText(txt: string): string {
   return txt.trim().replace(/\s+/g, ' ');

@@ -5,7 +5,6 @@ import {
   Component,
   ComponentFactoryResolver,
   ContentChild,
-  Directive,
   ElementRef,
   EventEmitter,
   HostListener,
@@ -23,8 +22,9 @@ import {
 } from '@angular/core';
 import {Subject} from 'rxjs';
 
-import {Key} from './key';
-import {MentionsListComponent} from './mentions-list.component';
+import {Key} from './util/key';
+import {Line, Mention, Tag} from './util/interfaces';
+import {NgMentionsListComponent} from './util/mentions-list.component';
 import {
   applyChangeToValue,
   escapeRegExp,
@@ -37,30 +37,10 @@ import {
   replacePlaceholders,
   setCaretPosition,
   styleProperties
-} from './utils';
-
-export interface Tag {
-  indices: {start: number, end: number};
-}
-
-export interface Line {
-  originalContent: string;
-  content: string;
-  parts: Array<string|Mention>;
-}
-
-export interface Mention {
-  contents: string;
-  tag: Tag;
-}
-
-@Directive({selector: 'highlighted'})
-export class HighlightedDirective {
-  @Input() tag: Tag;
-}
+} from './util/utils';
 
 /**
- *
+ * The Mentions Component
  */
 @Component({
   moduleId: module.id,
@@ -117,7 +97,7 @@ export class HighlightedDirective {
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
-export class MentionsComponent implements OnChanges, OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
+export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
   /**
    * The character to trigger the mentions list when a user is typing in the input field
    */
@@ -255,7 +235,7 @@ export class MentionsComponent implements OnChanges, OnInit, AfterViewInit, Afte
   private searchString: string;
   private startPos: number;
   private startNode;
-  mentionsList: MentionsListComponent;
+  mentionsList: NgMentionsListComponent;
   private stopSearch: boolean = false;
   private markupSearch: MarkupMention;
   private _destroyed: Subject<void> = new Subject<void>();
@@ -500,7 +480,7 @@ export class MentionsComponent implements OnChanges, OnInit, AfterViewInit, Afte
 
   private showMentionsList() {
     if (!this.mentionsList) {
-      let componentFactory = this.componentResolver.resolveComponentFactory(MentionsListComponent);
+      let componentFactory = this.componentResolver.resolveComponentFactory(NgMentionsListComponent);
       let componentRef = this.viewContainer.createComponent(componentFactory);
       this.mentionsList = componentRef.instance;
       this.mentionsList.itemTemplate = this.mentionListTemplate;

@@ -1,6 +1,6 @@
 {
   "name": "@nth-cloud/ng-mentions",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Angular v5+ components & directives for customizable mentions",
   "repository": {
     "type": "git",
@@ -14,8 +14,7 @@
   "peerDependencies": {
     "@angular/common": "^5.2.11",
     "@angular/core": "^5.2.11",
-    "@angular/forms": "^5.2.11",
-    "rxjs": "^5.5.12"
+    "@angular/forms": "^5.2.11"
   },
   "keywords": [
     "angular",
