@@ -43,7 +43,6 @@ import {
  * The Mentions Component
  */
 @Component({
-  moduleId: module.id,
   exportAs: 'ngMentions',
   selector: 'ng-mentions',
   template: `
