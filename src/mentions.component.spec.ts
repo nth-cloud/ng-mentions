@@ -18,7 +18,7 @@ const createTestComponent = (html: string) =>
     createGenericTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
 
 const isIE = /msie\s/i.test(window.navigator.userAgent);
-const IEDelay = 1500;
+const IEDelay = 4000;
 
 function createKeyDownEvent(event: any) {
   spyOn(event, 'preventDefault');
