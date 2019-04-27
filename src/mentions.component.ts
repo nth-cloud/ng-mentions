@@ -168,6 +168,9 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     this.refreshStyles();
   }
 
+  /**
+   * Number of rows for the textarea. Defaults to 1
+   */
   @Input('rows')
   get rows(): number|string {
     return this._rows;
@@ -175,11 +178,17 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
 
   set rows(value: number|string) {
     if (value !== null && typeof value !== 'undefined') {
-      this._rows = Math.max(1, <number>value);
+      if (typeof value === 'string') {
+        value = parseInt(value, 10);
+      }
+      this._rows = Math.max(1, value);
       this.refreshStyles();
     }
   }
 
+  /**
+   * Number of columns for the textarea. Defaults to 1
+   */
   @Input('cols')
   get columns(): number|string {
     return this._columns;
@@ -187,7 +196,10 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
 
   set columns(value: number|string) {
     if (value !== null && typeof value !== 'undefined') {
-      this._columns = Math.max(1, <number>value);
+      if (typeof value === 'string') {
+        value = parseInt(value, 10);
+      }
+      this._columns = Math.max(1, value);
       this.refreshStyles();
     }
   }
@@ -233,8 +245,8 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   private _value: string = '';
   private _required: boolean;
   private _disabled: boolean;
-  private _rows: number = null;
-  private _columns: number = null;
+  private _rows: number = 1;
+  private _columns: number = 1;
   private searchString: string;
   private startPos: number;
   private startNode;
