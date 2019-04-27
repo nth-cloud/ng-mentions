@@ -17,6 +17,9 @@ class TestComponent {
 const createTestComponent = (html: string) =>
     createGenericTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
 
+const isIE = /msie\s/i.test(window.navigator.userAgent);
+const IEDelay = 1500;
+
 function createKeyDownEvent(event: any) {
   spyOn(event, 'preventDefault');
   spyOn(event, 'stopPropagation');
@@ -34,7 +37,6 @@ function getDropDown(element: HTMLElement): HTMLDivElement {
 function changeTextArea(element: any, value: string, reset: boolean = false) {
   const input = getNativeTextArea(element);
   input.focus();
-  tick(50);
   if (!reset) {
     const evt = createKeyEvent({key: value.charCodeAt(0), type: 'keydown', bubbles: true});
     triggerTextAreaEvent(element, evt);
@@ -144,7 +146,7 @@ describe('ng-mentions', () => {
        triggerTextAreaEvent(el, createKeyEvent({key: Key.Shift, type: 'keydown'}));
        tickFixture(fixture);
        changeTextArea(el, triggerValue);
-       tickFixture(fixture, 1250);
+       tickFixture(fixture, isIE ? IEDelay : undefined);
 
        expectTextAreaValue(el, triggerValue);
        expect(comp.model).toEqual(triggerValue);
@@ -199,7 +201,7 @@ describe('ng-mentions', () => {
        triggerTextAreaEvent(el, createKeyEvent({key: Key.Shift, type: 'keydown'}));
        tickFixture(fixture);
        changeTextArea(el, triggerValue);
-       tickFixture(fixture);
+       tickFixture(fixture, isIE ? IEDelay : undefined);
 
        let event;
        fixture.whenStable().then(() => {
