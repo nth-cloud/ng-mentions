@@ -74,7 +74,7 @@ import {
       ></textarea>
   `,
   styles: [
-    'ng-mentions {position: relative;}',
+    'ng-mentions {position: relative; display: inline-block;}',
     'ng-mentions textarea {position:relative; background-color: transparent !important;}', `ng-mentions .highlighter {
         position: absolute;
         top:      0;
@@ -343,7 +343,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     }
   }
 
-  public onBlur(event: MouseEvent|KeyboardEvent) {
+  public onBlur(event: MouseEvent|KeyboardEvent|FocusEvent) {
     if (event instanceof FocusEvent && event.relatedTarget) {
       let element = event.relatedTarget as HTMLElement;
       if (element.classList.contains('dropdown-item')) {
@@ -380,7 +380,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     return result;
   }
 
-  private stopEvent(event: MouseEvent|KeyboardEvent) {
+  private stopEvent(event: MouseEvent|KeyboardEvent|FocusEvent) {
     if (event.preventDefault) {
       event.preventDefault();
       event.stopPropagation();
