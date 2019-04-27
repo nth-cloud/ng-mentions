@@ -34,6 +34,7 @@ function getDropDown(element: HTMLElement): HTMLDivElement {
 function changeTextArea(element: any, value: string, reset: boolean = false) {
   const input = getNativeTextArea(element);
   input.focus();
+  tick(50);
   if (!reset) {
     const evt = createKeyEvent({key: value.charCodeAt(0), type: 'keydown', bubbles: true});
     triggerTextAreaEvent(element, evt);
@@ -75,8 +76,8 @@ function expectDropDownItems(element, expectedResults: string[]) {
   expectResults(dropDown, expectedResults);
 }
 
-function tickFixture(fixture: ComponentFixture<TestComponent>) {
-  tick();
+function tickFixture(fixture: ComponentFixture<TestComponent>, millis?: number) {
+  tick(millis);
   fixture.detectChanges();
 }
 
@@ -139,11 +140,11 @@ describe('ng-mentions', () => {
        expectMentionListToBeHidden(fixture.debugElement, true);
        tickFixture(fixture);
 
-       let triggerValue = '@';
+       const triggerValue = '@';
        triggerTextAreaEvent(el, createKeyEvent({key: Key.Shift, type: 'keydown'}));
        tickFixture(fixture);
        changeTextArea(el, triggerValue);
-       tickFixture(fixture);
+       tickFixture(fixture, 1250);
 
        expectTextAreaValue(el, triggerValue);
        expect(comp.model).toEqual(triggerValue);
@@ -194,7 +195,7 @@ describe('ng-mentions', () => {
        expectMentionListToBeHidden(fixture.debugElement, true);
        tickFixture(fixture);
 
-       let triggerValue = '@';
+       const triggerValue = '@';
        triggerTextAreaEvent(el, createKeyEvent({key: Key.Shift, type: 'keydown'}));
        tickFixture(fixture);
        changeTextArea(el, triggerValue);

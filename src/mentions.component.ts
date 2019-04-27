@@ -246,7 +246,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   private _required: boolean;
   private _disabled: boolean;
   private _rows: number = 1;
-  private _columns: number = 1;
+  private _columns: number = 20;
   private searchString: string;
   private startPos: number;
   private startNode;
