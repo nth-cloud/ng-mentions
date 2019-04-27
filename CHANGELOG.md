@@ -1,3 +1,14 @@
+## [2.0.2](https://github.com/nth-cloud/ng-mentions/compare/2.0.0...2.0.2) (2019-04-27)
+
+
+### Bug Fixes
+
+* Firefox display issue, closes [#3](https://github.com/nth-cloud/ng-mentions/issues/3) ([cc1d653](https://github.com/nth-cloud/ng-mentions/commit/cc1d653))
+* fixed defaulting rows and columns to 1 causing layout issue ([3b74f98](https://github.com/nth-cloud/ng-mentions/commit/3b74f98)), closes [#1](https://github.com/nth-cloud/ng-mentions/issues/1)
+* removed moduleId to fix issue with webpack builds ([6a446fe](https://github.com/nth-cloud/ng-mentions/commit/6a446fe))
+
+
+
 # [2.0.0](https://github.com/nth-cloud/ng-mentions/compare/0.1.2...2.0.0) (2019-01-18)
 
 
