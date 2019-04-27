@@ -12,7 +12,7 @@ export class NthdMentionsBasic {
     disabled: boolean = false;
     required: boolean = false;
     rows: number = 5;
-    cols: number;
+    cols: number = 15;
     dropUp: boolean = false;
 
     model: any = {

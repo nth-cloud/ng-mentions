@@ -1,4 +1,4 @@
-<div>
+<div class="basic-example">
     <ng-mentions
         [mentions]="model.mentions"
         formClass="form-control"
@@ -6,9 +6,10 @@
         cols="35"
         [(ngModel)]="model.value"
         placeholder="Type text here..."
-        (search)="onSearch($event)"
-        [disableSearch]="true"
-    ></ng-mentions>
+    >
+        <ng-template let-item="item">
+            <span>{{item.id}}: {{item.display}} ({{item.type}})</span>
+        </ng-template>
+    </ng-mentions>
 </div>
 <pre class="my-2">{{model | json}}</pre>
-<p>Available names: {{names}}</p>

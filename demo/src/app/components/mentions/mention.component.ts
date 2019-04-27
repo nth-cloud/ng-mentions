@@ -18,6 +18,10 @@ import {DEMO_SNIPPETS} from './demos';
       <nthd-example-box title="String Values" [snippets]="snippets" component="mentions" demo="string-values" id="values">
         <nthd-mentions-string-values></nthd-mentions-string-values>
       </nthd-example-box>
+        <nthd-example-box title="Custom Mentions List Template" [snippets]="snippets" component="mentions" demo="custom-template"
+                          id="template">
+            <nthd-mentions-custom-template></nthd-mentions-custom-template>
+        </nthd-example-box>
     </nthd-component-wrapper>
   `
 })

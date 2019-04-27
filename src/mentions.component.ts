@@ -174,8 +174,10 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   }
 
   set rows(value: number|string) {
-    this._rows = Math.max(1, <number>value);
-    this.refreshStyles();
+    if (value !== null && typeof value !== 'undefined') {
+      this._rows = Math.max(1, <number>value);
+      this.refreshStyles();
+    }
   }
 
   @Input('cols')
@@ -184,8 +186,10 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   }
 
   set columns(value: number|string) {
-    this._columns = Math.max(1, <number>value);
-    this.refreshStyles();
+    if (value !== null && typeof value !== 'undefined') {
+      this._columns = Math.max(1, <number>value);
+      this.refreshStyles();
+    }
   }
 
   /**
@@ -229,8 +233,8 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   private _value: string = '';
   private _required: boolean;
   private _disabled: boolean;
-  private _rows: number = 1;
-  private _columns: number = 1;
+  private _rows: number = null;
+  private _columns: number = null;
   private searchString: string;
   private startPos: number;
   private startNode;

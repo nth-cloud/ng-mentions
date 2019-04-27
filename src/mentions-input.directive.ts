@@ -47,8 +47,8 @@ export class NgMentionsAccessorDirective implements OnInit, OnDestroy, ControlVa
     }
   }
 
-  onChange(value: any) {
-    if (this._onChange) {
+  onChange(value: string) {
+    if (this._onChange && typeof value === 'string') {
       this._onChange(value);
     }
   }
