@@ -3,7 +3,7 @@
     Required
 </label>
 <pre class="my-2">Validation: {{validation.status}} {{!validation.pristine ? 'TOUCHED' : 'PRISTINE'}}</pre>
-<div class="basic-example" [class.was-validated]="required && !validation.pristine">
+<div class="position-relative" [class.was-validated]="required && !validation.pristine">
     <ng-mentions
         [mentions]="model.mentions"
         formClass="form-control"

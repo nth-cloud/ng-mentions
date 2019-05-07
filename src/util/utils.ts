@@ -2,7 +2,7 @@ export const styleProperties = Object.freeze([
   'direction',  // RTL support
   'boxSizing',
   'width',  // on Chrome and IE, exclude the scrollbar, so the mirror div wraps exactly as the textarea does
-  'height', 'overflowX',
+  'height', 'minHeight', 'minWidth', 'overflowX',
   'overflowY',  // copy the scrollbar for IE
 
   'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth', 'borderStyle',
@@ -121,15 +121,15 @@ export function getCaretCoordinates(element: HTMLTextAreaElement, position: numb
   }
   const div = document.createElement('div');
   document.body.appendChild(div);
-  let style = div.style;
-  const computed = window.getComputedStyle ? getComputedStyle(element) : (<any>element).currentStyle;
+  const style = div.style;
+  const computed = getElementStyle(element);
   style.whiteSpace = 'pre-wrap';
   if (element.nodeName !== 'INPUT') {
     style.wordWrap = 'break-word';
   }
   style.position = 'absolute';
   style.visibility = 'hidden';
-  styleProperties.forEach(prop => style[prop] = computed[prop]);
+  styleProperties.forEach(prop => (style[prop] = computed[prop]) && console.log(prop + ':', style[prop]));
   if (isFirefox) {
     if (element.scrollHeight > parseInt(computed.height, 10)) {
       style.overflowY = 'scroll';
@@ -142,18 +142,33 @@ export function getCaretCoordinates(element: HTMLTextAreaElement, position: numb
     div.textContent = div.textContent.replace(/\s/g, '\u00a0');
   }
 
-  let span = document.createElement('span');
+  const span = document.createElement('span');
   span.textContent = element.value.substring(position) || '.';
   div.appendChild(span);
+  let scrollTop = 0;
+  if (element.scrollTop > 0) {
+    scrollTop = element.scrollTop;
+  }
 
   coords = {
-    top: span.offsetTop + parseInt(computed['borderTopWidth'], 10),
+    top: span.offsetTop + parseInt(computed['borderTopWidth'], 10) - scrollTop,
     left: span.offsetLeft + parseInt(computed['borderLeftWidth'], 10)
   };
 
   document.body.removeChild(div);
 
   return coords;
+}
+
+export function getElementStyle(element: HTMLElement, property?: string): any {
+  const style = window.getComputedStyle ? getComputedStyle(element) : (<any>element).currentStyle;
+  if (property && typeof property === 'string' && typeof style[property] !== 'undefined') {
+    return style[property];
+  } else if (property && typeof property === 'string') {
+    return null;
+  }
+
+  return style;
 }
 
 export function setCaretPosition(element: HTMLInputElement, position: number): void {

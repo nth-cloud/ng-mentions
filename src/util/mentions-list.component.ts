@@ -8,7 +8,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import {getCaretCoordinates} from './utils';
+import {getCaretCoordinates, getElementStyle} from './utils';
 
 @Component({
   selector: 'mentions-list',
@@ -124,8 +124,8 @@ export class NgMentionsListComponent implements OnInit {
   private get adjustTop(): number {
     let adjust = 0;
     if (!this.dropUp) {
-      const computed = getComputedStyle(this.textAreaElement);
-      adjust = parseInt(computed.fontSize, 10) + this.textAreaElement.offsetTop;
+      const computedFontSize = getElementStyle(this.textAreaElement, 'fontSize');
+      adjust = parseInt(computedFontSize, 10) + this.textAreaElement.offsetTop;
     }
 
     return adjust;
