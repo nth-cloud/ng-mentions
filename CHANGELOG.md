@@ -1,3 +1,12 @@
+## [2.0.3](https://github.com/nth-cloud/ng-mentions/compare/2.0.2...2.0.3) (2019-05-07)
+
+
+### Bug Fixes
+
+* Fixed not taking scroll into account for mentions list position, fixes [#4](https://github.com/nth-cloud/ng-mentions/issues/4) ([45e7222](https://github.com/nth-cloud/ng-mentions/commit/45e7222))
+
+
+
 ## [2.0.2](https://github.com/nth-cloud/ng-mentions/compare/2.0.0...2.0.2) (2019-04-27)
 
 
