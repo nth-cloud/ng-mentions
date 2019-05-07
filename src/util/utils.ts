@@ -129,7 +129,7 @@ export function getCaretCoordinates(element: HTMLTextAreaElement, position: numb
   }
   style.position = 'absolute';
   style.visibility = 'hidden';
-  styleProperties.forEach(prop => (style[prop] = computed[prop]) && console.log(prop + ':', style[prop]));
+  styleProperties.forEach(prop => style[prop] = computed[prop]);
   if (isFirefox) {
     if (element.scrollHeight > parseInt(computed.height, 10)) {
       style.overflowY = 'scroll';
