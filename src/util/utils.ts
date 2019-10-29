@@ -196,11 +196,11 @@ export interface MarkupMention {
 }
 
 export function markupToRegExp(markup: string): MarkupMention {
+  const placeholderRegExp = /__([\w]+)__/g;
+  const placeholderExclusion = '^\\)\\]';
   let markupPattern = escapeRegExp(markup);
-  let placeholderRegExp = /__([\w]+)__/g;
   let placeholders = {};
-  let groups = /[\[\]()]+/.test(markup);
-  let match, i = groups ? 1 : 0, placeholderExclusion = groups ? '^\\)\\]' : '\\S';
+  let match, i = 1;
   do {
     match = placeholderRegExp.exec(markupPattern);
     if (match) {
@@ -280,4 +280,20 @@ export function getBoundsOfMentionAtPosition(
     value: string, mentionMarkup: MarkupMention, indexInPlainText: number,
     displayTransform: (..._: string[]) => string): {start: number, end: number} {
   return findStartOfMentionInPlainText(value, mentionMarkup, indexInPlainText, displayTransform);
+}
+
+export function escapeHtml(text: string) {
+  return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+export function isCoordinateWithinRect(rect: ClientRect, x: number, y: number) {
+  return (rect.left < x && x < rect.right) && (rect.top < y && y < rect.bottom);
+}
+
+export class Highlighted {
+  constructor(public readonly element: Element, public readonly type: string = null) {}
+
+  get clientRect(): ClientRect {
+    return this.element.getBoundingClientRect();
+  }
 }

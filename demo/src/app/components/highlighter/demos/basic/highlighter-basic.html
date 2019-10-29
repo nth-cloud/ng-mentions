@@ -1,0 +1,8 @@
+<div class="basic-example position-relative">
+    <blockquote class="blockquote">
+        <ng-highlighter [text]="model.text">
+            <ng-highlighter-pattern className="name" [markup]="model.markup" [markupReplace]="model.markupReplace"></ng-highlighter-pattern>
+        </ng-highlighter>
+    </blockquote>
+</div>
+<pre class="my-2">{{model | json}}</pre>

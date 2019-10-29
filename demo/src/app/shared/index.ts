@@ -12,6 +12,7 @@ import {CodeHighlightService} from './code/code-highlight.service';
 import {NthdTab, NthdTabContent, NthdTabTitle, NthdTabVerbose} from './tabs/tab.component';
 import {NthdTabs} from './tabs/tabs.component';
 import {NthdInternalOutlet} from './tabs/outlet';
+import {NthSideNavComponent} from './side-nav/side-nav.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule],
@@ -30,7 +31,13 @@ import {NthdInternalOutlet} from './tabs/outlet';
     ComponentWrapper,
     PageWrapper,
     NthdCodeComponent,
-    NthdTab, NthdTabs, NthdTabVerbose, NthdTabContent, NthdTabTitle, NthdInternalOutlet
+    NthdTab,
+    NthdTabs,
+    NthdTabVerbose,
+    NthdTabContent,
+    NthdTabTitle,
+    NthdInternalOutlet,
+    NthSideNavComponent
   ],
   providers: [Analytics, CodeHighlightService]
 })

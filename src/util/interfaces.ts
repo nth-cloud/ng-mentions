@@ -1,5 +1,7 @@
 export interface Tag {
   indices: {start: number, end: number};
+  type?: string;
+  formatter?: any;
 }
 
 export interface Line {

@@ -6,12 +6,27 @@ import {NgMentionsAccessorDirective} from './mentions-input.directive';
 import {NgMentionsComponent} from './mentions.component';
 import {HighlightedDirective} from './util/highlight.directive';
 import {NgMentionsListComponent} from './util/mentions-list.component';
+import {NgHighlighterComponent} from './highlighter.component';
+import {NgHighlighterPatternDirective} from './highlighter-pattern.directive';
 
 export {NgMentionsAccessorDirective} from './mentions-input.directive';
 export {NgMentionsComponent} from './mentions.component';
+export {NgHighlighterComponent} from './highlighter.component';
 
-const EXPORT_DIRECTIVES = [NgMentionsComponent, NgMentionsAccessorDirective];
-const DECLARATIONS = [NgMentionsComponent, NgMentionsAccessorDirective, NgMentionsListComponent, HighlightedDirective];
+const EXPORT_DIRECTIVES = [
+  NgMentionsComponent,
+  NgMentionsAccessorDirective,
+  NgHighlighterComponent,
+  NgHighlighterPatternDirective,
+];
+const DECLARATIONS = [
+  NgMentionsComponent,
+  NgMentionsAccessorDirective,
+  NgMentionsListComponent,
+  HighlightedDirective,
+  NgHighlighterComponent,
+  NgHighlighterPatternDirective
+];
 
 @NgModule({
   imports: [CommonModule, FormsModule],

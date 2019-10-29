@@ -1,20 +1,25 @@
-<section class="container mt-4 tabset-code">
-  <nthd-tabset
-    class="root-nav"
-    (tabChange)="tabChange($event)"
-    [activeId]="activeTab"
-  >
-    <nthd-tab title="Examples" id="examples">
-      <ng-template nthd-tab-content>
-        <ng-content select="nthd-example-box"></ng-content>
-      </ng-template>
-    </nthd-tab>
-    <nthd-tab title="API" id="api">
-      <ng-template nthd-tab-content>
-        <ng-content select="nthd-api-docs"></ng-content>
-        <ng-content select="nthd-api-docs-class"></ng-content>
-        <ng-content select="nthd-api-docs-config"></ng-content>
-      </ng-template>
-    </nthd-tab>
-  </nthd-tabset>
+<section class="container mt-4 tabset-code d-flex">
+  <div class="col-3">
+    <nthd-side-nav></nthd-side-nav>
+  </div>
+  <div class="col-9">
+    <nthd-tabset
+      class="root-nav"
+      (tabChange)="tabChange($event)"
+      [activeId]="activeTab"
+    >
+      <nthd-tab title="Examples" id="examples">
+        <ng-template nthd-tab-content>
+          <ng-content select="nthd-example-box"></ng-content>
+        </ng-template>
+      </nthd-tab>
+      <nthd-tab title="API" id="api">
+        <ng-template nthd-tab-content>
+          <ng-content select="nthd-api-docs"></ng-content>
+          <ng-content select="nthd-api-docs-class"></ng-content>
+          <ng-content select="nthd-api-docs-config"></ng-content>
+        </ng-template>
+      </nthd-tab>
+    </nthd-tabset>
+  </div>
 </section>
