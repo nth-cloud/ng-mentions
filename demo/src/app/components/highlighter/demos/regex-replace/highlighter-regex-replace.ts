@@ -9,7 +9,7 @@ import {NgHighlightedValue} from '../../../../../../../src/highlighted-value';
     'ng-highlighter .highlighted {font-weight: bold;}'
   ]
 })
-export class NthdHighlighterRegExReplace {
+export class NthdHighlighterRegexReplace {
   model: any  = {
     text: 'Hello @[Dave](contact:1). How are you doing today?\n\nWould you like to play a game of chess?',
     markup: '@[__display__](__type__:__id__)',

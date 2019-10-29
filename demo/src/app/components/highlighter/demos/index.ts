@@ -1,7 +1,7 @@
 import {NthdHighlighterBasic} from './basic/highlighter-basic';
-import {NthdHighlighterRegExReplace} from './regex-replace/highlighter-regex-replace';
+import {NthdHighlighterRegexReplace} from './regex-replace/highlighter-regex-replace';
 
-export const DEMO_DIRECTIVES = [NthdHighlighterBasic, NthdHighlighterRegExReplace];
+export const DEMO_DIRECTIVES = [NthdHighlighterBasic, NthdHighlighterRegexReplace];
 export const DEMO_SNIPPETS = {
   'basic': {
     'code': require('!!raw-loader!./basic/highlighter-basic'),
