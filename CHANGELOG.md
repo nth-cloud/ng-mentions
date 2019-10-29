@@ -1,3 +1,12 @@
+## [2.0.4](https://github.com/nth-cloud/ng-mentions/compare/2.0.3...2.0.4) (2019-10-29)
+
+
+### Features
+
+* Added new Highlighter component, closes [#5](https://github.com/nth-cloud/ng-mentions/issues/5) ([5d131a6](https://github.com/nth-cloud/ng-mentions/commit/5d131a6))
+
+
+
 ## [2.0.3](https://github.com/nth-cloud/ng-mentions/compare/2.0.2...2.0.3) (2019-05-07)
 
 
