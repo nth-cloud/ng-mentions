@@ -4,14 +4,14 @@ node_js:
 
 env:
   global:
-  - SAUCE_USERNAME=ng-mentions
-  - SAUCE_ACCESS_KEY=07515f712e6a-1878-0d84-01ed-d8216552
   - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
   - LOGS_DIR=/tmp/logs
 
 addons:
   chrome: stable
-  sauce_connect: true
+  sauce_connect:
+    username: ng-mentions
+    access_key: 07515f712e6a-1878-0d84-01ed-d8216552
 
 services:
   - xvfb
