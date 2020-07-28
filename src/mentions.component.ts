@@ -123,6 +123,42 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
    * the mention in the search result list and when formatting a mention in the displayed text.
    */
   @Input('displayName') displayName: string = 'display';
+  @Input('placeholder') placeholder: string;
+
+  /**
+   * An event emitted, after the trigger character has been typed, with the user-entered search string.
+   */
+  @Output('search') readonly search: EventEmitter<string> = new EventEmitter<string>();
+  @Output('valueChanges') readonly valueChanges: EventEmitter<string> = new EventEmitter<string>();
+  @Output('stateChanges') readonly stateChanges: Subject<void> = new Subject<void>();
+
+  @ContentChild(TemplateRef, {static: true}) mentionListTemplate: TemplateRef<any>;
+  @ViewChild('input', {static: true}) textAreaInputElement: ElementRef;
+  @ViewChild('highlighter', {static: true}) highlighterElement: ElementRef;
+
+  displayContent: string = '';
+  lines: Line[] = [];
+  highlighterStyle: {[key: string]: string} = {};
+  textAreaClassNames: {[key: string]: boolean} = {};
+  selectionStart: number;
+  selectionEnd: number;
+  mentions: any[] = [];
+
+  private _value: string = '';
+  private _required: boolean;
+  private _disabled: boolean;
+  private _rows: number = 1;
+  private _columns: number = 20;
+  private searchString: string;
+  private startPos: number;
+  private startNode;
+  mentionsList: NgMentionsListComponent;
+  private stopSearch: boolean = false;
+  private markupSearch: MarkupMention;
+  private _destroyed: Subject<void> = new Subject<void>();
+  private newLine: RegExp = /\n/g;
+  private _errorState: boolean = false;
+
   /**
    * Classes for textarea
    */
@@ -138,7 +174,6 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     });
   }
 
-  @Input('placeholder') placeholder: string;
   @Input('value')
   get value(): string {
     return this._value;
@@ -215,25 +250,6 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     }
   }
 
-  /**
-   * An event emitted, after the trigger character has been typed, with the user-entered search string.
-   */
-  @Output('search') readonly search: EventEmitter<string> = new EventEmitter<string>();
-  @Output('valueChanges') readonly valueChanges: EventEmitter<string> = new EventEmitter<string>();
-  @Output('stateChanges') readonly stateChanges: Subject<void> = new Subject<void>();
-
-  @ContentChild(TemplateRef, {static: true}) mentionListTemplate: TemplateRef<any>;
-  @ViewChild('input', {static: true}) textAreaInputElement: ElementRef;
-  @ViewChild('highlighter', {static: true}) highlighterElement: ElementRef;
-
-  displayContent: string = '';
-  lines: Line[] = [];
-  highlighterStyle: {[key: string]: string} = {};
-  textAreaClassNames: {[key: string]: boolean} = {};
-  selectionStart: number;
-  selectionEnd: number;
-  mentions: any[] = [];
-
   get readonly(): string {
     return this.disabled ? 'readonly' : null;
   }
@@ -241,21 +257,6 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   get errorState(): boolean {
     return this._errorState;
   }
-
-  private _value: string = '';
-  private _required: boolean;
-  private _disabled: boolean;
-  private _rows: number = 1;
-  private _columns: number = 20;
-  private searchString: string;
-  private startPos: number;
-  private startNode;
-  mentionsList: NgMentionsListComponent;
-  private stopSearch: boolean = false;
-  private markupSearch: MarkupMention;
-  private _destroyed: Subject<void> = new Subject<void>();
-  private newLine: RegExp = /\n/g;
-  private _errorState: boolean = false;
 
   constructor(
       private element: ElementRef, private componentResolver: ComponentFactoryResolver,
@@ -598,6 +599,9 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   }
 
   private refreshStyles() {
+    if (!this.textAreaInputElement) {
+      return;
+    }
     const element = this.textAreaInputElement.nativeElement;
     const computedStyle: any = getComputedStyle(element);
     this.highlighterStyle = {};

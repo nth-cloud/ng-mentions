@@ -42,14 +42,13 @@ export class NgMentionsListComponent implements OnInit {
   activeIndex: number = -1;
   readonly itemSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  get selectedItem(): any {
-    return this.activeIndex >= 0 && this.items[this.activeIndex] !== undefined ? this.items[this.activeIndex] : null;
-  }
-
   @ViewChild('defaultItemTemplate', {static: true}) defaultItemTemplate: TemplateRef<any>;
   @ViewChild('list', {static: true}) list: ElementRef;
   @HostBinding('class.show') public show: boolean = false;
   @HostBinding('class.drop-up') public dropUp: boolean = false;
+
+  private _top: number = 0;
+  private _left: number = 0;
 
   @HostBinding('style.top')
   get top(): string {
@@ -66,8 +65,9 @@ export class NgMentionsListComponent implements OnInit {
     return !Array.isArray(this.items) || this.items.length === 0;
   }
 
-  private _top: number = 0;
-  private _left: number = 0;
+  get selectedItem(): any {
+    return this.activeIndex >= 0 && this.items[this.activeIndex] !== undefined ? this.items[this.activeIndex] : null;
+  }
 
   ngOnInit(): void {
     if (!this.itemTemplate) {
