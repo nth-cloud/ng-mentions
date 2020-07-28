@@ -2,6 +2,7 @@
 
 import 'zone.js/dist/zone';
 import 'zone.js/dist/zone-testing';
+import '@angular/localize';
 import './test/jasmine.config';
 
 import {getTestBed} from '@angular/core/testing';
