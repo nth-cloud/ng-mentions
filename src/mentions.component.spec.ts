@@ -21,7 +21,8 @@ const isIE = isBrowser('ie');
 const isIE10 = isBrowser('ie10');
 const IEDelay = isIE10 ? 6000 : 4000;
 
-function createKeyDownEvent(event: any) {
+function createKeyDownEvent(key: Key) {
+  const event = createKeyEvent({key, type: 'keydown'});
   spyOn(event, 'preventDefault');
   spyOn(event, 'stopPropagation');
   return event;
@@ -144,17 +145,10 @@ describe('ng-mentions', () => {
        tickFixture(fixture);
 
        const triggerValue = '@';
-       triggerTextAreaEvent(el, createKeyEvent({key: Key.Shift, type: 'keydown'}));
+       triggerTextAreaEvent(el, createKeyDownEvent(Key.Shift));
        tickFixture(fixture);
        changeTextArea(el, triggerValue);
        tickFixture(fixture, isIE ? IEDelay : undefined);
-
-       expectTextAreaValue(el, triggerValue, 'textarea value not set');
-       expect(comp.model).toEqual(triggerValue, 'test component model value not set');
-       expect(mentionComp.value).toEqual(triggerValue, 'component model value not set');
-       expect(mentionComp.displayContent).toEqual(triggerValue, 'component display content not set');
-       expect(mentionComp.selectionStart).toBeGreaterThan(0, 'component selectionStart empty');
-       tickFixture(fixture);
 
        fixture.whenStable().then(() => {
          const mentionsList = fixture.debugElement.query(By.directive(NgMentionsListComponent));
@@ -166,11 +160,10 @@ describe('ng-mentions', () => {
          expect(mentionsListComp.activeIndex).toBe(0, 'MentionList activeIndex should be 0');
          expect(mentionsListComp.selectedItem).not.toBeNull('MentionList selectedItem should not be null');
          expect(mentionsListComp.selectedItem.display).toEqual('item1');
-         expect(mentionComp.selectionStart).toBeGreaterThan(0);
          tickFixture(fixture);
          expectDropDownItems(el, ['+item1', 'item2', 'item3']);
 
-         let event = createKeyEvent({key: Key.Enter, type: 'keydown'});
+         let event = createKeyDownEvent(Key.Enter);
          triggerTextAreaEvent(el, event);
          tickFixture(fixture);
 
@@ -199,7 +192,7 @@ describe('ng-mentions', () => {
        tickFixture(fixture);
 
        const triggerValue = '@';
-       triggerTextAreaEvent(el, createKeyEvent({key: Key.Shift, type: 'keydown'}));
+       triggerTextAreaEvent(el, createKeyDownEvent(Key.Shift));
        tickFixture(fixture);
        changeTextArea(el, triggerValue);
        tickFixture(fixture, isIE ? IEDelay : undefined);
@@ -219,28 +212,28 @@ describe('ng-mentions', () => {
          expectDropDownItems(el, ['+item1', 'item2', 'item3']);
 
          // Down
-         event = createKeyDownEvent(createKeyEvent({key: Key.ArrowDown, type: 'keydown'}));
+         event = createKeyDownEvent(Key.ArrowDown);
          triggerTextAreaEvent(el, event);
          tickFixture(fixture);
          expect(event.preventDefault).toHaveBeenCalled();
          expect(mentionsListComp.activeIndex).toBe(1);
 
          // Up
-         event = createKeyDownEvent(createKeyEvent({key: Key.ArrowUp, type: 'keydown'}));
+         event = createKeyDownEvent(Key.ArrowUp);
          triggerTextAreaEvent(el, event);
          tickFixture(fixture);
          expect(event.preventDefault).toHaveBeenCalled();
          expect(mentionsListComp.activeIndex).toBe(0);
 
          // End
-         event = createKeyDownEvent(createKeyEvent({key: Key.End, type: 'keydown'}));
+         event = createKeyDownEvent(Key.End);
          triggerTextAreaEvent(el, event);
          tickFixture(fixture);
          expect(event.preventDefault).toHaveBeenCalled();
          expect(mentionsListComp.activeIndex).toBe(2);
 
          // Home
-         event = createKeyDownEvent(createKeyEvent({key: Key.Home, type: 'keydown'}));
+         event = createKeyDownEvent(Key.Home);
          triggerTextAreaEvent(el, event);
          tickFixture(fixture);
          expect(event.preventDefault).toHaveBeenCalled();

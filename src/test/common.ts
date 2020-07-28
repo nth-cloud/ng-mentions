@@ -79,18 +79,13 @@ export function createKeyEvent(
   }
   let event;
   const isIE = isBrowser(['ie10', 'ie11']);
-  if (isIE && options.type === 'input') {
-    event = document.createEvent('MouseEvent');
-    event.initEvent(options.type, options.bubbles, options.cancelable);
-  } else if (isIE) {
+  if (isIE) {
     event = document.createEvent('KeyboardEvent');
     event.initEvent(options.type, options.cancelable, options.bubbles);
-    // event.initKeyboardEvent(options.type, options.cancelable, options.bubbles, window, 0, 0, 0, 0, 0);
   } else {
-    event = new KeyboardEvent(options.type, eventInitDict)
+    event = new KeyboardEvent(options.type, eventInitDict);
   }
   if (options.key) {
-    delete event.keyCode;
     Object.defineProperties(event, {
       which: {get: () => options.key},
       keyCode: {get: () => options.key},
