@@ -18,6 +18,12 @@ const BROWSERS = {
     platform: 'Windows 10',
     version: 'latest'
   },
+  'EDGE18': {
+    base: 'SauceLabs',
+    browserName: 'MicrosoftEdge',
+    platform: 'Windows 10',
+    version: '18.17763'
+  },
   'IE10': {
     base: 'SauceLabs',
     browserName: 'internet explorer',
