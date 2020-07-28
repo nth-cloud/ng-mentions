@@ -19,7 +19,7 @@ const createTestComponent = (html: string) =>
 
 const isIE = isBrowser('ie');
 const isIE10 = isBrowser('ie10');
-const IEDelay = isIE10 ? 8000 : 4000;
+const IEDelay = isIE10 ? 6000 : 4000;
 
 function createKeyDownEvent(event: any) {
   spyOn(event, 'preventDefault');
