@@ -4,14 +4,13 @@ node_js:
 
 env:
   global:
-  - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
-  - LOGS_DIR=/tmp/logs
+    - SAUCE_USERNAME=ng-mentions
+    - SAUCE_ACCESS_KEY=07515f712e6a-1878-0d84-01ed-d8216552
+    - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
+    - LOGS_DIR=/tmp/logs
 
 addons:
   chrome: stable
-  sauce_connect:
-    username: ng-mentions
-    access_key: 07515f712e6a-1878-0d84-01ed-d8216552
 
 services:
   - xvfb
@@ -23,10 +22,16 @@ cache: yarn
 
 before_script:
   - mkdir -p $LOGS_DIR
+  - ./scripts/sauce_connect_setup.sh
 
 script:
   - yarn ci && yarn api-doc:test
   - yarn global add codecov && codecov --disable=gcov -f coverage/lcov.info -F unit
+  - ./scripts/sauce_connect_block.sh
   - yarn saucelabs
+  - yarn saucelabs:ie
+
+after_script:
+  - ./scripts/sauce_connect_teardown.sh
 
 sudo: false

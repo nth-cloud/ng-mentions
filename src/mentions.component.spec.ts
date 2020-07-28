@@ -4,11 +4,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 
 import {NgMentionsComponent, NgMentionsModule} from './index';
-import {createGenericTestComponent, createKeyEvent, expectResults} from './test/common';
+import {createGenericTestComponent, createKeyEvent, expectResults, isBrowser} from './test/common';
 import {Key} from './util/key';
 import {NgMentionsListComponent} from './util/mentions-list.component';
 
-@Component({selector: 'test-cmp', template: ''})
+@Component({selector: 'test-cmp', template: '', styles: ['test-cmp {display: block;}']})
 class TestComponent {
   model: any = '';
   mentions: any = [];
@@ -17,8 +17,9 @@ class TestComponent {
 const createTestComponent = (html: string) =>
     createGenericTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
 
-const isIE = /msie\s/i.test(window.navigator.userAgent);
-const IEDelay = 4000;
+const isIE = isBrowser('ie');
+const isIE10 = isBrowser('ie10');
+const IEDelay = isIE10 ? 8000 : 4000;
 
 function createKeyDownEvent(event: any) {
   spyOn(event, 'preventDefault');
@@ -148,11 +149,11 @@ describe('ng-mentions', () => {
        changeTextArea(el, triggerValue);
        tickFixture(fixture, isIE ? IEDelay : undefined);
 
-       expectTextAreaValue(el, triggerValue);
-       expect(comp.model).toEqual(triggerValue);
-       expect(mentionComp.value).toEqual(triggerValue);
-       expect(mentionComp.displayContent).toEqual(triggerValue);
-       expect(mentionComp.selectionStart).toBeGreaterThan(0);
+       expectTextAreaValue(el, triggerValue, 'textarea value not set');
+       expect(comp.model).toEqual(triggerValue, 'test component model value not set');
+       expect(mentionComp.value).toEqual(triggerValue, 'component model value not set');
+       expect(mentionComp.displayContent).toEqual(triggerValue, 'component display content not set');
+       expect(mentionComp.selectionStart).toBeGreaterThan(0, 'component selectionStart empty');
        tickFixture(fixture);
 
        fixture.whenStable().then(() => {
