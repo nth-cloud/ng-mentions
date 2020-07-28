@@ -5,7 +5,7 @@ node_js:
 env:
   global:
     - SAUCE_USERNAME=ng-mentions
-    - SAUCE_ACCESS_KEY=07515f712e6a-1878-0d84-01ed-d8216552
+    - SAUCE_ACCESS_KEY=a2efb88ef74f-2c5b-0ce4-98bd-4582585a
     - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
     - LOGS_DIR=/tmp/logs
 
