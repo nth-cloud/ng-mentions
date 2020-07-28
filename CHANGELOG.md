@@ -1,3 +1,21 @@
+# [5.0.0](https://github.com/nth-cloud/ng-mentions/compare/4.0.0...5.0.0) (2020-07-28)
+
+
+### Features
+
+* upgrading to angular v10 ([721ecdc](https://github.com/nth-cloud/ng-mentions/commit/721ecdc31b90f06a9ce29b206513aea7af23e39a))
+
+
+
+# [4.0.0](https://github.com/nth-cloud/ng-mentions/compare/3.0.0...4.0.0) (2020-07-28)
+
+
+### Features
+
+* upgrading to angular v9 ([3c293a5](https://github.com/nth-cloud/ng-mentions/commit/3c293a5439de48e9e04bb5f9b31a01e7c6eb4065))
+
+
+
 # [3.0.0](https://github.com/nth-cloud/ng-mentions/compare/2.0.3...3.0.0) (2020-07-28)
 
 
