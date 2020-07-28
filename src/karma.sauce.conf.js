@@ -69,7 +69,7 @@ module.exports = function (config) {
       tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
       testName: 'ng-mentions',
       retryLimit: 3,
-      startConnect: true,
+      startConnect: false,
       recordVideo: false,
       recordScreenshots: false,
       options: {
