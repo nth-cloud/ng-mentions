@@ -222,9 +222,9 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   @Output('valueChanges') readonly valueChanges: EventEmitter<string> = new EventEmitter<string>();
   @Output('stateChanges') readonly stateChanges: Subject<void> = new Subject<void>();
 
-  @ContentChild(TemplateRef) mentionListTemplate: TemplateRef<any>;
-  @ViewChild('input') textAreaInputElement: ElementRef;
-  @ViewChild('highlighter') highlighterElement: ElementRef;
+  @ContentChild(TemplateRef, {static: true}) mentionListTemplate: TemplateRef<any>;
+  @ViewChild('input', {static: true}) textAreaInputElement: ElementRef;
+  @ViewChild('highlighter', {static: true}) highlighterElement: ElementRef;
 
   displayContent: string = '';
   lines: Line[] = [];

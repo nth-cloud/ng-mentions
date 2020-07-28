@@ -1,9 +1,18 @@
+# [3.0.0](https://github.com/nth-cloud/ng-mentions/compare/2.0.3...3.0.0) (2020-07-28)
+
+
+### Features
+
+* upgrading to angular v8 ([ca55755](https://github.com/nth-cloud/ng-mentions/commit/ca557559a2916902a4f00d085ca6cc837e3482a9))
+
+
+
 ## [2.0.4](https://github.com/nth-cloud/ng-mentions/compare/2.0.3...2.0.4) (2019-10-29)
 
 
 ### Features
 
-* Added new Highlighter component, closes [#5](https://github.com/nth-cloud/ng-mentions/issues/5) ([5d131a6](https://github.com/nth-cloud/ng-mentions/commit/5d131a6))
+* Added new Highlighter component, closes [#5](https://github.com/nth-cloud/ng-mentions/issues/5) ([5d131a6](https://github.com/nth-cloud/ng-mentions/commit/5d131a6f1b1d1555b19b135a0430aa1063efe369))
 
 
 

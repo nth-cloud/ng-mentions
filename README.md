@@ -16,13 +16,14 @@ Native Angular components & directives for customizable mentions. Allowing for c
 View it in action at https://nth-cloud.github.io/ng-mentions
 
 ## Dependencies
-* [Angular](https://angular.io) (tested with 7.0.0)
+* [Angular](https://angular.io) (tested with 8.2.14)
 
 | ng-mentions | Angular |
 | ----------- | ------- |
 | 0.x.x       | 5.2.1   |
 | 1.x.x       | 6.1.0   |
 | 2.x.x       | 7.0.0   |
+| 3.x.x       | 8.0.0   |
 
 ## Installation
 After installing the above dependencies, install `ng-mentions` via:

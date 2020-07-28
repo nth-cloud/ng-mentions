@@ -1,22 +1,28 @@
 import {Component} from '@angular/core';
 import {environment} from '../../environments/environment';
+import {CodeHighlightService} from '../shared/code/code-highlight.service';
 
-const prism = require('prismjs');
-const types = (Prism: any) => {
-    require('prismjs/components/prism-clike');
-    require('prismjs/components/prism-typescript');
-};
-types(prism);
+const INSTALL_NPM = require('!!raw-loader!./install-npm.md').default;
+const BUNDLE = require('!!raw-loader!./bundle.md').default;
+const IMPORT_USAGE = require('!!raw-loader!./import.md').default;
+const USAGE = require('!!raw-loader!./usage.md').default;
 
 @Component({
     selector: 'nthd-default',
     templateUrl: './default.component.html'
 })
 export class DefaultComponent {
-    public version: string = environment.version;
+    readonly version: string = environment.version;
 
-    readonly installNPM: string = prism.highlight(require('!!raw-loader!./install-npm.md'), prism.languages.clike);
-    readonly bundle: string = prism.highlight(require('!!raw-loader!./bundle.md'), prism.languages.javascript);
-    readonly importUsage: string = prism.highlight(require('!!raw-loader!./import.md'), prism.languages.typescript);
-    readonly usage: string = prism.highlight(require('!!raw-loader!./usage.md'), prism.languages.typescript);
+    readonly installNPM: string = '';
+    readonly bundle: string = '';
+    readonly importUsage: string = '';
+    readonly usage: string = '';
+
+    constructor(private highlightService: CodeHighlightService) {
+      this.installNPM = highlightService.highlight(INSTALL_NPM, 'clike');
+      this.bundle = highlightService.highlight(BUNDLE, 'javascript');
+      this.importUsage = highlightService.highlight(IMPORT_USAGE, 'typescript');
+      this.usage = highlightService.highlight(USAGE, 'typescript');
+    }
 }

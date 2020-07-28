@@ -46,8 +46,8 @@ export class NgMentionsListComponent implements OnInit {
     return this.activeIndex >= 0 && this.items[this.activeIndex] !== undefined ? this.items[this.activeIndex] : null;
   }
 
-  @ViewChild('defaultItemTemplate') defaultItemTemplate: TemplateRef<any>;
-  @ViewChild('list') list: ElementRef;
+  @ViewChild('defaultItemTemplate', {static: true}) defaultItemTemplate: TemplateRef<any>;
+  @ViewChild('list', {static: true}) list: ElementRef;
   @HostBinding('class.show') public show: boolean = false;
   @HostBinding('class.drop-up') public dropUp: boolean = false;
 
