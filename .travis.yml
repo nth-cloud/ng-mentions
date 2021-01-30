@@ -1,11 +1,10 @@
 language: node_js
 node_js:
-- "12"
+  - 12
+  - 14
 
 env:
   global:
-    - SAUCE_USERNAME=ng-mentions
-    - SAUCE_ACCESS_KEY=a2efb88ef74f-2c5b-0ce4-98bd-4582585a
     - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
     - LOGS_DIR=/tmp/logs
 
