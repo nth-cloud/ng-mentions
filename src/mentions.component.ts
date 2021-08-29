@@ -73,26 +73,7 @@ import {
         [placeholder]="placeholder"
       ></textarea>
   `,
-  styles: [
-    'ng-mentions {position: relative; display: inline-block;}',
-    'ng-mentions textarea {position:relative; background-color: transparent !important;}', `ng-mentions .highlighter {
-        position: absolute;
-        top:      0;
-        left:     0;
-        right:    0;
-        bottom:   0;
-        color:    transparent;
-        overflow: hidden !important;
-    }`,
-    `ng-mentions highlighted {
-        display:          inline;
-        border-radius:    3px;
-        padding:          1px;
-        margin:           -1px;
-        overflow-wrap:    break-word;
-        background-color: lightblue;
-    }`
-  ],
+  styleUrls: ['./mentions.scss'],
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })

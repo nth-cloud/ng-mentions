@@ -1,0 +1,35 @@
+
+mentions-list {
+  position: absolute;
+  display: none;
+
+  &.drop-up {
+    transform: translateY(-100%);
+  }
+
+  &.show {
+    display: block;
+  }
+
+  &.no-items {
+    display: none;
+  }
+
+  .scrollable-menu {
+    display: block;
+    height: auto;
+    max-height: 300px;
+    overflow: auto;
+  }
+
+  li.active {
+    background: #f7f7f9;
+  }
+
+  .dropdown-menu {
+    &,
+    & li {
+      list-style: none;
+    }
+  }
+}

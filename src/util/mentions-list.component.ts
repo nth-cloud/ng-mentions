@@ -25,8 +25,8 @@ import {getCaretCoordinates, getElementStyle} from './utils';
           </li>
       </ul>
   `,
+  styleUrls: ['./mentions-list.scss'],
   styles: [
-    'mentions-list {position: absolute;display: none;}', 'mentions-list.drop-up {transform: translateY(-100%);}',
     'mentions-list.show {display: block;} mentions-list.no-items {display: none;}',
     'mentions-list .scrollable-menu {display: block;height: auto;max-height:300px;overflow:auto;}',
     'mentions-list li.active {background: #f7f7f9;}'
