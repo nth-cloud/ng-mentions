@@ -1,3 +1,7 @@
+## [5.0.1](https://github.com/nth-cloud/ng-mentions/compare/5.0.0...5.0.1) (2021-08-29)
+
+
+
 # [5.0.0](https://github.com/nth-cloud/ng-mentions/compare/4.0.0...5.0.0) (2020-07-28)
 
 
