@@ -1,3 +1,12 @@
+# [7.0.0](https://github.com/nth-cloud/ng-mentions/compare/6.0.0...7.0.0) (2021-08-30)
+
+
+### Features
+
+* upgrading to angular v12 ([e1aed6d](https://github.com/nth-cloud/ng-mentions/commit/e1aed6d7e6e00066fbf7ace980fec84bbeee278b))
+
+
+
 # [6.0.0](https://github.com/nth-cloud/ng-mentions/compare/5.0.0...6.0.0) (2021-08-30)
 
 
