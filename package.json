@@ -54,12 +54,13 @@
     "demo:deploy": "yarn demo:build && yarn demo:publish",
     "demo:publish": "gh-pages --dist demo/dist --branch gh-pages",
     "demo:stackblitzes": "ts-node --project misc/tsconfig.json misc/generate-stackblitzes.ts",
-    "clean": "yarn clean:dist & yarn clean:test & yarn clean:demo & yarn clean:demo:deploy && yarn clean:demo:plunks",
-    "clean:dist": "([[ ! -e dist/ ]] || rm -r dist/) && ([[ ! -e dist.tgz ]] || rm dist.tgz)",
-    "clean:test": "[[ ! -e coverage/ ]] || rm -r coverage/",
-    "clean:demo": "[[ ! -e demo/dist/ ]] || rm -r demo/dist",
+    "clean": "yarn clean:dist & yarn clean:test & yarn clean:demo & yarn clean:demo:deploy && yarn clean:demo:plunks && yarn clean:schematics",
+    "clean:dist": "rimraf dist && ([[ ! -e dist.tgz ]] || rm dist.tgz)",
+    "clean:test": "rimraf coverage",
+    "clean:demo": "rimraf demo/dist",
+    "clean:schematics": "rimraf schematics/dist",
     "clean:demo:deploy": "[[ ! -e .publish/ ]] || rm -fr .publish/",
-    "clean:demo:plunks": "[[ ! -e demo/src/public/app/components ]] || rm -r demo/src/public/app/components"
+    "clean:demo:plunks": "rimraf demo/src/public/app/components"
   },
   "dependencies": {},
   "devDependencies": {
