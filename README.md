@@ -24,7 +24,7 @@ View it in action at https://nth-cloud.github.io/ng-mentions
 | 4.x.x       | 9.0.0   | :x: |
 | 5.x.x       | 10.0.0  | :white_check_mark: |
 | 6.x.x       | 11.0.0  | :white_check_mark: |
-| 7.x.x       | 11.0.0  | :white_check_mark: |
+| 7.x.x       | 12.0.0  | :white_check_mark: |
 
 ## Installation
 
