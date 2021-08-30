@@ -1,4 +1,4 @@
-import {Directive, ElementRef, forwardRef, OnDestroy, OnInit} from '@angular/core';
+import {Directive, ElementRef, forwardRef, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -10,7 +10,6 @@ import {NgMentionsComponent} from './mentions.component';
 @Directive({
   exportAs: 'ngMentions',
   selector: 'ng-mentions',
-  host: {'(change)': 'onChange($event)', '(touch)': 'onTouched()'},
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NgMentionsAccessorDirective), multi: true}]
 })
 export class NgMentionsAccessorDirective implements OnInit, OnDestroy, ControlValueAccessor {
@@ -47,12 +46,14 @@ export class NgMentionsAccessorDirective implements OnInit, OnDestroy, ControlVa
     }
   }
 
+  @HostListener('change', ['$event'])
   onChange(value: string) {
     if (this._onChange && typeof value !== 'object') {
       this._onChange(value);
     }
   }
 
+  @HostListener('touch')
   onTouched() {
     if (this._onTouch) {
       this._onTouch();

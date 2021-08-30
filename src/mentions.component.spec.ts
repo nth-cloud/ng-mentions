@@ -19,7 +19,7 @@ const createTestComponent = (html: string) =>
 
 const isIE = isBrowser('ie');
 const isIE10 = isBrowser('ie10');
-const IEDelay = isIE10 ? 6000 : 4000;
+const delayIE = isIE10 ? 6000 : 4000;
 
 function createKeyDownEvent(key: Key) {
   const event = createKeyEvent({key, type: 'keydown'});
@@ -65,7 +65,7 @@ function expectTextAreaValue(element: HTMLElement, value: string, exceptionFailO
 }
 
 function expectMentionListToBeHidden(element: DebugElement, hidden: boolean, exceptionFailOutput?: string) {
-  let el = element.query(By.directive(NgMentionsListComponent));
+  const el = element.query(By.directive(NgMentionsListComponent));
   expect(el).toBeDefined(exceptionFailOutput);
   if (!hidden) {
     expect(el).not.toBeNull(exceptionFailOutput);
@@ -96,7 +96,7 @@ describe('ng-mentions', () => {
          const plainTextValue = 'Test value with Mentions formatted\nAnd New Lines';
          const model = 'Test value with @[Mentions](type:1) formatted\nAnd @[New Lines](type:2)';
 
-         const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
+         const fixture = createTestComponent('<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>');
 
          const el = fixture.nativeElement;
          const comp = fixture.componentInstance;
@@ -114,9 +114,9 @@ describe('ng-mentions', () => {
   });
 
   it('should initialize', () => {
-    const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
+    const fixture = createTestComponent('<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>');
 
-    let originalValue = 'Test string @[Name](type:1)';
+    const originalValue = 'Test string @[Name](type:1)';
     fixture.componentInstance.model = originalValue;
     fixture.componentInstance.mentions = [{display: 'Name2', type: 'type', id: 2}];
     fixture.detectChanges();
@@ -126,7 +126,7 @@ describe('ng-mentions', () => {
   });
 
   it('should select first mention on Enter', fakeAsync(() => {
-       const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
+       const fixture = createTestComponent('<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>');
 
        const el = fixture.nativeElement;
        const comp = fixture.componentInstance;
@@ -148,7 +148,7 @@ describe('ng-mentions', () => {
        triggerTextAreaEvent(el, createKeyDownEvent(Key.Shift));
        tickFixture(fixture);
        changeTextArea(el, triggerValue);
-       tickFixture(fixture, isIE ? IEDelay : undefined);
+       tickFixture(fixture, isIE ? delayIE : undefined);
 
        fixture.whenStable().then(() => {
          const mentionsList = fixture.debugElement.query(By.directive(NgMentionsListComponent));
@@ -163,7 +163,7 @@ describe('ng-mentions', () => {
          tickFixture(fixture);
          expectDropDownItems(el, ['+item1', 'item2', 'item3']);
 
-         let event = createKeyDownEvent(Key.Enter);
+         const event = createKeyDownEvent(Key.Enter);
          triggerTextAreaEvent(el, event);
          tickFixture(fixture);
 
@@ -173,7 +173,7 @@ describe('ng-mentions', () => {
      }));
 
   it('should make previous/next result active with up/down arrow keys', fakeAsync(() => {
-       const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
+       const fixture = createTestComponent('<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>');
 
        const el = fixture.nativeElement;
        const comp = fixture.componentInstance;
@@ -195,7 +195,7 @@ describe('ng-mentions', () => {
        triggerTextAreaEvent(el, createKeyDownEvent(Key.Shift));
        tickFixture(fixture);
        changeTextArea(el, triggerValue);
-       tickFixture(fixture, isIE ? IEDelay : undefined);
+       tickFixture(fixture, isIE ? delayIE : undefined);
 
        let event;
        fixture.whenStable().then(() => {
@@ -242,7 +242,7 @@ describe('ng-mentions', () => {
      }));
 
   it('should remove mention on backspace into mention', fakeAsync(() => {
-       const fixture = createTestComponent(`<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>`);
+       const fixture = createTestComponent('<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>');
        const comp = fixture.componentInstance;
        const mentionComp: NgMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
 

@@ -7,7 +7,7 @@ import {createGenericTestComponent} from './test/common';
 @Component({selector: 'test-cmp', template: ''})
 class TestComponent {
   model: any = '';
-  value: string = 'Test string @[Name](type:1)';
+  value = 'Test string @[Name](type:1)';
 }
 
 const createTestComponent = (html: string) =>

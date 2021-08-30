@@ -81,29 +81,29 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   /**
    * The character to trigger the mentions list when a user is typing in the input field
    */
-  @Input('triggerChar') triggerChar: string = '@';
+  @Input('triggerChar') triggerChar = '@';
   /**
    * The markup used to format a mention in the model value
    */
-  @Input('markup') mentionMarkup: string = '@[__display__](__type__:__id__)';
+  @Input('markup') mentionMarkup = '@[__display__](__type__:__id__)';
   /**
    * Optional. When using a custom search (i.e. an API call), the internal searching capability should be disabled.
    */
-  @Input('disableSearch') disableSearch: boolean = false;
+  @Input('disableSearch') disableSearch = false;
   /**
    * Only used when internal search is not disabled. This limits the maximum number of items to display in the search
    * result list.
    */
-  @Input('maxItems') maxItems: number = -1;
+  @Input('maxItems') maxItems = -1;
   /**
    * Used to cause the search result list to display in a "drop up" fashion, instead of a typical dropdown.
    */
-  @Input('dropUp') dropUp: boolean = false;
+  @Input('dropUp') dropUp = false;
   /**
    * If the supplied mentions are a list of objects, this is the name of the property used to display
    * the mention in the search result list and when formatting a mention in the displayed text.
    */
-  @Input('displayName') displayName: string = 'display';
+  @Input('displayName') displayName = 'display';
   @Input('placeholder') placeholder: string;
 
   /**
@@ -117,7 +117,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   @ViewChild('input', {static: true}) textAreaInputElement: ElementRef;
   @ViewChild('highlighter', {static: true}) highlighterElement: ElementRef;
 
-  displayContent: string = '';
+  displayContent = '';
   lines: Line[] = [];
   highlighterStyle: {[key: string]: string} = {};
   textAreaClassNames: {[key: string]: boolean} = {};
@@ -125,20 +125,20 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   selectionEnd: number;
   mentions: any[] = [];
 
-  private _value: string = '';
+  private _value = '';
   private _required: boolean;
   private _disabled: boolean;
-  private _rows: number = 1;
-  private _columns: number = 20;
+  private _rows = 1;
+  private _columns = 20;
   private searchString: string;
   private startPos: number;
   private startNode;
   mentionsList: NgMentionsListComponent;
-  private stopSearch: boolean = false;
+  private stopSearch = false;
   private markupSearch: MarkupMention;
   private _destroyed: Subject<void> = new Subject<void>();
-  private newLine: RegExp = /\n/g;
-  private _errorState: boolean = false;
+  private newLine = /\n/g;
+  private _errorState = false;
 
   /**
    * Classes for textarea
@@ -369,7 +369,8 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
 
   private _formatMention(contents: string): string {
     const replaceValue = `\$${this.displayName}`;
-    let result = contents.replace(this.markupSearch.regEx, replaceValue), replaceIndex;
+    let result = contents.replace(this.markupSearch.regEx, replaceValue);
+    let replaceIndex;
     if (result === replaceValue) {
       replaceIndex = `\$${this.markupSearch.groups[this.displayName]}`;
       result = contents.replace(this.markupSearch.regEx, replaceIndex);
@@ -485,7 +486,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
       this.mentionsList.displayTransform = this.displayTransform.bind(this);
       this.mentionsList.itemSelected.subscribe(item => {
         this.textAreaInputElement.nativeElement.focus();
-        const fakeEvent = {keyCode: Key.Enter, wasSelection: true, item: item};
+        const fakeEvent = {keyCode: Key.Enter, wasSelection: true, item};
         this.onKeyDown(fakeEvent);
       });
       this.mentionsList.displayTransform = this.getDisplayValue.bind(this);
@@ -502,7 +503,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     if (!this.disableSearch) {
       let items = Array.from(this.mentions);
       if (this.searchString) {
-        const searchString = this.searchString.toLowerCase(), searchRegEx = new RegExp(escapeRegExp(searchString), 'i');
+        const searchString = this.searchString.toLowerCase(); const searchRegEx = new RegExp(escapeRegExp(searchString), 'i');
         items = items.filter(item => {
           const value = this.getDisplayValue(item);
           return value !== null && searchRegEx.test(value);
@@ -562,7 +563,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
       if (contents.length === expectedLength) {
         const prevIndex = prevTags.length > 0 ? prevTags[prevTags.length - 1].indices.end : 0;
         const before = line.slice(prevIndex, tag.indices.start);
-        const partMention = <Mention>{contents: contents, tag: tag};
+        const partMention = <Mention>{contents, tag};
         lineObj.parts.push(before);
         lineObj.parts.push(partMention);
         prevTags.push(tag);

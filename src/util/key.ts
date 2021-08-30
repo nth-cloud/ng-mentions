@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
+// eslint-disable-next-line no-shadow
 export enum Key {
   Backspace = 8,
   Tab = 9,

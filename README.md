@@ -13,7 +13,7 @@ Native Angular components & directives for customizable mentions. Allowing for c
 View it in action at https://nth-cloud.github.io/ng-mentions
 
 ## Dependencies
-* [Angular](https://angular.io) (tested with 11.2.14)
+* [Angular](https://angular.io) (tested with 12.2.3)
 
 | ng-mentions | Angular | Active Support |
 | ----------- | ------- |:---------:|
@@ -23,7 +23,8 @@ View it in action at https://nth-cloud.github.io/ng-mentions
 | 3.x.x       | 8.0.0   | :x: |
 | 4.x.x       | 9.0.0   | :x: |
 | 5.x.x       | 10.0.0  | :white_check_mark: |
-| 5.x.x       | 11.0.0  | :white_check_mark: |
+| 6.x.x       | 11.0.0  | :white_check_mark: |
+| 7.x.x       | 11.0.0  | :white_check_mark: |
 
 ## Installation
 

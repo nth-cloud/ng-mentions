@@ -5,7 +5,7 @@ function normalizeText(txt: string): string {
   return txt.trim().replace(/\s+/g, ' ');
 }
 
-export function createGenericTestComponent<T>(html: string, type: {new (...args: any[]): T}): ComponentFixture<T> {
+export function createGenericTestComponent<T>(html: string, type: new (...args: any[]) => T): ComponentFixture<T> {
   TestBed.overrideComponent(type, {set: {template: html}});
   const fixture = TestBed.createComponent(type);
   fixture.detectChanges();
@@ -15,7 +15,7 @@ export function createGenericTestComponent<T>(html: string, type: {new (...args:
 export type Browser = 'ie9'|'ie10'|'ie11'|'ie'|'edge'|'chrome'|'safari'|'firefox';
 
 export function getBrowser(ua = window.navigator.userAgent) {
-  let browser = 'unknown';
+  const browser = 'unknown';
 
   // IE < 11
   const msie = ua.indexOf('MSIE ');
@@ -25,7 +25,7 @@ export function getBrowser(ua = window.navigator.userAgent) {
 
   // IE 11
   if (ua.indexOf('Trident/') > 0) {
-    let rv = ua.indexOf('rv:');
+    const rv = ua.indexOf('rv:');
     return 'ie' + parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
   }
 
@@ -55,8 +55,8 @@ export function getBrowser(ua = window.navigator.userAgent) {
 }
 
 export function isBrowser(browsers: Browser|Browser[], ua = window.navigator.userAgent) {
-  let browsersStr = Array.isArray(browsers) ? (browsers as Browser[]).map(x => x.toString()) : [browsers.toString()];
-  let browser = getBrowser(ua);
+  const browsersStr = Array.isArray(browsers) ? (browsers as Browser[]).map(x => x.toString()) : [browsers.toString()];
+  const browser = getBrowser(ua);
 
   if (browsersStr.indexOf('ie') > -1 && browser.startsWith('ie')) {
     return true;
@@ -72,7 +72,7 @@ export function createKeyEvent(
       bubbles: true,
       cancelable: true
     }): Event {
-  let eventInitDict: any = {bubbles: options.bubbles, cancelable: options.cancelable};
+  const eventInitDict: any = {bubbles: options.bubbles, cancelable: options.cancelable};
   if (options.key === Key.Shift) {
     eventInitDict.shiftKey = true;
     options.key = null;
@@ -104,8 +104,8 @@ export function expectResults(element: HTMLElement, resultsDef: string[]) {
 
   expect(elements.length).toEqual(resultsDef.length);
   for (let i = 0; i < resultsDef.length; i++) {
-    let resultDef = resultsDef[i];
-    let classIndicator = resultDef.charAt(0);
+    const resultDef = resultsDef[i];
+    const classIndicator = resultDef.charAt(0);
 
     if (classIndicator === '+') {
       expect(elements[i]).toHaveCssClass('active');

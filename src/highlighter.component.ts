@@ -121,7 +121,7 @@ export class NgHighlighterComponent implements OnChanges, AfterContentInit {
   }
 
   private getMatchedElement(event: MouseEvent): Highlighted {
-    let matched = this.highlightedElements.find(
+    const matched = this.highlightedElements.find(
         (el: Highlighted): boolean => isCoordinateWithinRect(el.clientRect, event.clientX, event.clientY));
 
     return matched ? matched : null;

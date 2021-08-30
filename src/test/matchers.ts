@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand,prefer-arrow/prefer-arrow-functions */
 beforeEach(() => {
   jasmine.addMatchers({
     toHaveCssClass: function(util, customEqualityTests) {

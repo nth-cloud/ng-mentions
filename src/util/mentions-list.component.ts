@@ -39,16 +39,16 @@ export class NgMentionsListComponent implements OnInit {
   public displayTransform: (..._: string[]) => string;
   public textAreaElement: HTMLTextAreaElement;
 
-  activeIndex: number = -1;
+  activeIndex = -1;
   readonly itemSelected: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('defaultItemTemplate', {static: true}) defaultItemTemplate: TemplateRef<any>;
   @ViewChild('list', {static: true}) list: ElementRef;
-  @HostBinding('class.show') public show: boolean = false;
-  @HostBinding('class.drop-up') public dropUp: boolean = false;
+  @HostBinding('class.show') public show = false;
+  @HostBinding('class.drop-up') public dropUp = false;
 
-  private _top: number = 0;
-  private _left: number = 0;
+  private _top = 0;
+  private _left = 0;
 
   @HostBinding('style.top')
   get top(): string {
@@ -107,7 +107,7 @@ export class NgMentionsListComponent implements OnInit {
 
   public position() {
     const element = this.textAreaElement;
-    let coords = getCaretCoordinates(element, element.selectionStart);
+    const coords = getCaretCoordinates(element, element.selectionStart);
     this._top = coords.top;
     this._left = coords.left + element.offsetLeft;
     this.list.nativeElement.scrollTop = 0;
@@ -132,7 +132,7 @@ export class NgMentionsListComponent implements OnInit {
   }
 
   private scrollToActiveItem() {
-    let element = this.list.nativeElement as HTMLElement;
+    const element = this.list.nativeElement as HTMLElement;
     if (this.activeIndex === 0) {
       element.scrollTop = 0;
     } else {

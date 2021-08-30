@@ -8,6 +8,7 @@ export class NgHighlightedValue {
   public readonly content: string;
   /**
    * The type (or class name) associated with the highlighted item that was clicked.
+   *
    * @see NgHighlighterPatternDirective.className
    */
   public readonly type: string = null;
