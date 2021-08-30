@@ -1,3 +1,12 @@
+# [6.0.0](https://github.com/nth-cloud/ng-mentions/compare/5.0.0...6.0.0) (2021-08-30)
+
+
+### Features
+
+* upgrading to angular v11 ([4103887](https://github.com/nth-cloud/ng-mentions/commit/410388759aa85cb40978db53734ec1a738fad16d))
+
+
+
 ## [5.0.1](https://github.com/nth-cloud/ng-mentions/compare/5.0.0...5.0.1) (2021-08-29)
 
 
