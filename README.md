@@ -1,11 +1,8 @@
 # NG-MENTIONS
 
+[![Browser Tests And Coverage](https://github.com/nth-cloud/ng-mentions/actions/workflows/browser-tests.yml/badge.svg)](https://github.com/nth-cloud/ng-mentions/actions/workflows/browser-tests.yml)
 [![npm version](https://badge.fury.io/js/%40nth-cloud%2Fng-mentions.svg)](https://badge.fury.io/js/%40nth-cloud%2Fng-mentions)
-[![Build Status](https://travis-ci.org/nth-cloud/ng-mentions.svg?branch=master)](https://travis-ci.org/nth-cloud/ng-mentions)
 [![codecov](https://codecov.io/gh/nth-cloud/ng-mentions/branch/master/graph/badge.svg)](https://codecov.io/gh/nth-cloud/ng-mentions)
-[![dependency Status](https://david-dm.org/nth-cloud/ng-mentions.svg?branch=master)](https://david-dm.org/nth-cloud/ng-mentions)
-[![devDependency Status](https://david-dm.org/nth-cloud/ng-mentions/dev-status.svg?branch=master)](https://david-dm.org/nth-cloud/ng-mentions#info=devDependencies)
-[![Sauce Test Status](https://saucelabs.com/buildstatus/ng-mentions)](https://saucelabs.com/u/ng-mentions)
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/ng-mentions.svg)](https://saucelabs.com/u/ng-mentions)
 
@@ -18,14 +15,14 @@ View it in action at https://nth-cloud.github.io/ng-mentions
 ## Dependencies
 * [Angular](https://angular.io) (tested with 10.0.4)
 
-| ng-mentions | Angular |
-| ----------- | ------- |
-| 0.x.x       | 5.2.1   |
-| 1.x.x       | 6.1.0   |
-| 2.x.x       | 7.0.0   |
-| 3.x.x       | 8.0.0   |
-| 4.x.x       | 9.0.0   |
-| 5.x.x       | 10.0.0  |
+| ng-mentions | Angular | Active Support |
+| ----------- | ------- |:---------:|
+| 0.x.x       | 5.2.1   | :x: |
+| 1.x.x       | 6.1.0   | :x: |
+| 2.x.x       | 7.0.0   | :x: |
+| 3.x.x       | 8.0.0   | :x: |
+| 4.x.x       | 9.0.0   | :x: |
+| 5.x.x       | 10.0.0  | :white_check_mark: |
 
 ## Installation
 After installing the above dependencies, install `ng-mentions` via:
