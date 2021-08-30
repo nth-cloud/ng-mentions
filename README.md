@@ -13,7 +13,7 @@ Native Angular components & directives for customizable mentions. Allowing for c
 View it in action at https://nth-cloud.github.io/ng-mentions
 
 ## Dependencies
-* [Angular](https://angular.io) (tested with 10.0.4)
+* [Angular](https://angular.io) (tested with 11.2.14)
 
 | ng-mentions | Angular | Active Support |
 | ----------- | ------- |:---------:|
@@ -23,49 +23,31 @@ View it in action at https://nth-cloud.github.io/ng-mentions
 | 3.x.x       | 8.0.0   | :x: |
 | 4.x.x       | 9.0.0   | :x: |
 | 5.x.x       | 10.0.0  | :white_check_mark: |
+| 5.x.x       | 11.0.0  | :white_check_mark: |
 
 ## Installation
-After installing the above dependencies, install `ng-mentions` via:
+
+We strongly recommend using [Angular CLI](https://cli.angular.io) for setting up a new project. If you have an Angular &ge; 9 CLI project, you could simply use our schematics to add ng-mentions library to it.
+
+Just run the following:
+
 ```shell
-npm install --save @nth-cloud/ng-mentions
+ng add @nth-cloud/ng-mentions
 ```
 
-Import the main module into your project:
-```js
-import {NgMentionsModule} from "@nth-cloud/ng-mentions";
+It will install ng-mentions for the default application specified in your `angular.json`.
+If you have multiple projects and you want to target a specific application, you could specify the `--project` option:
+
+```shell
+ng add @nth-cloud/ng-mentions --project myProject
 ```
 
-Import the module into your application:
-```js
-import {NgMentionsModule} from "@nth-cloud/ng-mentions";
-
-@NgModule({
-    ...
-    imports: [NgMentionsModule, ...],
-    ...
-})
-export class AppModule {
-}
-```
-
-If you are using SystemJS, you should adjust your configuration to point to the UMD bundle.
-
-In your systemJS config file, `map` needs to tell the System loader where to look for `ng-mentions`:
-```js
-map: {
-   '@nth-cloud/ng-mentions': 'npm:@nth-cloud/ng-mentions/dist/bundles/ng-mentions.js'
-}
-```
+If you prefer not to use schematics and install everything manually, please refer to the
+[manual installation instructions](https://nth-cloud.github.io/ng-mentions/#/home) on our website.
 
 ## Supported browsers
-We strive to support the same browsers and versions as supported by Angular. Check browser support notes for
-[Angular](https://github.com/angular/angular/blob/master/README.md).
-
-* Chrome (45+)
-* Firefox (40+)
-* IE (10+)
-* Edge (20+)
-* Safari (7+)
+We strive to support the same browsers and versions as supported by Angular.
+See [Angular Browser Support](https://github.com/angular/angular/blob/master/README.md) for more details.
 
 ### Big Thanks
 

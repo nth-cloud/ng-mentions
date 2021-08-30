@@ -11,6 +11,18 @@
 
 <section class="container">
   <div class="heading">Getting Started</div>
+  <p>
+    We strongly recommend using <a href="https://cli.angular.io" target="_blank">Angular CLI</a> for setting up a new project. If you have an Angular &ge; 9 CLI project, you could simply use our schematics to add ng-mentions library to it.
+  </p>
+  <p>Just run the following:</p>
+  <prism [html]="installAngular"></prism>
+  <p>
+    It will install ng-mentions for the default application specified in your <code>angular.json</code>.<br />
+    If you have multiple projects and you want to target a specific application, you could specify the <code>--project</code> option:
+  </p>
+  <prism [html]="installAngularProject"></prism>
+
+  <div class="heading">Manual Installation</div>
   <p>Install through <code>npm</code>:</p>
   <prism [html]="installNPM"></prism>
   <p>If you are using <strong>SystemJS</strong>, you should also adjust your configuration to point to our UMD bundle, similar to this:</p>
@@ -27,13 +39,12 @@
   </p>
   <ul>
     <li>
-      <a href="https://angular.io" target="_blank">Angular</a> (<em>requires</em> Angular version 10 or higher, tested with 10.0.4)
+      <a href="https://angular.io" target="_blank">Angular</a> (<em>requires</em> Angular version 10 or higher, tested with 11.2.14)
     </li>
   </ul>
 
   <div class="heading">Supported browsers</div>
-  <p>We strive to support the same browsers and versions as supported by Angular. Check browser support notes for
-    <a href="https://angular.io/docs/ts/latest/guide/browser-support.html" target="_blank">Angular</a>.
+  <p>We strive to support the same browsers and versions as supported by Angular. See <a href="https://github.com/angular/angular/blob/master/README.md" target="_blank">Angular Browser Support</a> for more details.
   </p>
   <p>Our code is automatically tested on all the supported browsers.</p>
 </section>
