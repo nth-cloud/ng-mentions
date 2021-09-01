@@ -276,6 +276,33 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     this.highlighterElement.nativeElement.scrollTop = this.textAreaInputElement.nativeElement.scrollTop;
   }
 
+  public open() {
+    const event = new KeyboardEvent('keydown', {
+      key: this.triggerChar,
+      keyCode: this.triggerChar.charCodeAt(0)
+    });
+    this.textAreaInputElement.nativeElement.focus();
+    const caretPosition: number = getCaretPosition(this.textAreaInputElement.nativeElement);
+    let selectionStart = this.textAreaInputElement.nativeElement.selectionStart;
+    let selectionEnd = this.textAreaInputElement.nativeElement.selectionEnd;
+    if (typeof selectionStart !== 'number' || typeof selectionEnd !== 'number') {
+      selectionStart = caretPosition;
+      selectionEnd = caretPosition;
+    }
+    const newCaretPosition = selectionStart + 1;
+    const newValue = this.displayContent.substr(0, selectionStart) + this.triggerChar + this.displayContent.substr(selectionEnd);
+    this.displayContent = newValue;
+    this.onChange(newValue);
+    setTimeout(
+      () => {
+        this.selectionStart = newCaretPosition;
+        this.selectionEnd = newCaretPosition;
+        setCaretPosition(this.textAreaInputElement.nativeElement, newCaretPosition);
+        setTimeout(() => this.onKeyDown(event));
+      }
+    );
+  }
+
   public onSelect(event: any) {
     this.selectionStart = event.target.selectionStart;
     this.selectionEnd = event.target.selectionEnd;
@@ -379,6 +406,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     return result;
   }
 
+  // noinspection JSMethodCanBeStatic
   private stopEvent(event: MouseEvent|KeyboardEvent|FocusEvent) {
     if (event.preventDefault) {
       event.preventDefault();

@@ -172,6 +172,50 @@ describe('ng-mentions', () => {
        });
      }));
 
+  it('should display mentions list when open() is called', fakeAsync(() => {
+       const fixture = createTestComponent('<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>');
+
+       const el = fixture.nativeElement;
+       const comp = fixture.componentInstance;
+       comp.mentions = [
+         {display: 'item1', id: 1, type: 'type'},
+         {display: 'item2', id: 2, type: 'type'},
+         {display: 'item3', id: 3, type: 'type'},
+       ];
+       tickFixture(fixture);
+       expect(comp.mentions.length).toEqual(3);
+       tickFixture(fixture);
+
+       const mentionComp: NgMentionsComponent = getDebugInput(fixture.debugElement).componentInstance;
+       expect(mentionComp.mentions.length).toEqual(3);
+       expectMentionListToBeHidden(fixture.debugElement, true);
+       tickFixture(fixture);
+
+       mentionComp.open();
+       tickFixture(fixture, isIE ? delayIE : undefined);
+
+       fixture.whenStable().then(() => {
+         const mentionsList = fixture.debugElement.query(By.directive(NgMentionsListComponent));
+         expect(mentionsList).toBeDefined();
+         expect(mentionsList).not.toBeNull();
+         expectMentionListToBeHidden(fixture.debugElement, false, 'MentionList should be shown');
+         const mentionsListComp = mentionsList.componentInstance;
+         expect(mentionsListComp.show).toBeTruthy('MentionList should be shown');
+         expect(mentionsListComp.activeIndex).toBe(0, 'MentionList activeIndex should be 0');
+         expect(mentionsListComp.selectedItem).not.toBeNull('MentionList selectedItem should not be null');
+         expect(mentionsListComp.selectedItem.display).toEqual('item1');
+         tickFixture(fixture);
+         expectDropDownItems(el, ['+item1', 'item2', 'item3']);
+
+         const event = createKeyDownEvent(Key.Enter);
+         triggerTextAreaEvent(el, event);
+         tickFixture(fixture);
+
+         expect(mentionComp.displayContent).toEqual('item1');
+         expect(comp.model).toEqual('@[item1](type:1)');
+       });
+     }));
+
   it('should make previous/next result active with up/down arrow keys', fakeAsync(() => {
        const fixture = createTestComponent('<ng-mentions [mentions]="mentions" [(ngModel)]="model"></ng-mentions>');
 
