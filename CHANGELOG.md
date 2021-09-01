@@ -1,3 +1,12 @@
+## [7.0.2](https://github.com/nth-cloud/ng-mentions/compare/7.0.1...7.0.2) (2021-09-01)
+
+
+### Features
+
+* added method to trigger mentions list open from outside component ([285c3c6](https://github.com/nth-cloud/ng-mentions/commit/285c3c6bc33dea7ab3f0ab5cfa6fac2880f5c05d))
+
+
+
 ## [7.0.1](https://github.com/nth-cloud/ng-mentions/compare/6.0.0...7.0.1) (2021-08-30)
 
 
