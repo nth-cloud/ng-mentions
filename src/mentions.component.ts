@@ -53,7 +53,7 @@ import {
                   <highlighted *ngIf="isPartMention(part)" [tag]="part.tag">{{formatMention(part)}}</highlighted>
                   <ng-container *ngIf="!isPartMention(part)">{{part}}</ng-container>
               </ng-container>
-              <ng-container *ngIf="line.parts.length==0">&nbsp;</ng-container>
+              <ng-container *ngIf="line.parts.length===0">&nbsp;</ng-container>
           </div>
       </div>
       <textarea
