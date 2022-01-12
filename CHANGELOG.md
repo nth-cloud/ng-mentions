@@ -1,3 +1,7 @@
+## [7.0.3](https://github.com/nth-cloud/ng-mentions/compare/7.0.2...7.0.3) (2022-01-12)
+
+
+
 ## [7.0.2](https://github.com/nth-cloud/ng-mentions/compare/7.0.1...7.0.2) (2021-09-01)
 
 
