@@ -2,7 +2,7 @@
   <h3>
     <a
       class="title-fragment"
-      [routerLink]=""
+      [routerLink]="[]"
       fragment="{{apiDocs.className}}" nthFragment
       title="Anchor link to: {{apiDocs.className}}"
     >
@@ -20,7 +20,7 @@
     </a>
   </h3>
   <nthd-api-docs-badge [type]="apiDocs.type"></nthd-api-docs-badge>
-  <p class="lead">{{apiDocs.description}}</p>
+  <p class="lead" [innerHTML]="apiDocs.description"></p>
 
   <ng-template [ngIf]="apiDocs.properties && apiDocs.properties.length">
     <section>
@@ -30,7 +30,7 @@
         <tr *ngFor="let prop of apiDocs.properties">
           <td class="label-cell"><code>{{prop.name}}</code></td>
           <td class="content-cell">
-            <p>{{ prop.description }}</p>
+            <p [innerHTML]="prop.description"></p>
             <div class="meta">
               <div>
                 <i>Type: </i><code>{{ prop.type }}</code>

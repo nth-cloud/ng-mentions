@@ -4,8 +4,6 @@
   "deleteDestPath": false,
   "lib": {
     "flatModuleFile": "ng-mentions",
-    "entryFile": "./index.ts",
-    "umdId": "nthm",
-    "amdId": "nthm"
+    "entryFile": "./index.ts"
   }
 }

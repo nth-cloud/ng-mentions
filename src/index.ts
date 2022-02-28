@@ -10,6 +10,7 @@ import {HighlightedDirective} from './util/highlight.directive';
 import {NgMentionsListComponent} from './util/mentions-list.component';
 
 export {NgHighlighterComponent} from './highlighter.component';
+export {NgHighlighterPatternDirective} from './highlighter-pattern.directive';
 export {NgMentionsAccessorDirective} from './mentions-input.directive';
 export {NgMentionsComponent} from './mentions.component';
 
@@ -25,10 +26,9 @@ const DECLARATIONS = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FormsModule],
-  exports: EXPORT_DIRECTIVES,
-  declarations: DECLARATIONS,
-  entryComponents: [NgMentionsListComponent]
+    imports: [CommonModule, FormsModule],
+    exports: EXPORT_DIRECTIVES,
+    declarations: DECLARATIONS
 })
 export class NgMentionsModule {
 }
