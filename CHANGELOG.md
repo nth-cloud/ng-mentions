@@ -1,3 +1,12 @@
+# [8.0.0](https://github.com/nth-cloud/ng-mentions/compare/7.0.3...8.0.0) (2022-02-28)
+
+
+### Features
+
+* Upgrading to Angular 13 ([e497105](https://github.com/nth-cloud/ng-mentions/commit/e4971055eaba26ad084a751305043496ca7f45ce))
+
+
+
 ## [7.0.3](https://github.com/nth-cloud/ng-mentions/compare/7.0.2...7.0.3) (2022-01-12)
 
 
