@@ -1,3 +1,7 @@
+## [8.0.1](https://github.com/nth-cloud/ng-mentions/compare/8.0.0...8.0.1) (2022-04-04)
+
+
+
 # [8.0.0](https://github.com/nth-cloud/ng-mentions/compare/7.0.3...8.0.0) (2022-02-28)
 
 
