@@ -3,7 +3,7 @@ import * as fs from 'fs-extra';
 import * as glob from 'glob';
 import * as he from 'he';
 
-const stackblitzUrl = 'https://run.stackblitz.com/api/angular/v1/';
+const stackblitzUrl = 'https://stackblitz.com/run?file=src/app/app.component.ts';
 
 const packageJson = JSON.parse(fs.readFileSync('package.json').toString());
 const ngMentions = JSON.parse(fs.readFileSync('src/package.json').toString()).version;
@@ -23,46 +23,75 @@ const ENTRY_CMPTS = {
   'mentions-validation': ['NthdMentionsValidation'],
 };
 
+function getFileContents(filepath) {
+  return fs.readFileSync(filepath).toString();
+}
+
+
+function getStackblitzTemplate(path) {
+  return getFileContents(`misc/builder-templates/${path}`);
+}
+
+function generatePackageJson() {
+  return {
+    name: 'angular.example',
+    version: '0.0.0',
+    description: 'Angular Example',
+    license: 'MIT',
+    scripts: {
+      ng: 'ng',
+      start: 'ng serve',
+      build: 'ng build',
+      watch: 'ng build --watch --configuration development',
+      test: 'ng test'
+    },
+    private: true,
+    dependencies: Object.assign({}, packageJson.dependencies, {'@nth-cloud/ng-mentions': versions.ngMentions}),
+    devDependencies: packageJson.peerDependencies || {},
+    engines: {
+      node: '^14.15.0'
+    }
+  };
+}
+
+
 function generateStackblitzContent(componentName, demoName) {
   const fileName = `${componentName}-${demoName}`;
   const basePath = `demo/src/app/components/${componentName}/demos/${demoName}/${fileName}`;
 
-  const codeContent = fs.readFileSync(`${basePath}.ts`).toString();
-  const markupContent = fs.readFileSync(`${basePath}.html`).toString();
+  const files = glob.sync('**/*', {nodir: true, cwd: 'misc/builder-templates', dot: true}).reduce(
+    (carry: any, file: string) => {
+      carry[file] = getStackblitzTemplate(file);
+
+      return carry;
+    },
+    {
+      'package.json': JSON.stringify(generatePackageJson(), null, 2),
+      'src/index.html': generateIndexHtml(),
+      'src/app/app.module.ts': generateAppModuleTsContent(componentName, demoName, basePath + '.ts'),
+      'src/app/app.component.html': generateAppComponentHtmlContent(componentName, demoName)
+    }
+  );
+  files[`src/app/${fileName}.ts`] = fs.readFileSync(`${basePath}.ts`).toString();
+  files[`src/app/${fileName}.html`] = fs.readFileSync(`${basePath}.html`).toString();
 
   return `<!DOCTYPE html>
 <html lang="en">
 <body>
-  <form id="mainForm" method="post" action="${stackblitzUrl}">
+  <form id="mainForm" method="post" action="${stackblitzUrl}" target="_self">
     <input type="hidden" name="description" value="Example usage of the ${
       componentName} widget from https://nth-cloud.github.io/ng-mentions">
 ${generateTags([
     'Angular', 'Bootstrap', 'ng-mentions', capitalize(componentName)
   ])}
-
-    <input type="hidden" name="files[.angular-cli.json]" value="${
-      he.encode(getStackblitzTemplate('.angular-cli.json'))}">
-    <input type="hidden" name="files[index.html]" value="${he.encode(generateIndexHtml())}">
-    <input type="hidden" name="files[main.ts]" value="${he.encode(getStackblitzTemplate('main.ts'))}">
-    <input type="hidden" name="files[polyfills.ts]" value="${he.encode(getStackblitzTemplate('polyfills.ts'))}">
-    <input type="hidden" name="files[app/app.module.ts]" value="${
-      he.encode(generateAppModuleTsContent(componentName, demoName, basePath + '.ts'))}">
-    <input type="hidden" name="files[app/app.component.ts]" value="${
-      he.encode(getStackblitzTemplate('app/app.component.ts'))}">
-    <input type="hidden" name="files[app/app.component.html]" value="${
-      he.encode(generateAppComponentHtmlContent(componentName, demoName))}">
-    <input type="hidden" name="files[app/${fileName}.ts]" value="${he.encode(codeContent)}">
-    <input type="hidden" name="files[app/${fileName}.html]" value="${he.encode(markupContent)}">
-
-    <input type="hidden" name="dependencies" value="${he.encode(JSON.stringify(generateDependencies()))}">
+    ${Object.keys(files).map(
+      filename => `<input type="hidden" name="project[files][${filename}]" value="${he.encode(files[filename])}">`
+  ).join('\n')}
+    <input type="hidden" name="project[template]" value="node">
   </form>
   <script>document.getElementById("mainForm").submit();</script>
 </body>
 </html>`;
-}
-
-function getStackblitzTemplate(path) {
-  return fs.readFileSync(`misc/builder-templates/${path}`).toString();
 }
 
 function generateIndexHtml() {
@@ -92,8 +121,9 @@ function generateAppComponentHtmlContent(componentName, demoName) {
   <hr>
 
   <p>
-    This is a demo example forked from the <strong>ng-mentions</strong> project: Angular powered Bootstrap.
-    Visit <a href="https://nth-cloud.github.io/ng-mentions/" target="_blank">https://nth-cloud.github.io/ng-mentions</a> for more widgets and demos.
+    This is a demo example forked from the <strong>ng-mentions</strong> project: Angular powered Bootstrap.&nbsp;
+    Visit <a href="https://nth-cloud.github.io/ng-mentions/" target="_blank">https://nth-cloud.github.io/ng-mentions</a> for&nbsp;
+    more widgets and demos.
   </p>
 
   <hr>
@@ -107,7 +137,7 @@ function generateAppModuleTsContent(componentName, demoName, filePath) {
   const demoClassName = `Nthd${capitalize(componentName)}${capitalize(demoName)}`;
   const demoImport = `./${componentName}-${demoName}`;
   const entryCmptClasses = (ENTRY_CMPTS[`${componentName}-${demoName}`] || []).join(', ');
-  const demoImports = entryCmptClasses ? `${demoClassName}, ${entryCmptClasses}` : demoClassName;
+  const demoImports = entryCmptClasses ? Array.from(new Set([demoClassName, entryCmptClasses])).join(', ') : demoClassName;
   const file = fs.readFileSync(filePath).toString();
   if (!file.includes(demoClassName)) {
     throw new Error(`Expecting demo class name in ${filePath} to be '${demoClassName}' (note the case)`);
@@ -135,32 +165,9 @@ function generateTags(tags) {
   return tags.map((tag, idx) => `    <input type="hidden" name="tags[${idx}]" value="${tag}">`).join('\n');
 }
 
-function generateDependencies() {
-  return {
-    '@angular/core': versions.angular,
-    '@angular/common': versions.angular,
-    '@angular/compiler': versions.angular,
-    '@angular/platform-browser': versions.angular,
-    '@angular/platform-browser-dynamic': versions.angular,
-    '@angular/router': versions.angular,
-    '@angular/forms': versions.angular,
-    '@nth-cloud/ng-mentions': versions.ngMentions,
-    'core-js': versions.coreJs,
-    'rxjs': versions.rxjs,
-    'zone.js': versions.zoneJs,
-  };
-}
-
 function getVersions() {
   return {
-    angular: getVersion('@angular/core'),
-    typescript: getVersion('typescript'),
-    rxjs: getVersion('rxjs'),
     ngMentions,
-    zoneJs: getVersion('zone.js'),
-    coreJs: getVersion('core-js'),
-    reflectMetadata: getVersion(
-        'reflect-metadata', JSON.parse(fs.readFileSync('node_modules/@angular/compiler-cli/package.json').toString())),
     bootstrap: getVersion('bootstrap').replace('^', '')
   };
 }
@@ -173,7 +180,7 @@ function getVersion(name, givenPackageJson?: {dependencies, devDependencies}) {
   const value = (givenPackageJson.dependencies || {})[name] || (givenPackageJson.devDependencies || {})[name];
 
   if (!value) {
-    throw `couldn't find version for ${name} in package.json`;
+    throw new Error(`couldn't find version for ${name} in package.json`);
   }
 
   return value;
@@ -202,7 +209,7 @@ function getDemoNames(componentName: string): string[] {
  * resulting html files to the public folder of the demo application
  */
 
-const base = `demo/src/public/app/components`;
+const base = 'demo/src/public/app/components';
 
 // removing folder
 fs.ensureDirSync(base);

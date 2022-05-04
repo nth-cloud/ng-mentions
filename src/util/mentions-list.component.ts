@@ -77,8 +77,11 @@ export class NgMentionsListComponent implements OnInit {
 
   onItemClick(event: MouseEvent, activeIndex: number, item: any) {
     event.preventDefault();
-    this.activeIndex = activeIndex;
-    this.itemSelected.emit(item);
+    console.log(item);
+    if (item) {
+      this.activeIndex = activeIndex;
+      this.itemSelected.emit(item);
+    }
   }
 
   public selectFirstItem() {
