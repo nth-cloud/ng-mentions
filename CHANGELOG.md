@@ -1,3 +1,12 @@
+# [8.1.0](https://github.com/nth-cloud/ng-mentions/compare/8.0.1...8.1.0) (2022-05-04)
+
+
+### Features
+
+* adding support for mobile events, closes [#39](https://github.com/nth-cloud/ng-mentions/issues/39) ([a27cf23](https://github.com/nth-cloud/ng-mentions/commit/a27cf232024f58ecddd4d3da359db2c6811204d2))
+
+
+
 ## [8.0.1](https://github.com/nth-cloud/ng-mentions/compare/8.0.0...8.0.1) (2022-04-04)
 
 
