@@ -48,7 +48,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          npm ci
+          npm ci --legacy-peer-deps
           npm run api-doc:test
 
       - name: Register CodeCov
