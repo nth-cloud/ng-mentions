@@ -1,18 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-  <form id="mainForm" method="post" action="https://run.stackblitz.com/api/angular/v1/">
+  <form id="mainForm" method="post" action="https://stackblitz.com/run?file=src/app/app.component.ts" target="_self">
     <input type="hidden" name="description" value="Example usage of the mentions widget from https://nth-cloud.github.io/ng-mentions">
     <input type="hidden" name="tags[0]" value="Angular">
     <input type="hidden" name="tags[1]" value="Bootstrap">
     <input type="hidden" name="tags[2]" value="ng-mentions">
     <input type="hidden" name="tags[3]" value="Mentions">
-
-    <input type="hidden" name="files[.angular-cli.json]" value="{
-  &#x22;apps&#x22;: [{}]
-}
-">
-    <input type="hidden" name="files[index.html]" value="&#x3C;!DOCTYPE html&#x3E;
+    <input type="hidden" name="project[files][package.json]" value="{
+  &#x22;name&#x22;: &#x22;angular.example&#x22;,
+  &#x22;version&#x22;: &#x22;0.0.0&#x22;,
+  &#x22;description&#x22;: &#x22;Angular Example&#x22;,
+  &#x22;license&#x22;: &#x22;MIT&#x22;,
+  &#x22;scripts&#x22;: {
+    &#x22;ng&#x22;: &#x22;ng&#x22;,
+    &#x22;start&#x22;: &#x22;ng serve&#x22;,
+    &#x22;build&#x22;: &#x22;ng build&#x22;,
+    &#x22;watch&#x22;: &#x22;ng build --watch --configuration development&#x22;,
+    &#x22;test&#x22;: &#x22;ng test&#x22;
+  },
+  &#x22;private&#x22;: true,
+  &#x22;dependencies&#x22;: {
+    &#x22;@angular/common&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;@angular/core&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;@angular/forms&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;typescript&#x22;: &#x22;^4.5.5&#x22;,
+    &#x22;@nth-cloud/ng-mentions&#x22;: &#x22;8.1.0&#x22;
+  },
+  &#x22;devDependencies&#x22;: {
+    &#x22;@angular-devkit/build-angular&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;@angular/animations&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;@angular/cli&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;@angular/compiler&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;@angular/compiler-cli&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;@angular/platform-browser&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;@angular/platform-browser-dynamic&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;@angular/router&#x22;: &#x22;^13.0.0&#x22;,
+    &#x22;core-js&#x22;: &#x22;~3&#x22;,
+    &#x22;rxjs&#x22;: &#x22;^6.6.0&#x22;,
+    &#x22;tslib&#x22;: &#x22;^2.3.1&#x22;,
+    &#x22;zone.js&#x22;: &#x22;~0.11.4&#x22;
+  },
+  &#x22;engines&#x22;: {
+    &#x22;node&#x22;: &#x22;^14.15.0&#x22;
+  }
+}">
+<input type="hidden" name="project[files][src/index.html]" value="&#x3C;!DOCTYPE html&#x3E;
 &#x3C;html&#x3E;
 
   &#x3C;head&#x3E;
@@ -26,23 +59,177 @@
   &#x3C;/body&#x3E;
 
 &#x3C;/html&#x3E;">
-    <input type="hidden" name="files[main.ts]" value="import &#x27;./polyfills&#x27;;
+<input type="hidden" name="project[files][src/app/app.module.ts]" value="
+import { NgModule } from &#x27;@angular/core&#x27;;
+import { BrowserModule } from &#x27;@angular/platform-browser&#x27;;
+import { FormsModule, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import { HttpClientModule } from &#x27;@angular/common/http&#x27;;
+import { NgMentionsModule } from &#x27;@nth-cloud/ng-mentions&#x27;;
+import { AppComponent } from &#x27;./app.component&#x27;;
+import { NthdMentionsCustomTemplate } from &#x27;./mentions-custom-template&#x27;;
+
+@NgModule({
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, NgMentionsModule],
+  declarations: [AppComponent, NthdMentionsCustomTemplate],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+">
+<input type="hidden" name="project[files][src/app/app.component.html]" value="
+&#x3C;div class=&#x22;container-fluid&#x22;&#x3E;
+
+  &#x3C;hr&#x3E;
+
+  &#x3C;p&#x3E;
+    This is a demo example forked from the &#x3C;strong&#x3E;ng-mentions&#x3C;/strong&#x3E; project: Angular powered Bootstrap.&#x26;nbsp;
+    Visit &#x3C;a href=&#x22;https://nth-cloud.github.io/ng-mentions/&#x22; target=&#x22;_blank&#x22;&#x3E;https://nth-cloud.github.io/ng-mentions&#x3C;/a&#x3E; for&#x26;nbsp;
+    more widgets and demos.
+  &#x3C;/p&#x3E;
+
+  &#x3C;hr&#x3E;
+
+  &#x3C;nthd-mentions-custom-template&#x3E;&#x3C;/nthd-mentions-custom-template&#x3E;
+&#x3C;/div&#x3E;
+">
+<input type="hidden" name="project[files][.stackblitzrc]" value="{&#x22;installDependencies&#x22;:true,&#x22;startCommand&#x22;:&#x22;turbo start&#x22;,&#x22;env&#x22;:{&#x22;ENABLE_CJS_IMPORTS&#x22;:true}}
+">
+<input type="hidden" name="project[files][angular.json]" value="{
+  &#x22;$schema&#x22;: &#x22;./node_modules/@angular/cli/lib/config/schema.json&#x22;,
+  &#x22;version&#x22;: 1,
+  &#x22;newProjectRoot&#x22;: &#x22;projects&#x22;,
+  &#x22;projects&#x22;: {
+    &#x22;angular.io-example&#x22;: {
+      &#x22;projectType&#x22;: &#x22;application&#x22;,
+      &#x22;schematics&#x22;: {
+        &#x22;@schematics/angular:application&#x22;: {
+          &#x22;strict&#x22;: true
+        }
+      },
+      &#x22;root&#x22;: &#x22;&#x22;,
+      &#x22;sourceRoot&#x22;: &#x22;src&#x22;,
+      &#x22;prefix&#x22;: &#x22;app&#x22;,
+      &#x22;architect&#x22;: {
+        &#x22;build&#x22;: {
+          &#x22;builder&#x22;: &#x22;@angular-devkit/build-angular:browser&#x22;,
+          &#x22;options&#x22;: {
+            &#x22;outputPath&#x22;: &#x22;dist&#x22;,
+            &#x22;index&#x22;: &#x22;src/index.html&#x22;,
+            &#x22;main&#x22;: &#x22;src/main.ts&#x22;,
+            &#x22;polyfills&#x22;: &#x22;src/polyfills.ts&#x22;,
+            &#x22;tsConfig&#x22;: &#x22;tsconfig.app.json&#x22;,
+            &#x22;assets&#x22;: [],
+            &#x22;styles&#x22;: [],
+            &#x22;scripts&#x22;: []
+          },
+          &#x22;configurations&#x22;: {
+            &#x22;production&#x22;: {
+              &#x22;budgets&#x22;: [
+                {
+                  &#x22;type&#x22;: &#x22;initial&#x22;,
+                  &#x22;maximumWarning&#x22;: &#x22;500kb&#x22;,
+                  &#x22;maximumError&#x22;: &#x22;1mb&#x22;
+                },
+                {
+                  &#x22;type&#x22;: &#x22;anyComponentStyle&#x22;,
+                  &#x22;maximumWarning&#x22;: &#x22;2kb&#x22;,
+                  &#x22;maximumError&#x22;: &#x22;4kb&#x22;
+                }
+              ],
+              &#x22;fileReplacements&#x22;: [
+                {
+                  &#x22;replace&#x22;: &#x22;src/environments/environment.ts&#x22;,
+                  &#x22;with&#x22;: &#x22;src/environments/environment.prod.ts&#x22;
+                }
+              ],
+              &#x22;outputHashing&#x22;: &#x22;all&#x22;
+            },
+            &#x22;development&#x22;: {
+              &#x22;buildOptimizer&#x22;: false,
+              &#x22;optimization&#x22;: false,
+              &#x22;vendorChunk&#x22;: true,
+              &#x22;extractLicenses&#x22;: false,
+              &#x22;sourceMap&#x22;: true,
+              &#x22;namedChunks&#x22;: true
+            }
+          },
+          &#x22;defaultConfiguration&#x22;: &#x22;production&#x22;
+        },
+        &#x22;serve&#x22;: {
+          &#x22;builder&#x22;: &#x22;@angular-devkit/build-angular:dev-server&#x22;,
+          &#x22;configurations&#x22;: {
+            &#x22;production&#x22;: {
+              &#x22;browserTarget&#x22;: &#x22;angular.io-example:build:production&#x22;
+            },
+            &#x22;development&#x22;: {
+              &#x22;browserTarget&#x22;: &#x22;angular.io-example:build:development&#x22;
+            }
+          },
+          &#x22;defaultConfiguration&#x22;: &#x22;development&#x22;
+        },
+        &#x22;extract-i18n&#x22;: {
+          &#x22;builder&#x22;: &#x22;@angular-devkit/build-angular:extract-i18n&#x22;,
+          &#x22;options&#x22;: {
+            &#x22;browserTarget&#x22;: &#x22;angular.io-example:build&#x22;
+          }
+        },
+        &#x22;e2e&#x22;: {
+          &#x22;builder&#x22;: &#x22;@angular-devkit/build-angular:protractor&#x22;,
+          &#x22;options&#x22;: {
+            &#x22;protractorConfig&#x22;: &#x22;e2e/protractor.conf.js&#x22;,
+            &#x22;devServerTarget&#x22;: &#x22;angular.io-example:serve&#x22;
+          },
+          &#x22;configurations&#x22;: {
+            &#x22;production&#x22;: {
+              &#x22;devServerTarget&#x22;: &#x22;angular.io-example:serve:production&#x22;
+            }
+          }
+        }
+      }
+    }
+  },
+  &#x22;defaultProject&#x22;: &#x22;angular.io-example&#x22;
+}
+">
+<input type="hidden" name="project[files][src/app/app.component.ts]" value="import { Component } from &#x27;@angular/core&#x27;;
+
+@Component({
+  selector: &#x27;my-app&#x27;,
+  templateUrl: &#x27;./app.component.html&#x27;
+})
+export class AppComponent {
+}
+">
+<input type="hidden" name="project[files][src/environments/environment.prod.ts]" value="export const environment = {
+  production: true
+};
+">
+<input type="hidden" name="project[files][src/environments/environment.ts]" value="// This file can be replaced during build by using the &#x60;fileReplacements&#x60; array.
+// &#x60;ng build&#x60; replaces &#x60;environment.ts&#x60; with &#x60;environment.prod.ts&#x60;.
+// The list of file replacements can be found in &#x60;angular.json&#x60;.
+
+export const environment = {
+  production: false
+};
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as &#x60;zone.run&#x60;, &#x60;zoneDelegate.invokeTask&#x60;.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import &#x27;zone.js/plugins/zone-error&#x27;;  // Included with Angular CLI.
+">
+<input type="hidden" name="project[files][src/main.ts]" value="import &#x27;./polyfills&#x27;;
 
 import { platformBrowserDynamic } from &#x27;@angular/platform-browser-dynamic&#x27;;
 
 import { AppModule } from &#x27;./app/app.module&#x27;;
 
-platformBrowserDynamic().bootstrapModule(AppModule).then(ref =&#x3E; {
-  // Ensure Angular destroys itself on hot reloads.
-  if (window[&#x27;ngRef&#x27;]) {
-    window[&#x27;ngRef&#x27;].destroy();
-  }
-  window[&#x27;ngRef&#x27;] = ref;
-
-  // Otherwise, log the boot error
-}).catch(err =&#x3E; console.error(err));
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err =&#x3E; console.error(err));
 ">
-    <input type="hidden" name="files[polyfills.ts]" value="/**
+<input type="hidden" name="project[files][src/polyfills.ts]" value="/**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
  *
@@ -63,38 +250,23 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref =&#x3E; {
  */
 
 /** IE9, IE10 and IE11 requires all of the following polyfills. **/
-// import &#x27;core-js/es6/symbol&#x27;;
-// import &#x27;core-js/es6/object&#x27;;
-// import &#x27;core-js/es6/function&#x27;;
-// import &#x27;core-js/es6/parse-int&#x27;;
-// import &#x27;core-js/es6/parse-float&#x27;;
-// import &#x27;core-js/es6/number&#x27;;
-// import &#x27;core-js/es6/math&#x27;;
-// import &#x27;core-js/es6/string&#x27;;
-// import &#x27;core-js/es6/date&#x27;;
-// import &#x27;core-js/es6/array&#x27;;
-// import &#x27;core-js/es6/regexp&#x27;;
-// import &#x27;core-js/es6/map&#x27;;
-// import &#x27;core-js/es6/weak-map&#x27;;
-// import &#x27;core-js/es6/set&#x27;;
-
-/** IE10 and IE11 requires the following for NgClass support on SVG elements */
-// import &#x27;classlist.js&#x27;;  // Run &#x60;npm install --save classlist.js&#x60;.
+import &#x27;core-js/es/symbol&#x27;;
+import &#x27;core-js/es/object&#x27;;
+import &#x27;core-js/es/function&#x27;;
+import &#x27;core-js/es/parse-int&#x27;;
+import &#x27;core-js/es/parse-float&#x27;;
+import &#x27;core-js/es/number&#x27;;
+import &#x27;core-js/es/math&#x27;;
+import &#x27;core-js/es/string&#x27;;
+import &#x27;core-js/es/date&#x27;;
+import &#x27;core-js/es/array&#x27;;
+import &#x27;core-js/es/regexp&#x27;;
+import &#x27;core-js/es/map&#x27;;
+import &#x27;core-js/es/weak-map&#x27;;
+import &#x27;core-js/es/set&#x27;;
 
 /** IE10 and IE11 requires the following for the Reflect API. */
-// import &#x27;core-js/es6/reflect&#x27;;
-
-
-/** Evergreen browsers require these. **/
-// Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
-import &#x27;core-js/es7/reflect&#x27;;
-
-
-/**
- * Required to support Web Animations &#x60;@angular/platform-browser/animations&#x60;.
- * Needed for: All but Chrome, Firefox and Opera. http://caniuse.com/#feat=web-animation
- **/
-// import &#x27;web-animations-js&#x27;;  // Run &#x60;npm install --save web-animations-js&#x60;.
+import &#x27;core-js/es/reflect&#x27;;
 
 
 
@@ -109,47 +281,45 @@ import &#x27;zone.js&#x27;;  // Included with Angular CLI.
  * APPLICATION IMPORTS
  */
 ">
-    <input type="hidden" name="files[app/app.module.ts]" value="
-import { NgModule } from &#x27;@angular/core&#x27;;
-import { BrowserModule } from &#x27;@angular/platform-browser&#x27;;
-import { FormsModule, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
-import { HttpClientModule } from &#x27;@angular/common/http&#x27;;
-import { NgMentionsModule } from &#x27;@nth-cloud/ng-mentions&#x27;;
-import { AppComponent } from &#x27;./app.component&#x27;;
-import { NthdMentionsCustomTemplate } from &#x27;./mentions-custom-template&#x27;;
-
-@NgModule({
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule, NgMentionsModule],
-  declarations: [AppComponent, NthdMentionsCustomTemplate],
-  bootstrap: [AppComponent]
-})
-export class AppModule {}
-">
-    <input type="hidden" name="files[app/app.component.ts]" value="import { Component } from &#x27;@angular/core&#x27;;
-
-@Component({
-  selector: &#x27;my-app&#x27;,
-  templateUrl: &#x27;./app.component.html&#x27;
-})
-export class AppComponent {
+<input type="hidden" name="project[files][tsconfig.app.json]" value="/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  &#x22;extends&#x22;: &#x22;./tsconfig.json&#x22;,
+  &#x22;compilerOptions&#x22;: {
+    &#x22;baseUrl&#x22;: &#x22;./&#x22;,
+    &#x22;outDir&#x22;: &#x22;./out-tsc/app&#x22;
+  },
+  &#x22;files&#x22;: [
+    &#x22;src/main.ts&#x22;,
+    &#x22;src/polyfills.ts&#x22;
+  ],
+  &#x22;include&#x22;: [
+    &#x22;src/app/**/*.d.ts&#x22;
+  ],
+  &#x22;exclude&#x22;: [
+    &#x22;src/app/test.ts&#x22;,
+    &#x22;src/app/**/*.spec.ts&#x22;
+  ]
 }
 ">
-    <input type="hidden" name="files[app/app.component.html]" value="
-&#x3C;div class=&#x22;container-fluid&#x22;&#x3E;
-
-  &#x3C;hr&#x3E;
-
-  &#x3C;p&#x3E;
-    This is a demo example forked from the &#x3C;strong&#x3E;ng-mentions&#x3C;/strong&#x3E; project: Angular powered Bootstrap.
-    Visit &#x3C;a href=&#x22;https://nth-cloud.github.io/ng-mentions/&#x22; target=&#x22;_blank&#x22;&#x3E;https://nth-cloud.github.io/ng-mentions&#x3C;/a&#x3E; for more widgets and demos.
-  &#x3C;/p&#x3E;
-
-  &#x3C;hr&#x3E;
-
-  &#x3C;nthd-mentions-custom-template&#x3E;&#x3C;/nthd-mentions-custom-template&#x3E;
-&#x3C;/div&#x3E;
+<input type="hidden" name="project[files][tsconfig.json]" value="{
+  &#x22;compileOnSave&#x22;: false,
+  &#x22;compilerOptions&#x22;: {
+    &#x22;allowSyntheticDefaultImports&#x22;: true,
+    &#x22;baseUrl&#x22;: &#x22;./&#x22;,
+    &#x22;target&#x22;: &#x22;es5&#x22;,
+    &#x22;lib&#x22;: [&#x22;es2017&#x22;, &#x22;dom&#x22;],
+    &#x22;module&#x22;: &#x22;es2020&#x22;,
+    &#x22;moduleResolution&#x22;: &#x22;node&#x22;,
+    &#x22;emitDecoratorMetadata&#x22;: true,
+    &#x22;experimentalDecorators&#x22;: true,
+    &#x22;noEmitOnError&#x22;: true,
+    &#x22;outDir&#x22;: &#x22;temp&#x22;,
+    &#x22;declaration&#x22;: false,
+    &#x22;sourceMap&#x22;: true
+  }
+}
 ">
-    <input type="hidden" name="files[app/mentions-custom-template.ts]" value="import {Component} from &#x27;@angular/core&#x27;;
+<input type="hidden" name="project[files][src/app/mentions-custom-template.ts]" value="import {Component} from &#x27;@angular/core&#x27;;
 
 @Component({
   selector: &#x27;nthd-mentions-custom-template&#x27;,
@@ -183,7 +353,7 @@ export class NthdMentionsCustomTemplate {
   };
 }
 ">
-    <input type="hidden" name="files[app/mentions-custom-template.html]" value="&#x3C;div class=&#x22;position-relative&#x22;&#x3E;
+<input type="hidden" name="project[files][src/app/mentions-custom-template.html]" value="&#x3C;div class=&#x22;position-relative&#x22;&#x3E;
     &#x3C;ng-mentions
         [mentions]=&#x22;model.mentions&#x22;
         formClass=&#x22;form-control&#x22;
@@ -199,8 +369,7 @@ export class NthdMentionsCustomTemplate {
 &#x3C;/div&#x3E;
 &#x3C;pre class=&#x22;my-2&#x22;&#x3E;{{model | json}}&#x3C;/pre&#x3E;
 ">
-
-    <input type="hidden" name="dependencies" value="{&#x22;@angular/core&#x22;:&#x22;^13.2.4&#x22;,&#x22;@angular/common&#x22;:&#x22;^13.2.4&#x22;,&#x22;@angular/compiler&#x22;:&#x22;^13.2.4&#x22;,&#x22;@angular/platform-browser&#x22;:&#x22;^13.2.4&#x22;,&#x22;@angular/platform-browser-dynamic&#x22;:&#x22;^13.2.4&#x22;,&#x22;@angular/router&#x22;:&#x22;^13.2.4&#x22;,&#x22;@angular/forms&#x22;:&#x22;^13.2.4&#x22;,&#x22;@nth-cloud/ng-mentions&#x22;:&#x22;8.0.1&#x22;,&#x22;core-js&#x22;:&#x22;3&#x22;,&#x22;rxjs&#x22;:&#x22;^6.6.0&#x22;,&#x22;zone.js&#x22;:&#x22;~0.11.4&#x22;}">
+    <input type="hidden" name="project[template]" value="node">
   </form>
   <script>document.getElementById("mainForm").submit();</script>
 </body>
