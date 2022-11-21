@@ -16,7 +16,7 @@ const NG_MENTIONS_PACKAGE_NAME = '@nth-cloud/ng-mentions';
  * Patches main application module by adding 'NgMentionsModule' import
  */
 export function addNgMentionsModuleToAppModule(options: Schema): Rule {
-  return async(host: Tree) => {
+  return async (host: Tree) => {
     const workspace = await getWorkspace(host);
     const projectName = options.project || (workspace.extensions.defaultProject as string);
     const project = workspace.projects.get(projectName);

@@ -13,7 +13,7 @@ import {createTestApp} from '../utils/testing';
       runner.logger.subscribe(({message}) => log.push(message));
     });
 
-    it(`should add '@angular/localize' polyfill`, async() => {
+    it('should add \'@angular/localize\' polyfill', async () => {
       let tree = await createTestApp(runner);
       const polyfillFilePath = `projects/${projectName}/src/polyfills.ts`;
 

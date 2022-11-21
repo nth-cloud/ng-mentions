@@ -17,7 +17,7 @@ const NG_MENTIONS_VERSION = '5.0.0';
  * It installs all dependencies in the 'package.json' and runs 'ng-add-setup-project' schematic.
  */
 export default function ngAdd(options: Schema): Rule {
-  return async(tree: Tree, context: SchematicContext) => {
+  return async (tree: Tree, context: SchematicContext) => {
 
     // Checking that project exists
     const {project} = options;

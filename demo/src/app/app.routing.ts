@@ -1,4 +1,4 @@
-import {Routes, RouterModule} from '@angular/router';
+import { Routes, RouterModule, Route } from '@angular/router';
 import {ModuleWithProviders} from '@angular/core';
 import {DefaultComponent} from './default';
 import {SupportComponent} from './support';
@@ -6,7 +6,7 @@ import {NthdMentionsComponent} from './components';
 import {NthdHighlighterComponent} from './components/highlighter';
 import {DEFAULT_TAB} from './shared/component-wrapper/component-wrapper.component';
 
-const DEFAULT_API_PATH = {path: '', pathMatch: 'full', redirectTo: DEFAULT_TAB};
+const DEFAULT_API_PATH: Route = {path: '', pathMatch: 'full', redirectTo: DEFAULT_TAB};
 
 const componentRoutes = [
   {
