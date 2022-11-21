@@ -1,3 +1,12 @@
+# [9.0.0](https://github.com/nth-cloud/ng-mentions/compare/8.1.0...9.0.0) (2022-11-21)
+
+
+### Features
+
+* Upgrading to Angular v14 ([ac42165](https://github.com/nth-cloud/ng-mentions/commit/ac42165f0bd8f2e2835778ed8c06350be9de05d6))
+
+
+
 # [8.1.0](https://github.com/nth-cloud/ng-mentions/compare/8.0.1...8.1.0) (2022-05-04)
 
 
