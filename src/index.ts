@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 import {NgHighlighterPatternDirective} from './highlighter-pattern.directive';
@@ -28,7 +28,8 @@ const DECLARATIONS = [
 @NgModule({
     imports: [CommonModule, FormsModule],
     exports: EXPORT_DIRECTIVES,
-    declarations: DECLARATIONS
+    declarations: DECLARATIONS,
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NgMentionsModule {
 }

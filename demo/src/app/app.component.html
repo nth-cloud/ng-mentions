@@ -1,39 +1,137 @@
-<header>
-  <div class="navbar navbar-fixed-top navbar-expand flex-column flex-md-row">
-    <a [routerLink]="['/']" class="d-inline-flex align-self-center align-items-center"><img class="navbar-logo" src="img/logo.png"/><span>NG-MENTIONS</span></a>
+<header class="navbar navbar-expand navbar-dark px-4 flex-column flex-md-row">
+  <a
+    routerLink="/home"
+    class="navbar-brand me-md-2 me-0"
+    aria-label="NG Mentions"
+    (click)="navbarCollapsed = true"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      width="36"
+      height="38"
+      viewBox="0 0 425 458">
+      <defs>
+        <linearGradient id="a">
+          <stop offset="0" stop-color="#324f8a"></stop>
+          <stop offset="1" stop-color="#325e8a"></stop>
+        </linearGradient>
+        <linearGradient
+          xlink:href="#a"
+          id="b"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="matrix(1.33396 0 0 1.33396 404.049 -265.9)"
+          x1="-111"
+          y1="967.862"
+          x2="-110.5"
+          y2="617.362"
+        ></linearGradient>
+      </defs>
+      <path
+        d="M379,375L212,454,46,375,5,83,212,5,421,83Z"
+        fill="url(#a)"
+        fill-rule="evenodd"
+        stroke="#fff"
+        stroke-width="20"
+      />
+      <path
+        d="M212,454L46,375,5,83,212,5V454Z"
+        fill="url(#b)"
+        fill-rule="evenodd"
+      />
+      <path
+        d="M278.157,344.332V228.354c0-8.25-9.761-8.6-9.756-.348,0,4.409-.061,141.219-0.084,144.968-42.147.087-102.595-.131-110.778-0.083,0-5.327,0-138.109.06-144.885-0.058-8.249-9.328-8.185-9.407.7,0.079,5.423,0,115.629,0,115.629,0,21.092-35.192,21.092-35.192,0V204.671c1.827-16.716,5.18-27.84,19.164-29.952H291.746c12.091-.013,20.593,10.8,21.254,30.3V344.332C313,365.424,278.157,365.424,278.157,344.332ZM212.826,164.271a53.636,53.636,0,1,1,53.833-53.636A53.735,53.735,0,0,1,212.826,164.271Z"
+        fill="#fff"
+      />
+    </svg>
 
-    <div class="navbar-nav-scroll d-inline-flex flex-fill" id="navbarContent">
-      <ul class="navbar-nav flex-row">
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" [routerLink]="['/docs']">Docs</a>
-        </li>
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" [routerLink]="['/support']">Support</a>
-        </li>
-      </ul>
+    <span class="ms-2 d-xl-none d-lg-none d-md-none d-inline">NG-MENTIONS</span>
+  </a>
 
-      <span class="github-buttons d-none d-lg-inline ml-auto">
-        <a class="github-button"
-           href="https://github.com/nth-cloud/ng-mentions"
-           target="_blank"
-           data-size="large"
-           data-show-count="true"
-           data-count-aria-label="# stargazers on GitHub"
-           aria-label="Star nth-cloud/ng-mentions on GitHub">Star</a>
-        <a href="https://twitter.com/intent/tweet?button_hashtag=ngmentions"
-           class="twitter-hashtag-button"
-           data-size="large"
-           data-text="I&#39;m checking out ng-mentions"
-           data-url="https://nth-cloud.github.io/ng-mentions"
-           data-show-count="true">Tweet #ngmentions</a>
-      </span>
-    </div>
+  <div class="navbar-nav-scroll">
+    <ul class="navbar-nav flex-row">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/home']"
+            [routerLinkActive]="['active']"
+            (click)="navbarCollapsed = true"
+          >Home</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/components']"
+            [routerLinkActive]="['active']"
+            (click)="navbarCollapsed = true"
+          >Components</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/support']"
+            [routerLinkActive]="['active']"
+            (click)="navbarCollapsed = true"
+          >Support</a>
+        </li>
+    </ul>
   </div>
+
+  <ul
+    class="social-buttons navbar-nav flex-row d-none d-md-flex align-items-center ms-md-auto"
+  >
+    <li>
+      <a
+        href="https://www.npmjs.com/package/@nth-cloud/ng-mentions"
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+        [title]="downloadCount + ' downloads over the last 30 days on Npm'"
+        class="d-flex flex-column align-items-center"
+      >
+        <!-- hide the text from a screen reader so that it uses title attribute for the announcement and navigation  -->
+        <span aria-hidden="true">{{ downloadCount }}</span>
+        <svg viewBox="0 0 780 250" width="40" height="13">
+          <path
+            d="M240,250h100v-50h100V0H240V250z M340,50h50v100h-50V50z M480,0v200h100V50h50v150h50V50h50v150h50V0H480z M0,200h100V50h50v150h50V0H0V200z"
+          ></path>
+        </svg>
+      </a>
+    </li>
+    <li class="ms-3">
+      <a
+        href="https://github.com/nth-cloud/ng-mentions"
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+        title="Open nth-cloud/ng-mentions on GitHub"
+      ><svg aria-hidden="true" nthdIcon="github"></svg
+      ></a>
+    </li>
+    <li class="ms-3">
+      <a
+        href="https://twitter.com/intent/tweet?text=I&#39;m+checking+out+&#23;ng-mentions&url=https%3A%2F%2Fnth-cloud.github.io%2Fng-mentions%2F&hashtags=ng-mentions,angular"
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+        title="Tweet #ng-mentions"
+      ><svg aria-hidden="true" nthdIcon="twitter"></svg></a>
+    </li>
+  </ul>
+
+  <button
+    class="navbar-toggler navbar-toggler-right"
+    type="button"
+    (click)="navbarCollapsed = !navbarCollapsed"
+    [attr.aria-expanded]="!navbarCollapsed"
+    aria-controls="navbarContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
 </header>
 
-<main>
+<div>
   <router-outlet></router-outlet>
-</main>
+</div>
 
 <footer class="nth-footer text-muted">
   <div class="container">

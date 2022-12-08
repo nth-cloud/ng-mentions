@@ -11,12 +11,17 @@ export const componentsList = [
   templateUrl: './side-nav.component.html',
 })
 export class NthSideNavComponent {
-  @Input() activeTab: String = '';
+  @Input() activeTab: string = '';
   components = componentsList;
 
   constructor(private router: Router) {}
 
-  isActive(currentRoute: any[], exact: boolean = true): boolean {
-    return this.router.isActive(this.router.createUrlTree(currentRoute), exact);
+  isActive(currentRoute: any[]): boolean {
+    return this.router.isActive(this.router.createUrlTree(currentRoute), {
+      paths: 'subset',
+      queryParams: 'subset',
+      fragment: 'ignored',
+      matrixParams: 'ignored'
+    });
   }
 }

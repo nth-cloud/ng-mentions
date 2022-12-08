@@ -1,29 +1,32 @@
-<div class="api-doc-component">
+<div class="api-doc-component" [class.deprecated]="apiDocs.deprecated">
   <h2 class="title">
     <a
-      [routerLink]="[]"
-      fragment="{{apiDocs.className}}" nthFragment
+      routerLink="."
+      fragment="{{apiDocs.className}}" nthdFragment
       title="Anchor link to: {{apiDocs.className}}"
     >
       <img src="img/link-symbol.svg" alt="Anchor link to: {{apiDocs.className}}"/>
     </a>
-    <span>{{apiDocs.className}}</span>
+    <span>
+      {{apiDocs.className}}<span class="text-muted fw-ligh" *ngIf="apiDocs.typeParameter">&lt;{{apiDocs.typeParameter}}&gt;</span>
+    </span>
     <a
       class="github-link ml-2"
       (click)="trackSourceClick()"
-      href="https://github.com/nth-cloud/ng-toggle/tree/master/{{apiDocs.fileName}}"
+      href="https://github.com/nth-cloud/ng-mentions/tree/master/{{apiDocs.fileName}}"
       target="_blank"
       title="Link to Github: {{apiDocs.className}}"
     >
       <img src="img/github.svg" alt="Link to Github {{apiDocs.className}}"/>
     </a>
   </h2>
-  <nthd-api-docs-badge [type]="apiDocs.type"></nthd-api-docs-badge>
+  <nthd-api-docs-badge [type]="apiDocs.type" [deprecated]="apiDocs.deprecated" [since]="apiDocs.since"></nthd-api-docs-badge>
+  <p *ngIf="apiDocs.deprecated">{{apiDocs.deprecated.description}}</p>
   <p class="lead" [innerHTML]="apiDocs.description"></p>
 
   <section>
-    <h4>Selector <small><code>{{apiDocs.selector}}</code></small></h4>
-    <h6 *ngIf="apiDocs.exportAs">Exported as <small><code>{{apiDocs.exportAs}}</code></small></h6>
+    <h4>Selector <small><code class="selector">{{apiDocs.selector}}</code></small></h4>
+    <h6 *ngIf="apiDocs.exportAs">Exported as <small><code class="export-as">{{apiDocs.exportAs}}</code></small></h6>
   </section>
 
   <ng-template [ngIf]="apiDocs.inputs.length">
@@ -31,16 +34,21 @@
       <h4>Inputs</h4>
       <table class="table table-sm">
         <tbody>
-        <tr *ngFor="let input of apiDocs.inputs">
-          <td class="label-cell"><code>{{input.name}}</code></td>
+        <tr *ngFor="let input of apiDocs.inputs" [class.deprecated]="input.deprecated">
+          <td class="label-cell">
+            <code>{{input.name}}</code>
+            <span *ngIf="input.since" class="badge bg-info text-dark">since {{input.since.version}}</span>
+            <span *ngIf="input.deprecated" class="badge bg-secondary">since {{input.deprecated.version}}</span>
+          </td>
           <td class="content-cell">
+            <p *ngIf="input.deprecated">{{input.deprecated.description}}</p>
             <p class="description" [innerHTML]="input.description"></p>
             <div class="meta">
               <div>
-                <i>Type: </i><code>{{ input.type }}</code>
+                <em>Type: </em><code>{{ input.type }}</code>
               </div>
               <div *ngIf="defaultInputValue(input) || hasConfigProperty(input)">
-                <span><i>Default value: </i><code>{{ defaultInputValue(input) || '-' }}</code></span>
+                <span><em>Default value: </em><code>{{ defaultInputValue(input) || '-' }}</code></span>&nbsp;
                 <span *ngIf="hasConfigProperty(input)">&mdash; initialized from {{ configServiceName }} service</span>
               </div>
             </div>
@@ -56,9 +64,16 @@
       <h4>Outputs</h4>
       <table class="table table-sm">
         <tbody>
-          <tr *ngFor="let output of apiDocs.outputs">
-            <td class="label-cell"><code>{{output.name}}</code></td>
-            <td class="content-cell" [innerHTML]="output.description"></td>
+          <tr *ngFor="let output of apiDocs.outputs" [class.deprecated]="output.deprecated">
+            <td class="label-cell">
+              <code>{{output.name}}</code>
+              <span *ngIf="output.since" class="badge bg-info text-dark">since {{output.since.version}}</span>
+              <span *ngIf="output.deprecated" class="badge bg-secondary">since {{output.deprecated.version}}</span>
+            </td>
+            <td class="content-cell">
+              <p *ngIf="output.deprecated">{{output.deprecated.description}}</p>
+              <p class="description" [innerHTML]="output.description"></p>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -70,14 +85,19 @@
       <h4>Methods</h4>
       <table class="table table-sm">
         <tbody>
-          <tr *ngFor="let method of apiDocs.methods">
-            <td class="label-cell"><code>{{method.name}}</code></td>
+          <tr *ngFor="let method of apiDocs.methods" [class.deprecated]="method.deprecated">
+            <td class="label-cell">
+              <code>{{method.name}}</code>
+              <span *ngIf="method.since" class="badge bg-info text-dark">since {{method.since.version}}</span>
+              <span *ngIf="method.deprecated" class="badge bg-secondary">since {{method.deprecated.version}}</span>
+            </td>
             <td class="content-cell">
-                <p>
-                    <code>{{methodSignature(method)}}</code>
-                    <small class="text-muted" title="Return type">=&gt; {{ method.returnType }}</small>
-                </p>
-                <p>{{ method.description }}</p>
+              <p class="signature">
+                  <code>{{methodSignature(method)}}</code>
+                  <small class="text-muted" title="Return type">=&gt; {{ method.returnType }}</small>
+              </p>
+              <p *ngIf="method.deprecated">{{method.deprecated.description}}</p>
+              <p class="description">{{ method.description }}</p>
             </td>
           </tr>
         </tbody>

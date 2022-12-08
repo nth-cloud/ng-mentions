@@ -1,15 +1,24 @@
-<p class="text-danger">
-    A limitation of plain string values is that the mention value cannot contain any spaces.
-</p>
-<div class="position-relative">
-    <ng-mentions
-        [mentions]="model.mentions"
-        [markup]="model.markup"
-        formClass="form-control"
-        rows="5"
-        cols="35"
-        [(ngModel)]="model.value"
-        placeholder="Type text here..."
-    ></ng-mentions>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6 col-12">
+      <p class="text-danger">
+          A limitation of plain string values is that the mention value cannot contain any spaces.
+      </p>
+      <div class="position-relative">
+          <ng-mentions
+              [mentions]="model.mentions"
+              [markup]="model.markup"
+              formClass="form-control"
+              rows="5"
+              cols="35"
+              [(ngModel)]="model.value"
+              placeholder="Type text here..."
+          ></ng-mentions>
+      </div>
+    </div>
+    <div class="col-xl-6 col-12">
+      <pre class="my-2">{{model | json}}</pre>
+    </div>
+  </div>
 </div>
-<pre class="my-2">{{model | json}}</pre>
+

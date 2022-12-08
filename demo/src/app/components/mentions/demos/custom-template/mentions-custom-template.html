@@ -1,15 +1,23 @@
-<div class="position-relative">
-    <ng-mentions
-        [mentions]="model.mentions"
-        formClass="form-control"
-        rows="5"
-        cols="35"
-        [(ngModel)]="model.value"
-        placeholder="Type text here..."
-    >
-        <ng-template let-item="item">
-            <span>{{item.id}}: {{item.display}} ({{item.type}})</span>
-        </ng-template>
-    </ng-mentions>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6 col-12">
+      <div class="position-relative">
+          <ng-mentions
+              [mentions]="model.mentions"
+              formClass="form-control"
+              rows="5"
+              cols="35"
+              [(ngModel)]="model.value"
+              placeholder="Type text here..."
+          >
+              <ng-template let-item="item">
+                  <span>{{item.id}}: {{item.display}} ({{item.type}})</span>
+              </ng-template>
+          </ng-mentions>
+      </div>
+    </div>
+    <div class="col-xl-6 col-12">
+      <pre class="my-2">{{model | json}}</pre>
+    </div>
+  </div>
 </div>
-<pre class="my-2">{{model | json}}</pre>

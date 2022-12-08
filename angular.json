@@ -32,9 +32,6 @@
             "karmaConfig": "src/karma.conf.js"
           },
           "configurations": {
-            "ie": {
-              "tsConfig": "src/tsconfig-ie.spec.json"
-            },
             "saucelabs": {
               "sourceMap": false,
               "progress": false,
@@ -70,6 +67,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "prismjs"
+            ],
             "outputPath": "demo/dist",
             "index": "demo/src/public/index.html",
             "main": "demo/src/main.ts",

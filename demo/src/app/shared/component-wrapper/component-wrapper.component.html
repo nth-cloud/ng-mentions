@@ -1,25 +1,51 @@
-<section class="container mt-4 tabset-code d-flex">
-  <div class="col-3">
-    <nthd-side-nav></nthd-side-nav>
+<div class="container-fluid">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-lg-2" style="border-right: 1px solid rgba(0,0,0,0.1);">
+      <div class="d-lg-none d-flex py-2 px-4 align-items-center text-body sidebar-collapsed"
+        (click)="sidebarCollapsed = !sidebarCollapsed" role="button">
+        <span class="me-auto">Menu</span>
+        <button class="btn btn-link p-0" aria-controls="doc-nav" [attr.aria-expanded]="!sidebarCollapsed"
+                aria-label="Toggle documentation navigation">
+          <svg class="align-middle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30"
+               focusable="false">
+            <title>Menu</title>
+            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10"
+                  d="M4 7h22M4 15h22M4 23h22"></path>
+          </svg>
+        </button>
+      </div>
+      <nthd-side-nav class="d-lg-block py-3 collapse sidebar"></nthd-side-nav>
+    </div>
+
+    <div class="col-12 col-lg-10">
+      <header class="bg-light pt-4 pb-md-5 px-4 px-lg-5 d-flex d-md-block align-items-center title">
+        <h1 class="mb-4 me-auto me-md-none">{{component | titlecase}}</h1>
+        <ul nthdNav [activeId]="this.activeTab"
+            class="nav-tabs px-4 px-lg-5 content-tabset justify-content-md-start justify-content-end">
+          <li [nthdNavItem]="childRoute.path" *ngFor="let childRoute of route.routeConfig!.children">
+            <a nthdNavLink [routerLink]="['.', childRoute.path]">
+              {{ childRoute.path || '' | titlecase }}
+            </a>
+          </li>
+        </ul>
+      </header>
+
+      <section class="row py-5 px-2 px-md-4 px-lg-5">
+        <div class="col-12 col-xl-9 px-md-0 pe-xl-4">
+          <ng-template [ngComponentOutlet]="(headerComponentType$ | async)"></ng-template>
+          <router-outlet (activate)="updateNavigation($event)"></router-outlet>
+        </div>
+
+        <div class="col-12 col-xl-3 d-none d-xl-block contextual-nav" *ngIf="!isLargeScreenOrLess">
+          <ul class="nav flex-column text-muted pt-4">
+            <li *ngFor="let topic of tableOfContents" class="nav-item">
+              <a *ngIf="topic.title else divider" class="nav-link" [routerLink]="['.', this.activeTab]"
+                 [fragment]="topic.fragment">{{topic.title}}</a>
+            </li>
+            <ng-template #divider>&nbsp;</ng-template>
+          </ul>
+        </div>
+      </section>
+    </div>
   </div>
-  <div class="col-9">
-    <nthd-tabset
-      class="root-nav"
-      (tabChange)="tabChange($event)"
-      [activeId]="activeTab"
-    >
-      <nthd-tab title="Examples" id="examples">
-        <ng-template nthd-tab-content>
-          <ng-content select="nthd-example-box"></ng-content>
-        </ng-template>
-      </nthd-tab>
-      <nthd-tab title="API" id="api">
-        <ng-template nthd-tab-content>
-          <ng-content select="nthd-api-docs"></ng-content>
-          <ng-content select="nthd-api-docs-class"></ng-content>
-          <ng-content select="nthd-api-docs-config"></ng-content>
-        </ng-template>
-      </nthd-tab>
-    </nthd-tabset>
-  </div>
-</section>
+</div>

@@ -1,18 +1,26 @@
-<label class="m-2">
-    <input type="checkbox" [(ngModel)]="required" class="mr-2"/>
-    Required
-</label>
-<pre class="my-2">Validation: {{validation.status}} {{!validation.pristine ? 'TOUCHED' : 'PRISTINE'}}</pre>
-<div class="position-relative" [class.was-validated]="required && !validation.pristine">
-    <ng-mentions
-        [mentions]="model.mentions"
-        formClass="form-control"
-        rows="5"
-        cols="35"
-        [(ngModel)]="model.value"
-        [required]="required"
-        #validation="ngModel"
-        placeholder="Type text here..."
-    ></ng-mentions>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6 col-12">
+      <label class="m-2">
+          <input type="checkbox" [(ngModel)]="required" class="mr-2"/>
+          Required
+      </label>
+      <pre class="my-2">Validation: {{validation.status}} {{!validation.pristine ? 'TOUCHED' : 'PRISTINE'}}</pre>
+      <div class="position-relative" [class.was-validated]="required && !validation.pristine">
+          <ng-mentions
+              [mentions]="model.mentions"
+              formClass="form-control"
+              rows="5"
+              cols="35"
+              [(ngModel)]="model.value"
+              [required]="required"
+              #validation="ngModel"
+              placeholder="Type text here..."
+          ></ng-mentions>
+      </div>
+    </div>
+    <div class="col-xl-6 col-12">
+      <pre class="my-2">{{model | json}}</pre>
+    </div>
+  </div>
 </div>
-<pre class="my-2">{{model | json}}</pre>

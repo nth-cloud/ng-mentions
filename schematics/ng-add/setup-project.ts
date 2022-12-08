@@ -4,7 +4,7 @@ import {Schema} from './schema';
 import {addNgMentionsModuleToAppModule} from './steps/add-ngm-module';
 
 /**
- * Sets up a project with all required to run ng-bootstrap.
+ * Sets up a project with all required to run ng-mentions.
  * This is run after 'package.json' was patched and all dependencies installed
  */
 export default function ngAddSetupProject(options: Schema): Rule {

@@ -1,8 +1,16 @@
-<div class="basic-example position-relative">
-    <blockquote class="blockquote">
-        <ng-highlighter [text]="model.text">
-            <ng-highlighter-pattern className="name" [markup]="model.markup" [markupReplace]="model.markupReplace"></ng-highlighter-pattern>
-        </ng-highlighter>
-    </blockquote>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-6 col-12">
+      <div class="basic-example position-relative">
+          <blockquote class="blockquote">
+              <ng-highlighter [text]="model.text">
+                  <ng-highlighter-pattern className="name" [markup]="model.markup" [markupReplace]="model.markupReplace"></ng-highlighter-pattern>
+              </ng-highlighter>
+          </blockquote>
+      </div>
+    </div>
+    <div class="col-xl-6 col-12">
+      <pre class="my-2">{{model | json}}</pre>
+    </div>
+  </div>
 </div>
-<pre class="my-2">{{model | json}}</pre>
