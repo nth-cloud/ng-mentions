@@ -48,4 +48,5 @@ jobs:
       - name: Run Tests
         run: |
           npm ci --legacy-peer-deps
-          npm run api-doc:test
+          npm run lib:test
+          npm run schematics:test
