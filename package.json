@@ -1,6 +1,6 @@
 {
   "name": "@nth-cloud/ng-mentions",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "description": "Angular components & directives for customizable mentions",
   "repository": {
     "type": "git",

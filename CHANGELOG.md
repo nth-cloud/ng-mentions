@@ -1,3 +1,7 @@
+## [9.1.1](https://github.com/nth-cloud/ng-mentions/compare/9.1.0...9.1.1) (2022-12-09)
+
+
+
 # [9.1.0](https://github.com/nth-cloud/ng-mentions/compare/9.0.1...9.1.0) (2022-12-09)
 
 
