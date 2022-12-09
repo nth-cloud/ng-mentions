@@ -22,6 +22,7 @@
     "components"
   ],
   "scripts": {
+    "ng": "ng",
     "preinstall": "node misc/preinstall.js",
     "commitmsg": "node misc/validate-commit.js",
     "version": "npm run changelog && git add CHANGELOG.md",
