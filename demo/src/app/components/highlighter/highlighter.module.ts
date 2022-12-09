@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 
-import {NgMentionsModule} from '@nth-cloud/ng-mentions';
 import {NthdSharedModule} from '../../shared';
 import {NthdComponentsSharedModule, NthdDemoList} from '../shared';
 import {NthdHighlighterBasic} from './demos/basic/highlighter-basic';
@@ -38,7 +38,7 @@ export const ROUTES: Routes = [
       { path: 'api', component: NthdApiPage }
     ]
   }
-]
+];
 
 @NgModule({
   imports: [

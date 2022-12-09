@@ -21,8 +21,8 @@ export class NthWidgetDemoComponent {
   @Input() code: string;
   @Input() markup: string;
   @Input() files: { name: string; source: string; }[];
-  @Input() showCode: boolean = false;
-  @Input() showStackblitz: boolean = false;
+  @Input() showCode = false;
+  @Input() showStackblitz = false;
 
   get markupSnippet() {
     return Snippet({lang: 'html', code: this.markup});

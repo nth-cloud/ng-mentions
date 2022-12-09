@@ -20,7 +20,7 @@ import {createTestApp} from '../utils/testing';
       expect(tree.read(polyfillFilePath) !.toString()).not.toContain('@angular/localize');
 
       tree = await runner.runSchematicAsync('ng-add-setup-project', projectName ? {project: projectName} : {}, tree)
-        .toPromise();
+                 .toPromise();
       expect(tree.read(polyfillFilePath) !.toString()).toContain('@angular/localize');
     });
   });

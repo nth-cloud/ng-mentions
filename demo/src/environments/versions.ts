@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+let bootstrap: string = require('../../../package.json').devDependencies['bootstrap'];
 // extracts only the minor version from package.json
 // ex. "bootstrap": "4.0.1" -> "4.0"
-let bootstrap: string = require('../../../package.json').devDependencies['bootstrap'];
-bootstrap = bootstrap.substr(0, bootstrap.lastIndexOf('.'));
+bootstrap = bootstrap.split('.').slice(0, 2).join('.');
 
 const ngMentions = require('../../../package.json').version;
 

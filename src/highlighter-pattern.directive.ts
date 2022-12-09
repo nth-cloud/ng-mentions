@@ -21,7 +21,7 @@ export class NgHighlighterPatternDirective implements OnInit, OnChanges {
    * and returned to be displayed. No other transformation will be done to the text and no
    * matching information is passed the to function, just the matched text.
    */
-  @Input() markupReplace: string|((content: string) => string);
+  @Input() markupReplace: string | ((content: string) => string);
 
   private markupMention: MarkupMention;
 
@@ -37,9 +37,7 @@ export class NgHighlighterPatternDirective implements OnInit, OnChanges {
     }
   }
 
-  match(value: string) {
-    return this.markupMention ? this.markupMention.regEx.exec(value) : null;
-  }
+  match(value: string) { return this.markupMention ? this.markupMention.regEx.exec(value) : null; }
 
   readonly format = (content: string) => {
     if (typeof this.markupReplace === 'string') {

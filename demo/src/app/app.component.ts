@@ -14,7 +14,7 @@ import {environment} from '../environments/environment';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-  navbarCollapsed: boolean = false;
+  navbarCollapsed = false;
   downloadCount: number|string = '';
 
   constructor(
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     route.fragment.pipe(filter(fragment => !!fragment))
       .subscribe((fragment: string) => zone.runOutsideAngular(() => requestAnimationFrame(() => vps.scrollToAnchor(fragment))));
 
-    if (environment.production || true) {
+    if (environment.production) {
       httpClient.get<{ downloads: string }>('https://api.npmjs.org/downloads/point/last-month/@nth-cloud/ng-mentions')
         .pipe(map(data => data?.downloads))
         .subscribe({next: count => this.downloadCount = count.toLocaleString(), error: () => of('')});

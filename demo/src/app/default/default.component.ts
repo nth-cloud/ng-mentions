@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import {Component} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {CodeHighlightService} from '../shared/code/code-highlight.service';

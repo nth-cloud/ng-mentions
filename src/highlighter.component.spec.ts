@@ -14,9 +14,7 @@ const createTestComponent = (html: string) =>
     createGenericTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
 
 describe('ng-highlighter', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({declarations: [TestComponent], imports: [NgMentionsModule]});
-  });
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NgMentionsModule]}));
 
   it('should format text as expected', fakeAsync(() => {
        const fixture = createTestComponent(`<ng-highlighter [text]="value">

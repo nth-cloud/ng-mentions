@@ -9,11 +9,11 @@ import {Component, ViewEncapsulation} from '@angular/core';
     encapsulation: ViewEncapsulation.None
 })
 export class NthdMentionsBasic {
-    disabled: boolean = false;
-    required: boolean = false;
-    rows: number = 5;
-    cols: number = 35;
-    dropUp: boolean = false;
+    disabled = false;
+    required = false;
+    rows = 5;
+    cols = 35;
+    dropUp = false;
 
     model: any = {
         value: 'Hello @[Dave](contact:1). How are you doing today?\n\nWould you like to play a game of chess?',

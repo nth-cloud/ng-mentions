@@ -116,13 +116,9 @@ export class NgMentionsListComponent implements OnInit {
     this.list.nativeElement.scrollTop = 0;
   }
 
-  public resetScroll() {
-    this.list.nativeElement.scrollTop = 0;
-  }
+  public resetScroll() { this.list.nativeElement.scrollTop = 0; }
 
-  public transformItem(item: any) {
-    return this.displayTransform(item) || item;
-  }
+  public transformItem(item: any) { return this.displayTransform(item) || item; }
 
   private get adjustTop(): number {
     let adjust = 0;

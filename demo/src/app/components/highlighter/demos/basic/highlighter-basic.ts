@@ -13,5 +13,5 @@ export class NthdHighlighterBasic {
     text: 'Hello @[Dave](contact:1). How are you doing today?\n\nWould you like to play a game of chess?',
     markup: '@[__display__](__type__:__id__)',
     markupReplace: 'display'
-  }
+  };
 }

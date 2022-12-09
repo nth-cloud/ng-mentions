@@ -45,7 +45,7 @@ export class NthdApiDocs {
       this.apiDocs.inputs.forEach(
         input => this._configProperties[input.name] = this._findInputConfigProperty(configApiDocs, input));
     }
-  };
+  }
 
   /**
    * Returns the default value of the given directive input by first looking for it in the matching config service

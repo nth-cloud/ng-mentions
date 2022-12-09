@@ -30,7 +30,8 @@ import {
   escapeRegExp,
   findStartOfMentionInPlainText,
   getBoundsOfMentionAtPosition,
-  getCaretPosition, isMobileOrTablet,
+  getCaretPosition,
+  isMobileOrTablet,
   mapPlainTextIndex,
   MarkupMention,
   markupToRegExp,
@@ -82,7 +83,8 @@ enum InputToKeyboard {
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
-export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
+export class NgMentionsComponent implements OnChanges,
+    OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
   /**
    * The character to trigger the mentions list when a user is typing in the input field
    */
@@ -157,9 +159,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
 
   set formClass(classNames: string) {
     this.textAreaClassNames = {};
-    Array.from(classNames.split(' ')).forEach(className => {
-      this.textAreaClassNames[className] = true;
-    });
+    Array.from(classNames.split(' ')).forEach(className => this.textAreaClassNames[className] = true);
   }
 
   @Input('value')
@@ -167,9 +167,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     return this._value;
   }
 
-  set value(value: string) {
-    this.parseLines(value);
-  }
+  set value(value: string) { this.parseLines(value); }
 
   @Input('required')
   get required(): boolean {
@@ -195,11 +193,11 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
    * Number of rows for the textarea. Defaults to 1
    */
   @Input('rows')
-  get rows(): number|string {
+      get rows(): number | string {
     return this._rows;
   }
 
-  set rows(value: number|string) {
+  set rows(value: number | string) {
     if (value !== null && typeof value !== 'undefined') {
       if (typeof value === 'string') {
         value = parseInt(value, 10);
@@ -213,11 +211,11 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
    * Number of columns for the textarea. Defaults to 1
    */
   @Input('cols')
-  get columns(): number|string {
+      get columns(): number | string {
     return this._columns;
   }
 
-  set columns(value: number|string) {
+  set columns(value: number | string) {
     if (value !== null && typeof value !== 'undefined') {
       if (typeof value === 'string') {
         value = parseInt(value, 10);
@@ -238,21 +236,15 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     }
   }
 
-  get readonly(): string {
-    return this.disabled ? 'readonly' : null;
-  }
+  get readonly(): string { return this.disabled ? 'readonly' : null; }
 
-  get errorState(): boolean {
-    return this._errorState;
-  }
+  get errorState(): boolean { return this._errorState; }
 
   constructor(
       private element: ElementRef, private componentResolver: ComponentFactoryResolver,
       private viewContainer: ViewContainerRef, private changeDetector: ChangeDetectorRef, private ngZone: NgZone) {}
 
-  ngOnInit(): void {
-    this.parseMarkup();
-  }
+  ngOnInit(): void { this.parseMarkup(); }
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('markup' in changes) {
@@ -273,10 +265,8 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
 
   ngOnDestroy(): void {
     if (this._inputListener) {
-      (this.textAreaInputElement.nativeElement as HTMLTextAreaElement).removeEventListener(
-        this.mobile ? 'input' : 'keydown',
-        this._inputListener
-      );
+      (this.textAreaInputElement.nativeElement as HTMLTextAreaElement)
+          .removeEventListener(this.mobile ? 'input' : 'keydown', this._inputListener);
       this._inputListener = undefined;
     }
     this._destroyed.next();
@@ -293,10 +283,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   }
 
   public open(): void {
-    const event = {
-      key: this.triggerChar,
-      which: this.triggerChar.charCodeAt(0)
-    };
+    const event = {key: this.triggerChar, which: this.triggerChar.charCodeAt(0)};
     this.textAreaInputElement.nativeElement.focus();
     const caretPosition: number = getCaretPosition(this.textAreaInputElement.nativeElement);
     let selectionStart = this.textAreaInputElement.nativeElement.selectionStart;
@@ -306,20 +293,19 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
       selectionEnd = caretPosition;
     }
     const newCaretPosition = selectionStart + 1;
-    const newValue = this.displayContent.substring(0, selectionStart) + this.triggerChar + this.displayContent.substring(selectionEnd);
+    const newValue = this.displayContent.substring(0, selectionStart) + this.triggerChar +
+        this.displayContent.substring(selectionEnd);
     this.displayContent = newValue;
     this.onChange(newValue);
-    setTimeout(
-      () => {
-        this.selectionStart = newCaretPosition;
-        this.selectionEnd = newCaretPosition;
-        setCaretPosition(this.textAreaInputElement.nativeElement, newCaretPosition);
-        setTimeout(() => {
-          this.textAreaInputElement.nativeElement.focus();
-          this.onKeyDown(event);
-        });
-      }
-    );
+    setTimeout(() => {
+      this.selectionStart = newCaretPosition;
+      this.selectionEnd = newCaretPosition;
+      setCaretPosition(this.textAreaInputElement.nativeElement, newCaretPosition);
+      setTimeout(() => {
+        this.textAreaInputElement.nativeElement.focus();
+        this.onKeyDown(event);
+      });
+    });
   }
 
   public onSelect(event: any): void {
@@ -375,7 +361,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     this.handleInput(event, keyCode, characterPressed);
   }
 
-  public onBlur(event: MouseEvent|KeyboardEvent|FocusEvent): void {
+  public onBlur(event: MouseEvent | KeyboardEvent | FocusEvent): void {
     if (event instanceof FocusEvent && event.relatedTarget) {
       const element = event.relatedTarget as HTMLElement;
       if (element.classList.contains('dropdown-item')) {
@@ -388,13 +374,9 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     }
   }
 
-  public isPartMention(part: any): boolean {
-    return typeof part.contents !== 'undefined';
-  }
+  public isPartMention(part: any): boolean { return typeof part.contents !== 'undefined'; }
 
-  public formatMention(mention: Mention): string {
-    return this._formatMention(mention.contents);
-  }
+  public formatMention(mention: Mention): string { return this._formatMention(mention.contents); }
 
   private handleInput(event: any, keyCode: number, characterPressed: string): void {
     let caretPosition: number = getCaretPosition(this.textAreaInputElement.nativeElement);
@@ -404,7 +386,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     }
 
     const startOfMention =
-      findStartOfMentionInPlainText(this._value, this.markupSearch, caretPosition, this.displayTransform.bind(this));
+        findStartOfMentionInPlainText(this._value, this.markupSearch, caretPosition, this.displayTransform.bind(this));
     if (characterPressed === this.triggerChar) {
       this.setupMentionsList(caretPosition);
     } else if (startOfMention.start === -1 && this.startPos >= 0) {
@@ -412,8 +394,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
         this.mentionsList.show = false;
         this.startPos = -1;
       } else if (
-        keyCode !== Key.Shift && !event.metaKey && !event.altKey && !event.ctrlKey &&
-        caretPosition > this.startPos) {
+          keyCode !== Key.Shift && !event.metaKey && !event.altKey && !event.ctrlKey && caretPosition > this.startPos) {
         this.handleKeyDown(event, caretPosition, characterPressed);
       }
     } else {
@@ -439,7 +420,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
   }
 
   // noinspection JSMethodCanBeStatic
-  private stopEvent(event: MouseEvent|KeyboardEvent|FocusEvent): void {
+  private stopEvent(event: MouseEvent | KeyboardEvent | FocusEvent): void {
     if (event.preventDefault) {
       event.preventDefault();
       event.stopPropagation();
@@ -527,7 +508,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     this.updateMentionsList();
   }
 
-  private getDisplayValue(item: any): null|string {
+  private getDisplayValue(item: any): null | string {
     if (typeof item === 'string') {
       return item;
     } else if (item[this.displayName] !== undefined) {
@@ -563,7 +544,8 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     if (!this.disableSearch) {
       let items = Array.from(this.mentions);
       if (this.searchString) {
-        const searchString = this.searchString.toLowerCase(); const searchRegEx = new RegExp(escapeRegExp(searchString), 'i');
+        const searchString = this.searchString.toLowerCase();
+        const searchRegEx = new RegExp(escapeRegExp(searchString), 'i');
         items = items.filter(item => {
           const value = this.getDisplayValue(item);
           return value !== null && searchRegEx.test(value);
@@ -642,11 +624,12 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
 
   private addInputListener(): void {
     if (!this._inputListener && this.textAreaInputElement) {
-      this._inputListener = this.mobile ? (event: InputEvent) => this.onInput(event) : (event: KeyboardEvent) => this.onKeyDown(event);
-      (this.textAreaInputElement.nativeElement as HTMLElement).addEventListener(
-        this.mobile ? 'input' : 'keydown',
-        this._inputListener
-      );
+      this._inputListener = (event: KeyboardEvent) => this.onKeyDown(event);
+      if (this.mobile) {
+        this._inputListener = (event: InputEvent) => this.onInput(event);
+      }
+      (this.textAreaInputElement.nativeElement as HTMLElement)
+          .addEventListener(this.mobile ? 'input' : 'keydown', this._inputListener);
     }
   }
 
@@ -657,9 +640,7 @@ export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, Af
     const element = this.textAreaInputElement.nativeElement;
     const computedStyle: any = getComputedStyle(element);
     this.highlighterStyle = {};
-    styleProperties.forEach(prop => {
-      this.highlighterStyle[prop] = computedStyle[prop];
-    });
+    styleProperties.forEach(prop => this.highlighterStyle[prop] = computedStyle[prop]);
     this.changeDetector.detectChanges();
   }
 

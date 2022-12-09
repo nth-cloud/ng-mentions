@@ -31,7 +31,8 @@ function fileContent(...paths: string[]) {
 }
 
 function getVersion(name) {
-  const value = (packageJson.dependencies || {})[name] || (packageJson.devDependencies || {})[name] || (packageJson.peerDependencies || {})[name];
+  const value = (packageJson.dependencies || {})[name] || (packageJson.devDependencies || {})[name] ||
+      (packageJson.peerDependencies || {})[name];
   if (!value) {
     throw new Error(`couldn't find version for ${name} in package.json`);
   }

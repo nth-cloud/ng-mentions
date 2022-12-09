@@ -68,15 +68,7 @@ function getJsDocTags(symbol) {
       .filter(el => ['deprecated', 'since'].includes(el.name))
       .reduce(
         (obj, el) => {
-          let version, rest;
-          if (Array.isArray(el.text)) {
-            [version, ...rest] = el.text
-              .map(item => item.text)
-              .join(' ')
-              .split(' ');
-          } else {
-            [version, ...rest] = el.text.split(' ');
-          }
+          const[version, ...rest] = el.text[0].text.split(' ');
           obj[el.name] = {version, description: rest.join(' ').trim()};
           return obj;
         }, {}
@@ -100,7 +92,7 @@ function getTypeParameter(program, declaration) {
     // default type can be 'unknown', 'error', base type (ex. 'number') or another symbol
     if (defaultType && !['error', 'unknown'].includes(defaultType.intrinsicName)) {
       parameterString +=
-        defaultType.intrinsicName ? ` = ${defaultType.intrinsicName}` : ` = ${defaultType.symbol.getName()}`;
+          defaultType.intrinsicName ? ` = ${defaultType.intrinsicName}` : ` = ${defaultType.symbol.getName()}`;
     }
     return parameterString;
   } else {
@@ -267,13 +259,13 @@ class APIDocVisitor {
         outputs.push(Object.assign(this.visitOutput(members[i], outDecorator), releaseInfo));
 
       } else if (
-        (members[i].kind === SyntaxKind.MethodDeclaration || members[i].kind === SyntaxKind.MethodSignature) &&
-        !isAngularLifecycleHook(members[i].name.text) && !isPrivateOrInternal(members[i], this.typeChecker)) {
+          (members[i].kind === SyntaxKind.MethodDeclaration || members[i].kind === SyntaxKind.MethodSignature) &&
+          !isAngularLifecycleHook(members[i].name.text) && !isPrivateOrInternal(members[i], this.typeChecker)) {
         methods.push(Object.assign(this.visitMethodDeclaration(members[i]), releaseInfo));
       } else if (
-        (members[i].kind === SyntaxKind.PropertyDeclaration || members[i].kind === SyntaxKind.PropertySignature ||
-          members[i].kind === SyntaxKind.GetAccessor) &&
-        !isPrivate(members[i]) && !isInternalMember(members[i])) {
+          (members[i].kind === SyntaxKind.PropertyDeclaration || members[i].kind === SyntaxKind.PropertySignature ||
+           members[i].kind === SyntaxKind.GetAccessor) &&
+          !isPrivate(members[i]) && !isInternalMember(members[i])) {
         properties.push(Object.assign(this.visitProperty(members[i]), releaseInfo));
       }
     }
@@ -365,12 +357,12 @@ export function parseOutApiDocs(programFiles: string[]): any {
   const apiDocVisitor = new APIDocVisitor(programFiles);
 
   return programFiles.reduce(
-    (soFar, file) => {
-      const directivesInFile = apiDocVisitor.visitSourceFile(file);
+      (soFar, file) => {
+        const directivesInFile = apiDocVisitor.visitSourceFile(file);
 
-      directivesInFile.forEach((directive) => { soFar[directive.className] = directive; });
+        directivesInFile.forEach((directive) => { soFar[directive.className] = directive; });
 
-      return soFar;
-    },
-    {});
+        return soFar;
+      },
+      {});
 }

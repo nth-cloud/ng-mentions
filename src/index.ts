@@ -26,10 +26,10 @@ const DECLARATIONS = [
 ];
 
 @NgModule({
-    imports: [CommonModule, FormsModule],
-    exports: EXPORT_DIRECTIVES,
-    declarations: DECLARATIONS,
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [CommonModule, FormsModule],
+  exports: EXPORT_DIRECTIVES,
+  declarations: DECLARATIONS,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NgMentionsModule {
 }

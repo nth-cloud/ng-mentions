@@ -6,6 +6,6 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrismComponent {
-    @Input() language: string = 'bash';
+    @Input() language = 'bash';
     @Input() html: string;
 }

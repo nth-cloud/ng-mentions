@@ -41,8 +41,8 @@ export function parseDemo(globPath: string): Map<string, DemoMetadata> {
               const matches = BOOTSTRAP_REGEX.exec(textDecorator);
               if (matches) {
                 modules.set(
-                  sourceFile.fileName,
-                  {moduleClassName: className, bootstrap: {selector: '', fileName: '', className: matches[1]}});
+                    sourceFile.fileName,
+                    {moduleClassName: className, bootstrap: {selector: '', fileName: '', className: matches[1]}});
               } else {
                 throw new Error(`Couldn't find any bootstrap components in ${className} in ${sourceFile.fileName}`);
               }

@@ -44,8 +44,8 @@ describe(`Parse demo for StackBlitz`, () => {
 
   it('should fail if there is no bootstrap component', () => {
     expect(() => { parseDemo('./misc/parse-demo-test-cases/no-bootstrap-component/**/*.ts'); })
-      .toThrowError(
-        `Couldn't find any bootstrap components in TestModule in misc/parse-demo-test-cases/no-bootstrap-component/test.module.ts`);
+        .toThrowError(
+            `Couldn't find any bootstrap components in TestModule in misc/parse-demo-test-cases/no-bootstrap-component/test.module.ts`);
   });
 
   it('should fail if there is no bootstrap component selector', () => {

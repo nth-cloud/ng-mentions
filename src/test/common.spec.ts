@@ -25,11 +25,7 @@ describe('test-tools', () => {
       expect(getBrowser(sampleAgents.firefox)).toBe('firefox');
     });
 
-    it('should crash for an unknown browser', () => {
-      expect(() => {
-        getBrowser(sampleAgents.unknown);
-      }).toThrow();
-    });
+    it('should crash for an unknown browser', () => { expect(() => getBrowser(sampleAgents.unknown)).toThrow(); });
   });
 
   describe('isBrowser()', () => {

@@ -11,7 +11,7 @@ export const componentsList = [
   templateUrl: './side-nav.component.html',
 })
 export class NthSideNavComponent {
-  @Input() activeTab: string = '';
+  @Input() activeTab = '';
   components = componentsList;
 
   constructor(private router: Router) {}

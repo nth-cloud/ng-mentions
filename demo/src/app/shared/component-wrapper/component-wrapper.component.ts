@@ -14,7 +14,7 @@ export type TableOfContents = {fragment: string, title: string}[];
 export class ComponentWrapper implements OnDestroy {
   public component: string;
 
-  public activeTab: string = 'examples';
+  public activeTab = 'examples';
 
   public headerComponentType$: Observable<Type<any>>;
 
@@ -23,7 +23,7 @@ export class ComponentWrapper implements OnDestroy {
 
   public tableOfContents: TableOfContents = [];
 
-  public sidebarCollapsed: boolean = false;
+  public sidebarCollapsed = false;
 
   private _routerSubscription: Subscription;
 

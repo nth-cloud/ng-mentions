@@ -34,7 +34,7 @@ const NG_MENTIONS_PACKAGE_NAME = '@nth-cloud/ng-mentions';
  *
  */
 export function addNgMentionsModuleToAppModule(options: Schema): Rule {
-  return async (host: Tree) => {
+  return async(host: Tree) => {
     const workspace = await readWorkspace(host);
     const projectName = options.project || (workspace.extensions.defaultProject as string);
 
@@ -60,9 +60,10 @@ export function addNgMentionsModuleToAppModule(options: Schema): Rule {
 
     // 4. adding 'NgMentionsModule' to the app module
     const appModuleSource =
-      ts.createSourceFile(appModuleFilePath, appModuleFileText.toString('utf-8'), ts.ScriptTarget.Latest, true);
+        ts.createSourceFile(appModuleFilePath, appModuleFileText.toString('utf-8'), ts.ScriptTarget.Latest, true);
 
-    const changes = addImportToModule(appModuleSource, appModuleFilePath, NG_MENTIONS_MODULE_NAME, NG_MENTIONS_PACKAGE_NAME);
+    const changes =
+        addImportToModule(appModuleSource, appModuleFilePath, NG_MENTIONS_MODULE_NAME, NG_MENTIONS_PACKAGE_NAME);
 
     const recorder = host.beginUpdate(appModuleFilePath);
     for (const change of changes) {

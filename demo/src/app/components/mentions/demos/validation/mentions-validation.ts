@@ -5,7 +5,7 @@ import {Component} from '@angular/core';
     templateUrl: './mentions-validation.html'
 })
 export class NthdMentionsValidation {
-    required: boolean = false;
+    required = false;
     model: any = {
         value: '',
         mentions: [

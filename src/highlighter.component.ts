@@ -29,7 +29,8 @@ import {escapeHtml, Highlighted, isCoordinateWithinRect} from './util/utils';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None
 })
-export class NgHighlighterComponent implements OnChanges, AfterContentInit {
+export class NgHighlighterComponent implements OnChanges,
+    AfterContentInit {
   /**
    * Text value to be highlighted
    */
