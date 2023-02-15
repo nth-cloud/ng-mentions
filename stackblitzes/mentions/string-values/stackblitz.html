@@ -39,7 +39,7 @@
     <input type="hidden" name="project[title]" value="ng-mentions - Mentions - StringValues">
     <input type="hidden" name="project[description]"
            value="Example usage of the mentions widget from https://nth-cloud.github.io/ng-mentions">
-    <input type="hidden" name="project[dependencies]" value="{&#34;@angular/animations&#34;:&#34;^14.0.0&#34;,&#34;@angular/core&#34;:&#34;^14.0.0&#34;,&#34;@angular/common&#34;:&#34;^14.0.0&#34;,&#34;@angular/compiler&#34;:&#34;^14.0.0&#34;,&#34;@angular/compiler-cli&#34;:&#34;^14.0.0&#34;,&#34;@angular/platform-browser&#34;:&#34;^14.0.0&#34;,&#34;@angular/platform-browser-dynamic&#34;:&#34;^14.0.0&#34;,&#34;@angular/router&#34;:&#34;^14.0.0&#34;,&#34;@angular/forms&#34;:&#34;^14.0.0&#34;,&#34;@angular/localize&#34;:&#34;^14.0.0&#34;,&#34;@nth-cloud/ng-mentions&#34;:&#34;9.1.0&#34;,&#34;rxjs&#34;:&#34;~7.5.5&#34;,&#34;typescript&#34;:&#34;^4.6.4 &lt;4.9&#34;,&#34;zone.js&#34;:&#34;^0.12.0&#34;}">
+    <input type="hidden" name="project[dependencies]" value="{&#34;@angular/animations&#34;:&#34;^15.0.0&#34;,&#34;@angular/core&#34;:&#34;^15.0.0&#34;,&#34;@angular/common&#34;:&#34;^15.0.0&#34;,&#34;@angular/compiler&#34;:&#34;^15.0.0&#34;,&#34;@angular/compiler-cli&#34;:&#34;^15.0.0&#34;,&#34;@angular/platform-browser&#34;:&#34;^15.0.0&#34;,&#34;@angular/platform-browser-dynamic&#34;:&#34;^15.0.0&#34;,&#34;@angular/router&#34;:&#34;^15.0.0&#34;,&#34;@angular/forms&#34;:&#34;^15.0.0&#34;,&#34;@angular/localize&#34;:&#34;^15.0.0&#34;,&#34;@nth-cloud/ng-mentions&#34;:&#34;10.0.0&#34;,&#34;rxjs&#34;:&#34;^6.6.0 || ^7.0&#34;,&#34;typescript&#34;:&#34;^4.9.5&#34;,&#34;zone.js&#34;:&#34;^0.12.0&#34;}">
     
     <input type="hidden" name="project[tags][]" value="angular">
     
@@ -68,13 +68,10 @@
  * Learn more in https://angular.io/docs/ts/latest/guide/browser-support.html
  */
 
-
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import &#39;zone.js&#39;;  // Included with Angular CLI.
-
-
+import &#39;zone.js&#39;; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
@@ -275,34 +272,27 @@ platformBrowserDynamic()
 
 ">
     
-        <input type="hidden" name="project[files][src/app/mentions-string-values.ts]" value="import {Component} from &#39;@angular/core&#39;;
+        <input type="hidden" name="project[files][src/app/mentions-string-values.ts]" value="import { Component } from &#39;@angular/core&#39;;
 
 @Component({
-    selector: &#39;nthd-mentions-string-values&#39;,
-    templateUrl: &#39;./mentions-string-values.html&#39;
+  selector: &#39;nthd-mentions-string-values&#39;,
+  templateUrl: &#39;./mentions-string-values.html&#39;,
 })
 export class NthdMentionsStringValues {
-    model: any = {
-        markup: &#39;@__display__&#39;,
-        value: &#39;&#39;,
-        mentions: [
-            &#39;Dave&#39;,
-            &#39;Sue&#39;,
-            &#39;Bob&#39;,
-            &#39;Carl&#39;,
-            &#39;Mention With Spaces&#39;,
-            &#39;Mention_With_Underscores&#39;
-        ]
-    };
+  model: any = {
+    markup: &#39;@__display__&#39;,
+    value: &#39;&#39;,
+    mentions: [&#39;Dave&#39;, &#39;Sue&#39;, &#39;Bob&#39;, &#39;Carl&#39;, &#39;Mention With Spaces&#39;, &#39;Mention_With_Underscores&#39;],
+  };
 }
 ">
     
-        <input type="hidden" name="project[files][src/app/module.ts]" value="import {NgModule} from &#39;@angular/core&#39;;
-import {BrowserModule} from &#39;@angular/platform-browser&#39;;
-import {FormsModule} from &#39;@angular/forms&#39;;
-import {NgMentionsModule} from &#39;@nth-cloud/ng-mentions&#39;;
+        <input type="hidden" name="project[files][src/app/module.ts]" value="import { NgModule } from &#39;@angular/core&#39;;
+import { BrowserModule } from &#39;@angular/platform-browser&#39;;
+import { FormsModule } from &#39;@angular/forms&#39;;
+import { NgMentionsModule } from &#39;@nth-cloud/ng-mentions&#39;;
 
-import {NthdMentionsStringValues} from &#39;./mentions-string-values&#39;;
+import { NthdMentionsStringValues } from &#39;./mentions-string-values&#39;;
 
 @NgModule({
   imports: [BrowserModule, FormsModule, NgMentionsModule],
@@ -310,8 +300,7 @@ import {NthdMentionsStringValues} from &#39;./mentions-string-values&#39;;
   exports: [NthdMentionsStringValues],
   bootstrap: [NthdMentionsStringValues],
 })
-export class NthdMentionsStringValuesModule {
-}
+export class NthdMentionsStringValuesModule {}
 ">
     
 </form>

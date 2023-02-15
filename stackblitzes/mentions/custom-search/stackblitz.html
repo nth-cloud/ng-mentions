@@ -39,7 +39,7 @@
     <input type="hidden" name="project[title]" value="ng-mentions - Mentions - CustomSearch">
     <input type="hidden" name="project[description]"
            value="Example usage of the mentions widget from https://nth-cloud.github.io/ng-mentions">
-    <input type="hidden" name="project[dependencies]" value="{&#34;@angular/animations&#34;:&#34;^14.0.0&#34;,&#34;@angular/core&#34;:&#34;^14.0.0&#34;,&#34;@angular/common&#34;:&#34;^14.0.0&#34;,&#34;@angular/compiler&#34;:&#34;^14.0.0&#34;,&#34;@angular/compiler-cli&#34;:&#34;^14.0.0&#34;,&#34;@angular/platform-browser&#34;:&#34;^14.0.0&#34;,&#34;@angular/platform-browser-dynamic&#34;:&#34;^14.0.0&#34;,&#34;@angular/router&#34;:&#34;^14.0.0&#34;,&#34;@angular/forms&#34;:&#34;^14.0.0&#34;,&#34;@angular/localize&#34;:&#34;^14.0.0&#34;,&#34;@nth-cloud/ng-mentions&#34;:&#34;9.1.0&#34;,&#34;rxjs&#34;:&#34;~7.5.5&#34;,&#34;typescript&#34;:&#34;^4.6.4 &lt;4.9&#34;,&#34;zone.js&#34;:&#34;^0.12.0&#34;}">
+    <input type="hidden" name="project[dependencies]" value="{&#34;@angular/animations&#34;:&#34;^15.0.0&#34;,&#34;@angular/core&#34;:&#34;^15.0.0&#34;,&#34;@angular/common&#34;:&#34;^15.0.0&#34;,&#34;@angular/compiler&#34;:&#34;^15.0.0&#34;,&#34;@angular/compiler-cli&#34;:&#34;^15.0.0&#34;,&#34;@angular/platform-browser&#34;:&#34;^15.0.0&#34;,&#34;@angular/platform-browser-dynamic&#34;:&#34;^15.0.0&#34;,&#34;@angular/router&#34;:&#34;^15.0.0&#34;,&#34;@angular/forms&#34;:&#34;^15.0.0&#34;,&#34;@angular/localize&#34;:&#34;^15.0.0&#34;,&#34;@nth-cloud/ng-mentions&#34;:&#34;10.0.0&#34;,&#34;rxjs&#34;:&#34;^6.6.0 || ^7.0&#34;,&#34;typescript&#34;:&#34;^4.9.5&#34;,&#34;zone.js&#34;:&#34;^0.12.0&#34;}">
     
     <input type="hidden" name="project[tags][]" value="angular">
     
@@ -68,13 +68,10 @@
  * Learn more in https://angular.io/docs/ts/latest/guide/browser-support.html
  */
 
-
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import &#39;zone.js&#39;;  // Included with Angular CLI.
-
-
+import &#39;zone.js&#39;; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
@@ -273,61 +270,61 @@ platformBrowserDynamic()
 &lt;/div&gt;
 ">
     
-        <input type="hidden" name="project[files][src/app/mentions-custom-search.ts]" value="import {Component} from &#39;@angular/core&#39;;
+        <input type="hidden" name="project[files][src/app/mentions-custom-search.ts]" value="import { Component } from &#39;@angular/core&#39;;
 
 @Component({
-    selector: &#39;nthd-mentions-custom-search&#39;,
-    templateUrl: &#39;./mentions-custom-search.html&#39;
+  selector: &#39;nthd-mentions-custom-search&#39;,
+  templateUrl: &#39;./mentions-custom-search.html&#39;,
 })
 export class NthdMentionsCustomSearch {
-    model: any = {
-        value: &#39;&#39;,
-        mentions: []
-    };
-    items: any[] = [
-        {
-            display: &#39;Dave&#39;,
-            id: 1,
-            type: &#39;contact&#39;
-        },
-        {
-            display: &#39;Bob Ross&#39;,
-            id: 2,
-            type: &#39;contact&#39;
-        },
-        {
-            display: &#39;Carl&#39;,
-            id: 3,
-            type: &#39;contact&#39;
-        },
-        {
-            display: &#39;Sue&#39;,
-            id: 4,
-            type: &#39;contact&#39;
-        },
-    ];
+  model: any = {
+    value: &#39;&#39;,
+    mentions: [],
+  };
+  items: any[] = [
+    {
+      display: &#39;Dave&#39;,
+      id: 1,
+      type: &#39;contact&#39;,
+    },
+    {
+      display: &#39;Bob Ross&#39;,
+      id: 2,
+      type: &#39;contact&#39;,
+    },
+    {
+      display: &#39;Carl&#39;,
+      id: 3,
+      type: &#39;contact&#39;,
+    },
+    {
+      display: &#39;Sue&#39;,
+      id: 4,
+      type: &#39;contact&#39;,
+    },
+  ];
 
-    get names(): string {
-        return this.items.map(item =&gt; item.display).join(&#39;, &#39;);
+  get names(): string {
+    return this.items.map((item) =&gt; item.display).join(&#39;, &#39;);
+  }
+
+  onSearch(searchTerm: string) {
+    this.model.mentions = [];
+    if (searchTerm.length === 0) {
+      return;
     }
 
-    onSearch(searchTerm: string) {
-        this.model.mentions = [];
-        if (searchTerm.length === 0) {
-            return;
-        }
-
-        this.model.mentions = Array.from(this.items).filter(item =&gt; item.display.toLowerCase().startsWith(searchTerm));
-    }
+    this.model.mentions = Array.from(this.items).filter((item) =&gt; item.display.toLowerCase().startsWith(searchTerm));
+  }
 }
 ">
     
-        <input type="hidden" name="project[files][src/app/module.ts]" value="import {NgModule} from &#39;@angular/core&#39;;
-import {BrowserModule} from &#39;@angular/platform-browser&#39;;
-import {FormsModule} from &#39;@angular/forms&#39;;
-import {NgMentionsModule} from &#39;@nth-cloud/ng-mentions&#39;;
+        <input type="hidden" name="project[files][src/app/module.ts]" value="import { NgModule } from &#39;@angular/core&#39;;
+import { BrowserModule } from &#39;@angular/platform-browser&#39;;
+import { FormsModule } from &#39;@angular/forms&#39;;
+import { NgMentionsModule } from &#39;@nth-cloud/ng-mentions&#39;;
 
-import {NthdMentionsCustomSearch} from &#39;./mentions-custom-search&#39;;
+import { NthdMentionsCustomSearch } from &#39;./mentions-custom-search&#39;;
 
 @NgModule({
   imports: [BrowserModule, FormsModule, NgMentionsModule],
@@ -335,8 +332,7 @@ import {NthdMentionsCustomSearch} from &#39;./mentions-custom-search&#39;;
   exports: [NthdMentionsCustomSearch],
   bootstrap: [NthdMentionsCustomSearch],
 })
-export class NthdMentionsCustomSearchModule {
-}
+export class NthdMentionsCustomSearchModule {}
 ">
     
 </form>
