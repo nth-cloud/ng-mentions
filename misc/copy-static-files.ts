@@ -1,4 +1,4 @@
-import {copyFileSync, copySync, readJsonSync, writeJSONSync} from 'fs-extra';
+import { copyFileSync, copySync, readJsonSync, writeJSONSync } from 'fs-extra';
 
 /**
  * Copies missing required static assets after the ng-mentions build
@@ -8,7 +8,7 @@ const DEST = 'dist';
 const SCHEMATICS = `${DEST}/schematics`;
 
 // 1. Copy static assets
-['LICENSE', 'README.md'].forEach(file => copyFileSync(file, `${DEST}/${file}`));
+['LICENSE', 'README.md'].forEach((file) => copyFileSync(file, `${DEST}/${file}`));
 
 // 2. Copy built schematics to 'dist/ng-mentions'
 copySync('schematics/dist', SCHEMATICS);
@@ -26,9 +26,9 @@ const {
   license,
   bugs,
   homepage,
-  peerDependencies: dependencies
-} = readJsonSync(`package.json`, {encoding: 'utf-8'});
-const packageJson = readJsonSync(`${DEST}/package.json`, {encoding: 'utf-8'});
+  peerDependencies: dependencies,
+} = readJsonSync(`package.json`, { encoding: 'utf-8' });
+const packageJson = readJsonSync(`${DEST}/package.json`, { encoding: 'utf-8' });
 packageJson.name = name;
 packageJson.version = version;
 packageJson.description = description;
@@ -39,4 +39,4 @@ packageJson.license = license;
 packageJson.bugs = bugs;
 packageJson.homepage = homepage;
 packageJson.peerDependencies = dependencies;
-writeJSONSync(`${DEST}/package.json`, packageJson, {spaces: 2, encoding: 'utf-8'});
+writeJSONSync(`${DEST}/package.json`, packageJson, { spaces: 2, encoding: 'utf-8' });

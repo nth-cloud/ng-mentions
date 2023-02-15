@@ -40,9 +40,10 @@ export function parseDemo(globPath: string): Map<string, DemoMetadata> {
             if (textDecorator.startsWith('@NgModule')) {
               const matches = BOOTSTRAP_REGEX.exec(textDecorator);
               if (matches) {
-                modules.set(
-                    sourceFile.fileName,
-                    {moduleClassName: className, bootstrap: {selector: '', fileName: '', className: matches[1]}});
+                modules.set(sourceFile.fileName, {
+                  moduleClassName: className,
+                  bootstrap: { selector: '', fileName: '', className: matches[1] },
+                });
               } else {
                 throw new Error(`Couldn't find any bootstrap components in ${className} in ${sourceFile.fileName}`);
               }
@@ -51,7 +52,7 @@ export function parseDemo(globPath: string): Map<string, DemoMetadata> {
             if (textDecorator.startsWith('@Component')) {
               const matches = SELECTOR_REGEX.exec(textDecorator);
               if (matches) {
-                components.set(className, {selector: matches[1], fileName: path.basename(sourceFile.fileName)});
+                components.set(className, { selector: matches[1], fileName: path.basename(sourceFile.fileName) });
               }
             }
           }
@@ -65,7 +66,7 @@ export function parseDemo(globPath: string): Map<string, DemoMetadata> {
   const files = glob.sync(globPath);
   const program = ts.createProgram(files, {});
   program.getTypeChecker();
-  files.forEach(file => processFile(program.getSourceFile(file)));
+  files.forEach((file) => processFile(program.getSourceFile(file)));
 
   // checks
   if (modules.size === 0) {
@@ -73,7 +74,7 @@ export function parseDemo(globPath: string): Map<string, DemoMetadata> {
   }
 
   // replacing temporary component types with their selectors
-  modules.forEach(metadata => {
+  modules.forEach((metadata) => {
     const bootstrapComponent = metadata.bootstrap.className;
     const bootstrapMetadata = components.get(bootstrapComponent);
     if (!bootstrapMetadata) {

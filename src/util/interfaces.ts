@@ -1,5 +1,5 @@
 export interface Tag {
-  indices: {start: number, end: number};
+  indices: { start: number; end: number };
   type?: string;
   formatter?: any;
 }

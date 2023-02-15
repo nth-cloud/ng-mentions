@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
-import {NgMentionsModule} from '@nth-cloud/ng-mentions';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NgMentionsModule } from '@nth-cloud/ng-mentions';
 
-import {NthdMentionsStringValues} from './mentions-string-values';
+import { NthdMentionsStringValues } from './mentions-string-values';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, NgMentionsModule],
@@ -11,5 +11,4 @@ import {NthdMentionsStringValues} from './mentions-string-values';
   exports: [NthdMentionsStringValues],
   bootstrap: [NthdMentionsStringValues],
 })
-export class NthdMentionsStringValuesModule {
-}
+export class NthdMentionsStringValuesModule {}

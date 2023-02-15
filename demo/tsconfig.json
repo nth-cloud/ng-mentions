@@ -2,16 +2,11 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "temp",
+    "outDir": "../out-tsc/demo",
     "paths": {
       "@nth-cloud/ng-mentions": ["../src/index"]
     }
   },
-  "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
-  ],
-  "include": [
-    "./src/**/*.d.ts"
-  ]
+  "files": ["src/main.ts"],
+  "include": ["./src/**/*.d.ts"]
 }

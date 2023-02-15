@@ -1,7 +1,7 @@
-import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import docs from '../../../../api-docs';
-import {ClassDesc} from './api-docs.model';
-import {Analytics} from '../../../shared/analytics/analytics';
+import { ClassDesc } from './api-docs.model';
+import { Analytics } from '../../../shared/analytics/analytics';
 
 const CONFIG_SUFFIX_LENGTH = 'Config'.length;
 
@@ -15,7 +15,7 @@ const CONFIG_SUFFIX_LENGTH = 'Config'.length;
 @Component({
   selector: 'nthd-api-docs-config',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './api-docs-config.component.html'
+  templateUrl: './api-docs-config.component.html',
 })
 export class NthdApiDocsConfig {
   apiDocs: ClassDesc;

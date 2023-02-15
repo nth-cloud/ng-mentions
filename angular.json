@@ -61,18 +61,20 @@
       "sourceRoot": "demo/src",
       "projectType": "application",
       "prefix": "nthd",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "prismjs"
-            ],
+            "allowedCommonJsDependencies": ["prismjs"],
             "outputPath": "demo/dist",
             "index": "demo/src/public/index.html",
             "main": "demo/src/main.ts",
-            "polyfills": "demo/src/polyfills.ts",
+            "polyfills": ["zone.js", "@angular/localize"],
             "tsConfig": "demo/tsconfig.json",
             "assets": [
               {

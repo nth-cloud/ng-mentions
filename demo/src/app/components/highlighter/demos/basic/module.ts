@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {NgMentionsModule} from '@nth-cloud/ng-mentions';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgMentionsModule } from '@nth-cloud/ng-mentions';
 
-import {NthdHighlighterBasic} from './highlighter-basic';
+import { NthdHighlighterBasic } from './highlighter-basic';
 
 @NgModule({
   imports: [BrowserModule, NgMentionsModule],
@@ -10,5 +10,4 @@ import {NthdHighlighterBasic} from './highlighter-basic';
   exports: [NthdHighlighterBasic],
   bootstrap: [NthdHighlighterBasic],
 })
-export class NthdHighlighterBasicModule {
-}
+export class NthdHighlighterBasicModule {}

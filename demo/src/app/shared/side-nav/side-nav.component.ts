@@ -1,10 +1,7 @@
 import { Component, Input } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
-export const componentsList = [
-  'Mentions',
-  'Highlighter',
-];
+export const componentsList = ['Mentions', 'Highlighter'];
 
 @Component({
   selector: 'nthd-side-nav',
@@ -21,7 +18,7 @@ export class NthSideNavComponent {
       paths: 'subset',
       queryParams: 'subset',
       fragment: 'ignored',
-      matrixParams: 'ignored'
+      matrixParams: 'ignored',
     });
   }
 }

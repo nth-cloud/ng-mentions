@@ -4,7 +4,7 @@ import * as fs from 'fs-extra';
 import * as glob from 'glob';
 import * as path from 'path';
 
-import {parseDemo} from './parse-demo';
+import { parseDemo } from './parse-demo';
 
 const stackblitzUrl = 'https://stackblitz.com/run';
 const packageJson = fs.readJsonSync('package.json');
@@ -16,12 +16,15 @@ const versions = {
   rxjs: getVersion('rxjs'),
   zoneJs: getVersion('zone.js'),
   bootstrap: getVersion('bootstrap'),
-  prismjs: getVersion('prismjs')
+  prismjs: getVersion('prismjs'),
 };
 
 function capitalize(string) {
   if (string.indexOf('-') !== -1) {
-    string = String(string).split('-').map(str => capitalize(str)).join('');
+    string = String(string)
+      .split('-')
+      .map((str) => capitalize(str))
+      .join('');
   }
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -31,8 +34,10 @@ function fileContent(...paths: string[]) {
 }
 
 function getVersion(name) {
-  const value = (packageJson.dependencies || {})[name] || (packageJson.devDependencies || {})[name] ||
-      (packageJson.peerDependencies || {})[name];
+  const value =
+    (packageJson.dependencies || {})[name] ||
+    (packageJson.devDependencies || {})[name] ||
+    (packageJson.peerDependencies || {})[name];
   if (!value) {
     throw new Error(`couldn't find version for ${name} in package.json`);
   }
@@ -62,16 +67,16 @@ const initialData = {
     '@angular/forms': versions.angular,
     '@angular/localize': versions.angular,
     '@nth-cloud/ng-mentions': versions.ngMentions,
-    'rxjs': versions.rxjs,
-    'typescript': versions.typescript,
+    rxjs: versions.rxjs,
+    typescript: versions.typescript,
     'zone.js': versions.zoneJs,
   }),
   tags: ['angular', 'mentions', 'ng-mentions', 'nth-cloud'],
   files: [
-    {name: 'src/polyfills.ts', source: fileContent('misc', 'stackblitz-templates', 'polyfills.ts')},
-    {name: 'tsconfig.json', source: fileContent('misc', 'stackblitz-templates', 'tsconfig.json')},
-    {name: 'angular.json', source: fileContent('misc', 'stackblitz-templates', 'angular.json')},
-  ]
+    { name: 'src/polyfills.ts', source: fileContent('misc', 'stackblitz-templates', 'polyfills.ts') },
+    { name: 'tsconfig.json', source: fileContent('misc', 'stackblitz-templates', 'tsconfig.json') },
+    { name: 'angular.json', source: fileContent('misc', 'stackblitz-templates', 'angular.json') },
+  ],
 };
 
 // clear directories
@@ -83,7 +88,7 @@ const modulesInfo = parseDemo(path.join(root, '**', 'demos', '*', '*.ts'));
 for (const demoModule of modulesInfo.keys()) {
   const demoDir = path.normalize(path.dirname(demoModule));
   const demoFiles = glob.sync(path.join(demoDir, '*'), {});
-  const[, componentName, , demoName] = demoDir.replace(root, '').split(path.sep);
+  const [, componentName, , demoName] = demoDir.replace(root, '').split(path.sep);
   const modulePath = path.basename(demoModule, '.ts');
   const moduleInfo = modulesInfo.get(demoModule);
 
@@ -98,16 +103,16 @@ for (const demoModule of modulesInfo.keys()) {
     tags: [...initialData.tags],
     files: [...initialData.files],
     styles: '',
-    openFile: `app/${moduleInfo.bootstrap.fileName}`
+    openFile: `app/${moduleInfo.bootstrap.fileName}`,
   };
 
   stackblitzData.tags.push(componentName);
 
-  stackblitzData.files.push({name: 'src/index.html', source: indexFile(stackblitzData)});
-  stackblitzData.files.push({name: 'src/main.ts', source: mainFile(stackblitzData)});
+  stackblitzData.files.push({ name: 'src/index.html', source: indexFile(stackblitzData) });
+  stackblitzData.files.push({ name: 'src/main.ts', source: mainFile(stackblitzData) });
   for (const file of demoFiles) {
     const destFile = path.basename(file);
-    stackblitzData.files.push({name: `src/app/${destFile}`, source: fs.readFileSync(file).toString()});
+    stackblitzData.files.push({ name: `src/app/${destFile}`, source: fs.readFileSync(file).toString() });
   }
 
   fs.ensureDirSync(destinationDir);

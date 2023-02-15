@@ -3,7 +3,6 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   ContentChild,
   ElementRef,
   EventEmitter,
@@ -18,13 +17,13 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
-import {Subject} from 'rxjs';
+import { Subject } from 'rxjs';
 
-import {Line, Mention, Tag} from './util/interfaces';
-import {Key} from './util/key';
-import {NgMentionsListComponent} from './util/mentions-list.component';
+import { Line, Mention, Tag } from './util/interfaces';
+import { Key } from './util/key';
+import { NgMentionsListComponent } from './util/mentions-list.component';
 import {
   applyChangeToValue,
   escapeRegExp,
@@ -37,13 +36,13 @@ import {
   markupToRegExp,
   replacePlaceholders,
   setCaretPosition,
-  styleProperties
+  styleProperties,
 } from './util/utils';
 
 // eslint-disable-next-line no-shadow
 enum InputToKeyboard {
   'deleteContentBackward' = Key.Backspace,
-  'insertLineBreak' = Key.Enter
+  'insertLineBreak' = Key.Enter,
 }
 
 /**
@@ -53,38 +52,42 @@ enum InputToKeyboard {
   exportAs: 'ngMentions',
   selector: 'ng-mentions',
   template: `
-      <div #highlighter class="highlighter" [ngClass]="textAreaClassNames" [attr.readonly]="readonly"
-           [ngStyle]="highlighterStyle">
-          <div *ngFor="let line of lines">
-              <ng-container *ngFor="let part of line.parts">
-                  <highlighted *ngIf="isPartMention(part)" [tag]="part.tag">{{formatMention(part)}}</highlighted>
-                  <ng-container *ngIf="!isPartMention(part)">{{part}}</ng-container>
-              </ng-container>
-              <ng-container *ngIf="line.parts.length===0">&nbsp;</ng-container>
-          </div>
+    <div
+      #highlighter
+      class="highlighter"
+      [ngClass]="textAreaClassNames"
+      [attr.readonly]="readonly"
+      [ngStyle]="highlighterStyle"
+    >
+      <div *ngFor="let line of lines">
+        <ng-container *ngFor="let part of line.parts">
+          <highlighted *ngIf="isPartMention(part)" [tag]="part.tag">{{ formatMention(part) }}</highlighted>
+          <ng-container *ngIf="!isPartMention(part)">{{ part }}</ng-container>
+        </ng-container>
+        <ng-container *ngIf="line.parts.length === 0">&nbsp;</ng-container>
       </div>
-      <textarea
-        #input
-        [rows]="rows"
-        [cols]="columns"
-        [ngModel]="displayContent"
-        [ngClass]="textAreaClassNames"
-        (blur)="onBlur($event)"
-        (select)="onSelect($event)"
-        (mouseup)="onSelect($event)"
-        (ngModelChange)="onChange($event)"
-        (scroll)="onTextAreaScroll()"
-        [disabled]="disabled"
-        [required]="required"
-        [placeholder]="placeholder"
-      ></textarea>
+    </div>
+    <textarea
+      #input
+      [rows]="rows"
+      [cols]="columns"
+      [ngModel]="displayContent"
+      [ngClass]="textAreaClassNames"
+      (blur)="onBlur($event)"
+      (select)="onSelect($event)"
+      (mouseup)="onSelect($event)"
+      (ngModelChange)="onChange($event)"
+      (scroll)="onTextAreaScroll()"
+      [disabled]="disabled"
+      [required]="required"
+      [placeholder]="placeholder"
+    ></textarea>
   `,
   styleUrls: ['./mentions.scss'],
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
-export class NgMentionsComponent implements OnChanges,
-    OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
+export class NgMentionsComponent implements OnChanges, OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
   /**
    * The character to trigger the mentions list when a user is typing in the input field
    */
@@ -120,14 +123,14 @@ export class NgMentionsComponent implements OnChanges,
   @Output('valueChanges') readonly valueChanges: EventEmitter<string> = new EventEmitter<string>();
   @Output('stateChanges') readonly stateChanges: Subject<void> = new Subject<void>();
 
-  @ContentChild(TemplateRef, {static: true}) mentionListTemplate: TemplateRef<any>;
-  @ViewChild('input', {static: true}) textAreaInputElement: ElementRef;
-  @ViewChild('highlighter', {static: true}) highlighterElement: ElementRef;
+  @ContentChild(TemplateRef, { static: true }) mentionListTemplate: TemplateRef<any>;
+  @ViewChild('input', { static: true }) textAreaInputElement: ElementRef;
+  @ViewChild('highlighter', { static: true }) highlighterElement: ElementRef;
 
   displayContent = '';
   lines: Line[] = [];
-  highlighterStyle: {[key: string]: string} = {};
-  textAreaClassNames: {[key: string]: boolean} = {};
+  highlighterStyle: { [key: string]: string } = {};
+  textAreaClassNames: { [key: string]: boolean } = {};
   selectionStart: number;
   selectionEnd: number;
   mentions: any[] = [];
@@ -159,7 +162,7 @@ export class NgMentionsComponent implements OnChanges,
 
   set formClass(classNames: string) {
     this.textAreaClassNames = {};
-    Array.from(classNames.split(' ')).forEach(className => this.textAreaClassNames[className] = true);
+    Array.from(classNames.split(' ')).forEach((className) => (this.textAreaClassNames[className] = true));
   }
 
   @Input('value')
@@ -167,7 +170,9 @@ export class NgMentionsComponent implements OnChanges,
     return this._value;
   }
 
-  set value(value: string) { this.parseLines(value); }
+  set value(value: string) {
+    this.parseLines(value);
+  }
 
   @Input('required')
   get required(): boolean {
@@ -193,7 +198,7 @@ export class NgMentionsComponent implements OnChanges,
    * Number of rows for the textarea. Defaults to 1
    */
   @Input('rows')
-      get rows(): number | string {
+  get rows(): number | string {
     return this._rows;
   }
 
@@ -211,7 +216,7 @@ export class NgMentionsComponent implements OnChanges,
    * Number of columns for the textarea. Defaults to 1
    */
   @Input('cols')
-      get columns(): number | string {
+  get columns(): number | string {
     return this._columns;
   }
 
@@ -236,15 +241,24 @@ export class NgMentionsComponent implements OnChanges,
     }
   }
 
-  get readonly(): string { return this.disabled ? 'readonly' : null; }
+  get readonly(): string {
+    return this.disabled ? 'readonly' : null;
+  }
 
-  get errorState(): boolean { return this._errorState; }
+  get errorState(): boolean {
+    return this._errorState;
+  }
 
   constructor(
-      private element: ElementRef, private componentResolver: ComponentFactoryResolver,
-      private viewContainer: ViewContainerRef, private changeDetector: ChangeDetectorRef, private ngZone: NgZone) {}
+    private element: ElementRef,
+    private viewContainer: ViewContainerRef,
+    private changeDetector: ChangeDetectorRef,
+    private ngZone: NgZone,
+  ) {}
 
-  ngOnInit(): void { this.parseMarkup(); }
+  ngOnInit(): void {
+    this.parseMarkup();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('markup' in changes) {
@@ -265,8 +279,10 @@ export class NgMentionsComponent implements OnChanges,
 
   ngOnDestroy(): void {
     if (this._inputListener) {
-      (this.textAreaInputElement.nativeElement as HTMLTextAreaElement)
-          .removeEventListener(this.mobile ? 'input' : 'keydown', this._inputListener);
+      (this.textAreaInputElement.nativeElement as HTMLTextAreaElement).removeEventListener(
+        this.mobile ? 'input' : 'keydown',
+        this._inputListener,
+      );
       this._inputListener = undefined;
     }
     this._destroyed.next();
@@ -283,7 +299,7 @@ export class NgMentionsComponent implements OnChanges,
   }
 
   public open(): void {
-    const event = {key: this.triggerChar, which: this.triggerChar.charCodeAt(0)};
+    const event = { key: this.triggerChar, which: this.triggerChar.charCodeAt(0) };
     this.textAreaInputElement.nativeElement.focus();
     const caretPosition: number = getCaretPosition(this.textAreaInputElement.nativeElement);
     let selectionStart = this.textAreaInputElement.nativeElement.selectionStart;
@@ -293,8 +309,8 @@ export class NgMentionsComponent implements OnChanges,
       selectionEnd = caretPosition;
     }
     const newCaretPosition = selectionStart + 1;
-    const newValue = this.displayContent.substring(0, selectionStart) + this.triggerChar +
-        this.displayContent.substring(selectionEnd);
+    const newValue =
+      this.displayContent.substring(0, selectionStart) + this.triggerChar + this.displayContent.substring(selectionEnd);
     this.displayContent = newValue;
     this.onChange(newValue);
     setTimeout(() => {
@@ -323,8 +339,14 @@ export class NgMentionsComponent implements OnChanges,
       newPlainTextValue = newPlainTextValue.substring(0, bounds.start) + newPlainTextValue.substring(bounds.end);
     }
     const newValue = applyChangeToValue(
-        value, this.markupSearch, newPlainTextValue, this.selectionStart, this.selectionEnd, selectionEnd,
-        displayTransform);
+      value,
+      this.markupSearch,
+      newPlainTextValue,
+      this.selectionStart,
+      this.selectionEnd,
+      selectionEnd,
+      displayTransform,
+    );
     const startOfMention = findStartOfMentionInPlainText(value, this.markupSearch, selectionStart, displayTransform);
     if (startOfMention.start > -1 && this.selectionEnd > startOfMention.start) {
       selectionStart = startOfMention.start;
@@ -339,12 +361,12 @@ export class NgMentionsComponent implements OnChanges,
   }
 
   public onInput(event: InputEvent): void {
-    const character = (event.data || '');
+    const character = event.data || '';
     const keyCode = InputToKeyboard[event.inputType] || character.charCodeAt(0);
     if (keyCode === Key.Enter && this.mentionsList.show) {
       event.preventDefault();
     }
-    this.handleInput({which: keyCode}, keyCode, character);
+    this.handleInput({ which: keyCode }, keyCode, character);
   }
 
   public onKeyDown(event: any): void {
@@ -353,7 +375,7 @@ export class NgMentionsComponent implements OnChanges,
     if (!characterPressed) {
       const characterCode = event.which || event.keyCode;
       characterPressed = String.fromCharCode(characterCode);
-      if (!event.shiftKey && (characterCode >= 65 && characterCode <= 90)) {
+      if (!event.shiftKey && characterCode >= 65 && characterCode <= 90) {
         characterPressed = String.fromCharCode(characterCode + 32);
       }
     }
@@ -374,9 +396,13 @@ export class NgMentionsComponent implements OnChanges,
     }
   }
 
-  public isPartMention(part: any): boolean { return typeof part.contents !== 'undefined'; }
+  public isPartMention(part: any): boolean {
+    return typeof part.contents !== 'undefined';
+  }
 
-  public formatMention(mention: Mention): string { return this._formatMention(mention.contents); }
+  public formatMention(mention: Mention): string {
+    return this._formatMention(mention.contents);
+  }
 
   private handleInput(event: any, keyCode: number, characterPressed: string): void {
     let caretPosition: number = getCaretPosition(this.textAreaInputElement.nativeElement);
@@ -385,8 +411,12 @@ export class NgMentionsComponent implements OnChanges,
       setCaretPosition(this.startNode, caretPosition);
     }
 
-    const startOfMention =
-        findStartOfMentionInPlainText(this._value, this.markupSearch, caretPosition, this.displayTransform.bind(this));
+    const startOfMention = findStartOfMentionInPlainText(
+      this._value,
+      this.markupSearch,
+      caretPosition,
+      this.displayTransform.bind(this),
+    );
     if (characterPressed === this.triggerChar) {
       this.setupMentionsList(caretPosition);
     } else if (startOfMention.start === -1 && this.startPos >= 0) {
@@ -394,11 +424,16 @@ export class NgMentionsComponent implements OnChanges,
         this.mentionsList.show = false;
         this.startPos = -1;
       } else if (
-          keyCode !== Key.Shift && !event.metaKey && !event.altKey && !event.ctrlKey && caretPosition > this.startPos) {
+        keyCode !== Key.Shift &&
+        !event.metaKey &&
+        !event.altKey &&
+        !event.ctrlKey &&
+        caretPosition > this.startPos
+      ) {
         this.handleKeyDown(event, caretPosition, characterPressed);
       }
     } else {
-      this.onSelect({target: this.textAreaInputElement.nativeElement});
+      this.onSelect({ target: this.textAreaInputElement.nativeElement });
     }
   }
 
@@ -449,27 +484,7 @@ export class NgMentionsComponent implements OnChanges,
       this.mentionsList.show = !this.stopSearch;
     } else if (this.mentionsList.show) {
       if (keyCode === Key.Tab || keyCode === Key.Enter) {
-        this.stopEvent(event);
-        this.mentionsList.show = false;
-        let value = this._value;
-        const start =
-            mapPlainTextIndex(value, this.markupSearch, this.startPos, false, this.displayTransform.bind(this));
-        const item = event.item || this.mentionsList.selectedItem;
-        const newValue = replacePlaceholders(item, this.markupSearch);
-        const newDisplayValue = this._formatMention(newValue);
-        caretPosition = this.startPos + newDisplayValue.length;
-        const searchString = this.searchString || '';
-        value = value.substring(0, start) + newValue + value.substring(start + searchString.length + 1, value.length);
-        this.parseLines(value);
-        this.startPos = -1;
-        this.searchString = '';
-        this.stopSearch = true;
-        this.mentionsList.show = false;
-        this.changeDetector.detectChanges();
-        setTimeout(() => {
-          setCaretPosition(this.textAreaInputElement.nativeElement, caretPosition);
-          this.onSelect({target: this.textAreaInputElement.nativeElement});
-        });
+        this.handleKeydownMentionSelection(event, caretPosition);
         return;
       } else if (keyCode === Key.Escape) {
         this.stopEvent(event);
@@ -508,6 +523,29 @@ export class NgMentionsComponent implements OnChanges,
     this.updateMentionsList();
   }
 
+  private handleKeydownMentionSelection(event: any, caretPosition: number): void {
+    this.stopEvent(event);
+    this.mentionsList.show = false;
+    let value = this._value;
+    const start = mapPlainTextIndex(value, this.markupSearch, this.startPos, false, this.displayTransform.bind(this));
+    const item = event.item || this.mentionsList.selectedItem;
+    const newValue = replacePlaceholders(item, this.markupSearch);
+    const newDisplayValue = this._formatMention(newValue);
+    caretPosition = this.startPos + newDisplayValue.length;
+    const searchString = this.searchString || '';
+    value = value.substring(0, start) + newValue + value.substring(start + searchString.length + 1, value.length);
+    this.parseLines(value);
+    this.startPos = -1;
+    this.searchString = '';
+    this.stopSearch = true;
+    this.mentionsList.show = false;
+    this.changeDetector.detectChanges();
+    setTimeout(() => {
+      setCaretPosition(this.textAreaInputElement.nativeElement, caretPosition);
+      this.onSelect({ target: this.textAreaInputElement.nativeElement });
+    });
+  }
+
   private getDisplayValue(item: any): null | string {
     if (typeof item === 'string') {
       return item;
@@ -520,14 +558,13 @@ export class NgMentionsComponent implements OnChanges,
 
   private showMentionsList(): void {
     if (!this.mentionsList) {
-      const componentFactory = this.componentResolver.resolveComponentFactory(NgMentionsListComponent);
-      const componentRef = this.viewContainer.createComponent(componentFactory);
+      const componentRef = this.viewContainer.createComponent(NgMentionsListComponent);
       this.mentionsList = componentRef.instance;
       this.mentionsList.itemTemplate = this.mentionListTemplate;
       this.mentionsList.displayTransform = this.displayTransform.bind(this);
-      this.mentionsList.itemSelected.subscribe(item => {
+      this.mentionsList.itemSelected.subscribe((item) => {
         this.textAreaInputElement.nativeElement.focus();
-        const fakeEvent = {which: Key.Enter, wasSelection: true, item};
+        const fakeEvent = { which: Key.Enter, wasSelection: true, item };
         this.onKeyDown(fakeEvent);
       });
       this.mentionsList.displayTransform = this.getDisplayValue.bind(this);
@@ -546,7 +583,7 @@ export class NgMentionsComponent implements OnChanges,
       if (this.searchString) {
         const searchString = this.searchString.toLowerCase();
         const searchRegEx = new RegExp(escapeRegExp(searchString), 'i');
-        items = items.filter(item => {
+        items = items.filter((item) => {
           const value = this.getDisplayValue(item);
           return value !== null && searchRegEx.test(value);
         });
@@ -573,7 +610,7 @@ export class NgMentionsComponent implements OnChanges,
     if (value !== this._value) {
       value = value || '';
       const lines = value.split(this.newLine).map((line: string) => this.formatMentions(line));
-      const displayContent = lines.map(line => line.content).join('\n');
+      const displayContent = lines.map((line) => line.content).join('\n');
       if (this.displayContent !== displayContent) {
         this.lines = lines;
         this.displayContent = displayContent;
@@ -583,7 +620,7 @@ export class NgMentionsComponent implements OnChanges,
   }
 
   private formatMentions(line: string): Line {
-    const lineObj: Line = <Line>{originalContent: line, content: line, parts: []};
+    const lineObj: Line = <Line>{ originalContent: line, content: line, parts: [] };
 
     if (line.length === 0) {
       return lineObj;
@@ -594,24 +631,26 @@ export class NgMentionsComponent implements OnChanges,
     const regEx = this.markupSearch.regEx;
     regEx.lastIndex = 0;
     while ((mention = regEx.exec(line)) !== null) {
-      tags.push({indices: {start: mention.index, end: mention.index + mention[0].length}});
+      tags.push({ indices: { start: mention.index, end: mention.index + mention[0].length } });
     }
 
     const prevTags: Tag[] = [];
     let content = '';
-    [...tags].sort((tagA, tagB) => tagA.indices.start - tagB.indices.start).forEach((tag: Tag) => {
-      const expectedLength = tag.indices.end - tag.indices.start;
-      const contents = line.slice(tag.indices.start, tag.indices.end);
-      if (contents.length === expectedLength) {
-        const prevIndex = prevTags.length > 0 ? prevTags[prevTags.length - 1].indices.end : 0;
-        const before = line.slice(prevIndex, tag.indices.start);
-        const partMention = <Mention>{contents, tag};
-        lineObj.parts.push(before);
-        lineObj.parts.push(partMention);
-        prevTags.push(tag);
-        content += before + this.formatMention(partMention);
-      }
-    });
+    [...tags]
+      .sort((tagA, tagB) => tagA.indices.start - tagB.indices.start)
+      .forEach((tag: Tag) => {
+        const expectedLength = tag.indices.end - tag.indices.start;
+        const contents = line.slice(tag.indices.start, tag.indices.end);
+        if (contents.length === expectedLength) {
+          const prevIndex = prevTags.length > 0 ? prevTags[prevTags.length - 1].indices.end : 0;
+          const before = line.slice(prevIndex, tag.indices.start);
+          const partMention = <Mention>{ contents, tag };
+          lineObj.parts.push(before);
+          lineObj.parts.push(partMention);
+          prevTags.push(tag);
+          content += before + this.formatMention(partMention);
+        }
+      });
 
     const remainingStart = prevTags.length > 0 ? prevTags[prevTags.length - 1].indices.end : 0;
     const remaining = line.slice(remainingStart);
@@ -628,8 +667,10 @@ export class NgMentionsComponent implements OnChanges,
       if (this.mobile) {
         this._inputListener = (event: InputEvent) => this.onInput(event);
       }
-      (this.textAreaInputElement.nativeElement as HTMLElement)
-          .addEventListener(this.mobile ? 'input' : 'keydown', this._inputListener);
+      (this.textAreaInputElement.nativeElement as HTMLElement).addEventListener(
+        this.mobile ? 'input' : 'keydown',
+        this._inputListener,
+      );
     }
   }
 
@@ -640,7 +681,7 @@ export class NgMentionsComponent implements OnChanges,
     const element = this.textAreaInputElement.nativeElement;
     const computedStyle: any = getComputedStyle(element);
     this.highlighterStyle = {};
-    styleProperties.forEach(prop => this.highlighterStyle[prop] = computedStyle[prop]);
+    styleProperties.forEach((prop) => (this.highlighterStyle[prop] = computedStyle[prop]));
     this.changeDetector.detectChanges();
   }
 

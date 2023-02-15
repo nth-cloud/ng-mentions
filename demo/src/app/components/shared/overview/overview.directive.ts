@@ -1,7 +1,6 @@
-import {Directive} from '@angular/core';
+import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[nthdOverview]'
+  selector: '[nthdOverview]',
 })
-export class NthdOverviewDirective {
-}
+export class NthdOverviewDirective {}

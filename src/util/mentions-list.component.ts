@@ -6,32 +6,35 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
-import {getCaretCoordinates, getElementStyle} from './utils';
+
+import { getCaretCoordinates, getElementStyle } from './utils';
 
 @Component({
   selector: 'mentions-list',
   template: `
-      <ng-template #defaultItemTemplate let-item="item">
-          {{transformItem(item)}}
-      </ng-template>
-      <ul #list class="dropdown-menu scrollable-menu">
-          <li *ngFor="let item of items; let i = index" [class.active]="activeIndex === i">
-              <a href class="dropdown-item" (click)="onItemClick($event, i, item)">
-                  <ng-template [ngTemplateOutlet]="itemTemplate"
-                               [ngTemplateOutletContext]="{item:item,index:i}"></ng-template>
-              </a>
-          </li>
-      </ul>
+    <ng-template #defaultItemTemplate let-item="item">
+      {{ transformItem(item) }}
+    </ng-template>
+    <ul #list class="dropdown-menu scrollable-menu">
+      <li *ngFor="let item of items; let i = index" [class.active]="activeIndex === i">
+        <a href class="dropdown-item" (click)="onItemClick($event, i, item)">
+          <ng-template
+            [ngTemplateOutlet]="itemTemplate"
+            [ngTemplateOutletContext]="{ item: item, index: i }"
+          ></ng-template>
+        </a>
+      </li>
+    </ul>
   `,
   styleUrls: ['./mentions-list.scss'],
   styles: [
     'mentions-list.show {display: block;} mentions-list.no-items {display: none;}',
     'mentions-list .scrollable-menu {display: block;height: auto;max-height:300px;overflow:auto;}',
-    'mentions-list li.active {background: #f7f7f9;}'
+    'mentions-list li.active {background: #f7f7f9;}',
   ],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class NgMentionsListComponent implements OnInit {
   public items: any[];
@@ -42,8 +45,8 @@ export class NgMentionsListComponent implements OnInit {
   activeIndex = -1;
   readonly itemSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('defaultItemTemplate', {static: true}) defaultItemTemplate: TemplateRef<any>;
-  @ViewChild('list', {static: true}) list: ElementRef;
+  @ViewChild('defaultItemTemplate', { static: true }) defaultItemTemplate: TemplateRef<any>;
+  @ViewChild('list', { static: true }) list: ElementRef;
   @HostBinding('class.show') public show = false;
   @HostBinding('class.drop-up') public dropUp = false;
 
@@ -77,7 +80,6 @@ export class NgMentionsListComponent implements OnInit {
 
   onItemClick(event: MouseEvent, activeIndex: number, item: any) {
     event.preventDefault();
-    console.log(item);
     if (item) {
       this.activeIndex = activeIndex;
       this.itemSelected.emit(item);
@@ -116,9 +118,13 @@ export class NgMentionsListComponent implements OnInit {
     this.list.nativeElement.scrollTop = 0;
   }
 
-  public resetScroll() { this.list.nativeElement.scrollTop = 0; }
+  public resetScroll() {
+    this.list.nativeElement.scrollTop = 0;
+  }
 
-  public transformItem(item: any) { return this.displayTransform(item) || item; }
+  public transformItem(item: any) {
+    return this.displayTransform(item) || item;
+  }
 
   private get adjustTop(): number {
     let adjust = 0;

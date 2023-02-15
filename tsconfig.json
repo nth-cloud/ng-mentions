@@ -3,15 +3,16 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
-    "target": "es2020",
-    "lib": ["es2020", "es2017", "dom"],
+    "declaration": false,
+    "downlevelIteration": true,
+    "target": "ES2022",
+    "lib": ["es2020", "dom"],
     "module": "es2020",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noEmitOnError": true,
     "outDir": "temp",
-    "declaration": false,
     "sourceMap": true
   }
 }

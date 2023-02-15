@@ -1,15 +1,15 @@
-import {Component, NgZone, OnDestroy, Type} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {Observable, Subscription} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
-import {NthdExamplesComponent} from '../../components/shared/example-page/examples.component';
-import {NthdApiPage} from '../../components/shared/api-page/api.component';
+import { Component, NgZone, OnDestroy, Type } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { NthdExamplesComponent } from '../../components/shared/example-page/examples.component';
+import { NthdApiPage } from '../../components/shared/api-page/api.component';
 
-export type TableOfContents = {fragment: string, title: string}[];
+export type TableOfContents = { fragment: string; title: string }[];
 
 @Component({
   selector: 'nthd-component-wrapper',
-  templateUrl: './component-wrapper.component.html'
+  templateUrl: './component-wrapper.component.html',
 })
 export class ComponentWrapper implements OnDestroy {
   public component: string;
@@ -29,9 +29,7 @@ export class ComponentWrapper implements OnDestroy {
 
   constructor(public route: ActivatedRoute, private _router: Router, ngZone: NgZone) {
     this._routerSubscription = this._router.events
-      .pipe(
-        filter(event => event instanceof NavigationEnd)
-      )
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         const parentRoute = this.route.snapshot.parent;
         const tabRoute = this.route.snapshot.firstChild;
@@ -39,16 +37,16 @@ export class ComponentWrapper implements OnDestroy {
         this.activeTab = tabRoute!.url[0].path;
       });
 
-    this.headerComponentType$ = this.route.data.pipe(map(data => data?.header));
+    this.headerComponentType$ = this.route.data.pipe(map((data) => data?.header));
     const smallScreenQL = matchMedia('(max-width: 767.98px)');
     // eslint-disable-next-line deprecation/deprecation
-    smallScreenQL.addListener((event) => ngZone.run(() => this.isSmallScreenOrLess = event.matches));
+    smallScreenQL.addListener((event) => ngZone.run(() => (this.isSmallScreenOrLess = event.matches)));
     this.isSmallScreenOrLess = smallScreenQL.matches;
 
     const largeScreenQL = matchMedia('(max-width: 1199.98px)');
     this.isLargeScreenOrLess = largeScreenQL.matches;
     // eslint-disable-next-line deprecation/deprecation
-    largeScreenQL.addListener((event) => ngZone.run(() => this.isLargeScreenOrLess = event.matches));
+    largeScreenQL.addListener((event) => ngZone.run(() => (this.isLargeScreenOrLess = event.matches)));
   }
 
   ngOnDestroy(): void {
@@ -57,17 +55,17 @@ export class ComponentWrapper implements OnDestroy {
 
   updateNavigation(component: NthdExamplesComponent | NthdApiPage | any): void {
     const getLinks = (typeCollection: string[]) => {
-      return typeCollection.map(item => ({
+      return typeCollection.map((item) => ({
         fragment: item,
-        title: item
+        title: item,
       }));
     };
     this.tableOfContents = [];
     if (component instanceof NthdExamplesComponent) {
-      this.tableOfContents = component.demos.map(demo => {
+      this.tableOfContents = component.demos.map((demo) => {
         return {
           fragment: demo.id,
-          title: demo.title
+          title: demo.title,
         };
       });
     } else if (component instanceof NthdApiPage) {
@@ -84,7 +82,7 @@ export class ComponentWrapper implements OnDestroy {
 
       this.tableOfContents = toc;
     } else {
-      this.tableOfContents = Object.values(component.sections).map(section => section) as TableOfContents;
+      this.tableOfContents = Object.values(component.sections).map((section) => section) as TableOfContents;
     }
   }
 }

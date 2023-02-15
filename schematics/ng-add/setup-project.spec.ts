@@ -1,27 +1,25 @@
-import {SchematicTestRunner} from '@angular-devkit/schematics/testing';
-import {createTestApp} from '../utils/testing';
+import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 
-['app', 'second-app'].forEach(projectName => {
+import { createTestApp } from '../utils/testing';
+
+['app', 'second-app'].forEach((projectName) => {
   describe(`ng-add-project-setup, 'project=${projectName}'`, () => {
-
     let runner: SchematicTestRunner;
     let log: string[] = [];
 
     beforeEach(() => {
       log = [];
       runner = new SchematicTestRunner('schematics', require.resolve('../collection.json'));
-      runner.logger.subscribe(({message}) => log.push(message));
+      runner.logger.subscribe(({ message }) => log.push(message));
     });
 
-    it(`should add '@angular/localize' polyfill`, async() => {
+    it(`should add '@angular/localize' polyfill`, async () => {
       let tree = await createTestApp(runner);
-      const polyfillFilePath = `projects/${projectName}/src/polyfills.ts`;
+      const tsconfigFilePath = `projects/${projectName}/tsconfig.app.json`;
+      expect(tree.read(tsconfigFilePath)!.toString()).not.toContain('@angular/localize');
 
-      expect(tree.read(polyfillFilePath) !.toString()).not.toContain('@angular/localize');
-
-      tree = await runner.runSchematicAsync('ng-add-setup-project', projectName ? {project: projectName} : {}, tree)
-                 .toPromise();
-      expect(tree.read(polyfillFilePath) !.toString()).toContain('@angular/localize');
+      tree = await runner.runSchematic('ng-add-setup-project', projectName ? { project: projectName } : {}, tree);
+      expect(tree.read(tsconfigFilePath)!.toString()).toContain('@angular/localize');
     });
   });
 });

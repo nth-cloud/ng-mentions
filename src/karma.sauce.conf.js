@@ -1,54 +1,53 @@
-
 if (typeof process.env.SAUCE_ACCESS_KEY !== 'undefined') {
   process.env.SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY.split('').reverse().join('');
 }
 
 const BROWSERS = {
-  'CHROME': {
+  CHROME: {
     base: 'SauceLabs',
     browserName: 'chrome',
-    version: 'latest'
+    version: 'latest',
   },
-  'FIREFOX': {
+  FIREFOX: {
     base: 'SauceLabs',
     browserName: 'firefox',
-    version: 'latest'
+    version: 'latest',
   },
-  'EDGE': {
+  EDGE: {
     base: 'SauceLabs',
     browserName: 'MicrosoftEdge',
     platform: 'Windows 10',
-    version: 'latest'
+    version: 'latest',
   },
-  'EDGE18': {
+  EDGE18: {
     base: 'SauceLabs',
     browserName: 'MicrosoftEdge',
     platform: 'Windows 10',
-    version: '18.17763'
+    version: '18.17763',
   },
-  'IE10': {
+  IE10: {
     base: 'SauceLabs',
     browserName: 'internet explorer',
     platform: 'Windows 8',
-    version: '10'
+    version: '10',
   },
-  'IE11': {
+  IE11: {
     base: 'SauceLabs',
     browserName: 'internet explorer',
     platform: 'Windows 8.1',
-    version: '11'
+    version: '11',
   },
-  'SAFARI12': {
+  SAFARI12: {
     base: 'SauceLabs',
     browserName: 'safari',
     platform: 'macOS 10.14',
-    version: '12'
+    version: '12',
   },
-  'SAFARI13': {
+  SAFARI13: {
     base: 'SauceLabs',
     browserName: 'safari',
     platform: 'macOS 10.15',
-    version: '13'
+    version: '13',
   },
 };
 
@@ -60,10 +59,10 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-sauce-launcher'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('@angular-devkit/build-angular/plugins/karma'),
     ],
     client: {
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
+      clearContext: false, // leave Jasmine Spec Runner output visible in browser
     },
 
     sauceLabs: {
@@ -77,8 +76,8 @@ module.exports = function (config) {
       options: {
         commandTimeout: 600,
         idleTimeout: 600,
-        maxDuration: 5400
-      }
+        maxDuration: 5400,
+      },
     },
 
     customLaunchers: BROWSERS,
@@ -93,6 +92,6 @@ module.exports = function (config) {
     captureTimeout: 180000,
     browserDisconnectTimeout: 180000,
     browserDisconnectTolerance: 3,
-    browserNoActivityTimeout: 300000
+    browserNoActivityTimeout: 300000,
   });
 };

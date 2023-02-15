@@ -1,7 +1,7 @@
-import {chain, externalSchematic, Rule} from '@angular-devkit/schematics';
+import { chain, externalSchematic, Rule } from '@angular-devkit/schematics';
 
-import {Schema} from './schema';
-import {addNgMentionsModuleToAppModule} from './steps/add-ngm-module';
+import { Schema } from './schema';
+import { addNgMentionsModuleToAppModule } from './steps/add-ngm-module';
 
 /**
  * Sets up a project with all required to run ng-mentions.
@@ -10,6 +10,6 @@ import {addNgMentionsModuleToAppModule} from './steps/add-ngm-module';
 export default function ngAddSetupProject(options: Schema): Rule {
   return chain([
     addNgMentionsModuleToAppModule(options),
-    externalSchematic('@angular/localize', 'ng-add', options.project ? {name: options.project} : {}),
+    externalSchematic('@angular/localize', 'ng-add', options.project ? { name: options.project } : {}),
   ]);
 }

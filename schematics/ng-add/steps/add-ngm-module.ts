@@ -1,13 +1,13 @@
-import {Rule, SchematicsException, Tree} from '@angular-devkit/schematics';
-import {getAppModulePath} from '@schematics/angular/utility/ng-ast-utils';
-import {addImportToModule} from '@schematics/angular/utility/ast-utils';
-import {InsertChange} from '@schematics/angular/utility/change';
+import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
+import { readWorkspace } from '@schematics/angular/utility';
+import { addImportToModule } from '@schematics/angular/utility/ast-utils';
+import { InsertChange } from '@schematics/angular/utility/change';
+import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
 
-import {Schema} from '../schema';
-import {readWorkspace} from '@schematics/angular/utility';
+import { getProjectTargetOptions } from '../../utils/project';
 import * as messages from '../messages';
-import {getProjectTargetOptions} from '../../utils/project';
+import { Schema } from '../schema';
 
 const NG_MENTIONS_MODULE_NAME = 'NgMentionsModule';
 const NG_MENTIONS_PACKAGE_NAME = '@nth-cloud/ng-mentions';
@@ -34,7 +34,7 @@ const NG_MENTIONS_PACKAGE_NAME = '@nth-cloud/ng-mentions';
  *
  */
 export function addNgMentionsModuleToAppModule(options: Schema): Rule {
-  return async(host: Tree) => {
+  return async (host: Tree) => {
     const workspace = await readWorkspace(host);
     const projectName = options.project || (workspace.extensions.defaultProject as string);
 
@@ -59,11 +59,19 @@ export function addNgMentionsModuleToAppModule(options: Schema): Rule {
     }
 
     // 4. adding 'NgMentionsModule' to the app module
-    const appModuleSource =
-        ts.createSourceFile(appModuleFilePath, appModuleFileText.toString('utf-8'), ts.ScriptTarget.Latest, true);
+    const appModuleSource = ts.createSourceFile(
+      appModuleFilePath,
+      appModuleFileText.toString('utf-8'),
+      ts.ScriptTarget.Latest,
+      true,
+    );
 
-    const changes =
-        addImportToModule(appModuleSource, appModuleFilePath, NG_MENTIONS_MODULE_NAME, NG_MENTIONS_PACKAGE_NAME);
+    const changes = addImportToModule(
+      appModuleSource,
+      appModuleFilePath,
+      NG_MENTIONS_MODULE_NAME,
+      NG_MENTIONS_PACKAGE_NAME,
+    );
 
     const recorder = host.beginUpdate(appModuleFilePath);
     for (const change of changes) {

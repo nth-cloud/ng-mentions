@@ -1,67 +1,61 @@
-// styles in src/style directory are applied to the whole page
-
-$header-link-color:               #d9d9d9;
-$header-border-color:             #1c1c1c;
-$header-bg:                       #363636;
-$banner-text-color:               #ccc;
-$banner-lead-text-color:          #fff;
-$page-footer-bg:                  #f7f7f7;
-$page-footer-link-color:          #55595c;
-$api-docs-border-color:           #999;
-$language-syntax-bg:              #272822;
-$doc-nav-color:                   rgba(0, 0, 0, 0.65);
-$doc-nav-active-bg:               #f8f9fa;
-$doc-nav-active-color:            rgba(0, 0, 0, 0.85);
-$hr-bg:                           #d8dde6;
-$nav-link-color:                  #54698d;
-$nav-link-hover-bg:               #cfdbe6;
-$nav-link-active-color:           #16325c;
-$nav-link-active-bg:              #0070d2;
+@import 'bootstrap/scss/functions';
+$font-family-base: Helvetica, Arial, sans-serif;
+$font-size-root: 16px;
+$header-link-color: #d9d9d9;
+$header-border-color: #1c1c1c;
+$header-bg: #363636;
+$banner-text-color: #ccc;
+$banner-lead-text-color: #fff;
+$page-footer-bg: #f7f7f7;
+$page-footer-link-color: #55595c;
+$api-docs-border-color: #999;
+$language-syntax-bg: #272822;
+$doc-nav-color: rgba(0, 0, 0, 0.65);
+$doc-nav-active-bg: #f8f9fa;
+$doc-nav-active-color: rgba(0, 0, 0, 0.85);
+$hr-bg: #d8dde6;
+$nav-link-color: #54698d;
+$nav-link-hover-bg: #cfdbe6;
+$nav-link-active-color: #16325c;
+$nav-link-active-bg: #0070d2;
 $nav-contextual-link-hover-color: darken($nav-link-color, 15%);
-
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins";
-
-html {
-  font-size:   100%;
-  font-family: Helvetica, Arial, sans-serif;
-}
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/navbar';
 
 body {
   font-size: 0.8125rem;
 }
 
 hr {
-  display:    block;
-  margin:     2rem 0;
+  display: block;
+  margin: 2rem 0;
   border-top: solid 1px $hr-bg;
-  height:     1px;
-  clear:      both;
+  height: 1px;
+  clear: both;
 }
 
-@import "bootstrap/scss/navbar";
-
 nthd-app {
-  //display:        flex;
-  //flex-direction: column;
   height: 100vh;
 }
 
 header.navbar {
-  background:    $header-bg;
+  background: $header-bg;
   border-bottom: 1px solid $header-border-color;
-  box-shadow:    0 4px 10px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
 
   .navbar {
-    display:      flex;
-    margin-left:  auto;
+    display: flex;
+    margin-left: auto;
     margin-right: auto;
-    max-width:    64rem;
-    padding:      0.55rem 2rem 0.75rem;
+    max-width: 64rem;
+    padding: 0.55rem 2rem 0.75rem;
 
     a:not(.nav-link) {
-      font-size:   0.75rem;
+      font-size: 0.75rem;
       line-height: 1.25;
     }
 
@@ -81,21 +75,21 @@ header.navbar {
 
 .masthead-followup {
   img {
-    width:  64px;
+    width: 64px;
     height: 64px;
   }
 }
 
 main {
   position: relative;
-  display:  block;
-  flex:     1 0 auto;
+  display: block;
+  flex: 1 0 auto;
 }
 
 @include media-breakpoint-down(sm) {
   header {
     position: relative;
-    z-index:  auto;
+    z-index: auto;
 
     .navbar {
       a:not(.nav-link) {
@@ -107,7 +101,7 @@ main {
       }
 
       .navbar-nav-scroll {
-        margin-left:  auto;
+        margin-left: auto;
         margin-right: auto;
       }
     }
@@ -119,14 +113,14 @@ main {
 }
 
 .heading {
-  font-size:   1.75rem;
+  font-size: 1.75rem;
   font-weight: 300;
   line-height: 1.25;
 }
 
 section {
   .heading {
-    margin-top:    1.5rem;
+    margin-top: 1.5rem;
     margin-bottom: 1.5rem;
 
     &:first-child {
@@ -136,7 +130,6 @@ section {
 
   p {
     margin-bottom: 0.75rem;
-
   }
 
   prism + p {
@@ -145,18 +138,18 @@ section {
 }
 
 .nth-footer {
-  padding:          3rem 0;
-  font-size:        0.85rem;
+  padding: 3rem 0;
+  font-size: 0.85rem;
   background-color: $page-footer-bg;
-  text-align:       left;
+  text-align: left;
 
   p {
     margin-bottom: 0;
   }
 
   a {
-    font-weight:     500;
-    color:           $page-footer-link-color;
+    font-weight: 500;
+    color: $page-footer-link-color;
     text-decoration: underline;
   }
 }
@@ -165,7 +158,7 @@ section {
   font-size: x-small;
 
   a {
-    color:           #fff;
+    color: #fff;
     text-decoration: none;
   }
 
@@ -175,19 +168,19 @@ section {
 }
 
 .sidebar-collapsed {
-  margin-left:   calc(var(--bs-gutter-x) * -0.5);
-  margin-right:  calc(var(--bs-gutter-x) * -0.5);
+  margin-left: calc(var(--bs-gutter-x) * -0.5);
+  margin-right: calc(var(--bs-gutter-x) * -0.5);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .sidebar {
-  position:     sticky;
-  top:          1rem;
-  max-height:   calc(100vh - 4rem);
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 4rem);
   margin-right: calc(var(--bs-gutter-x) * -0.5);
-  overflow-x:   hidden;
-  overflow-y:   auto;
-  z-index:      1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 1;
 
   a {
     text-decoration: none;
@@ -195,19 +188,19 @@ section {
 }
 
 header.title {
-  margin-left:  calc(var(--bs-gutter-x) * -0.5);
+  margin-left: calc(var(--bs-gutter-x) * -0.5);
   margin-right: calc(var(--bs-gutter-x) * -0.5);
-  position:     relative;
+  position: relative;
 
   .content-tabset {
     position: absolute;
-    bottom:   0;
-    left:     0;
-    right:    0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
     .nav-link {
-      border-style:  solid;
-      border-width:  3px 1px 1px;
+      border-style: solid;
+      border-width: 3px 1px 1px;
       border-radius: 3px 3px 0 0;
     }
 
@@ -223,7 +216,7 @@ header.title {
 
 .nth-toc {
   margin-left: 15px;
-  font-size:   1.1rem;
+  font-size: 1.1rem;
 
   .nth-toc-item {
     .nth-toc-link {
@@ -240,34 +233,34 @@ header.title {
 
     .nav > li > a {
       font-size: 0.85rem;
-      display:   inline-block;
+      display: inline-block;
 
       &:hover,
       &:focus {
-        text-decoration:  none;
-        margin-left:      -0.5rem;
-        padding:          0 0.5rem;
+        text-decoration: none;
+        margin-left: -0.5rem;
+        padding: 0 0.5rem;
         background-color: $doc-nav-active-bg;
-        border-radius:    3px;
+        border-radius: 3px;
       }
     }
 
     .nav > li.active > a,
     &.active > .nth-toc-link {
       font-weight: 500;
-      color:       $doc-nav-active-color;
+      color: $doc-nav-active-color;
     }
   }
 }
 
 .contextual-nav .nav {
   position: sticky;
-  top:      0;
+  top: 0;
 
   a {
-    color:     inherit;
+    color: inherit;
     font-size: 90%;
-    padding:   0.25rem 1rem;
+    padding: 0.25rem 1rem;
   }
 
   &:hover {
@@ -305,8 +298,8 @@ div.api-doc-component,
   h2,
   h3 {
     .github-link {
-      transition:  opacity 0.5s;
-      opacity:     0.3;
+      transition: opacity 0.5s;
+      opacity: 0.3;
       margin-left: 0.5rem;
     }
 
@@ -326,12 +319,12 @@ div.api-doc-component,
     margin-top: 3rem;
 
     h4 {
-      margin-top:    2rem;
+      margin-top: 2rem;
       margin-bottom: 1rem;
     }
 
     .meta {
-      font-size:     0.8rem;
+      font-size: 0.8rem;
       margin-bottom: 1rem;
 
       > div {
@@ -354,15 +347,15 @@ nthd-page-header {
 }
 
 a.title-fragment {
-  opacity:       0;
-  transition:    opacity 125ms ease;
-  line-height:   inherit;
-  position:      absolute;
-  margin-left:   -1.2em;
+  opacity: 0;
+  transition: opacity 125ms ease;
+  line-height: inherit;
+  position: absolute;
+  margin-left: -1.2em;
   padding-right: 0.5em;
 
   & > img {
-    width:  1em;
+    width: 1em;
     height: 1em;
   }
 }
@@ -375,7 +368,7 @@ div.component-demo {
   margin-bottom: 3rem;
 
   h2 {
-    display:       flex;
+    display: flex;
     margin-bottom: 1rem;
 
     span {
@@ -384,18 +377,18 @@ div.component-demo {
 
     .stackblitz,
     .toggle-code {
-      display:     flex;
+      display: flex;
       align-items: center;
-      align-self:  center;
+      align-self: center;
     }
 
     .toggle-code svg {
       vertical-align: middle;
-      fill:           $nav-contextual-link-hover-color;
+      fill: $nav-contextual-link-hover-color;
     }
 
     .stackblitz .stackblitz-icon {
-      height:      1.2rem;
+      height: 1.2rem;
       margin-left: -0.5rem;
     }
 
@@ -408,12 +401,12 @@ div.component-demo {
 
   .tabset-code {
     .nav {
-      padding:   0.5rem 1.25rem 0;
+      padding: 0.5rem 1.25rem 0;
       font-size: 80%;
 
       .nav-link.active {
         background-color: #f5f2f0;
-        border-bottom:    1px solid #f5f2f0;
+        border-bottom: 1px solid #f5f2f0;
       }
 
       .nav-link:not(.active) {
@@ -426,30 +419,30 @@ div.component-demo {
     }
 
     .nav.nav-pills {
-      border-right:  1px solid #dee2e6;
-      padding-left:  0.75rem;
+      border-right: 1px solid #dee2e6;
+      padding-left: 0.75rem;
       padding-right: 0;
 
       .nav-link.active {
-        color:                      #666;
-        background-color:           #f5f5f5;
-        border:                     1px solid #dee2e6;
-        border-right-color:         #f5f5f5;
-        border-top-right-radius:    0;
+        color: #666;
+        background-color: #f5f5f5;
+        border: 1px solid #dee2e6;
+        border-right-color: #f5f5f5;
+        border-top-right-radius: 0;
         border-bottom-right-radius: 0;
-        margin-right:               -1px;
+        margin-right: -1px;
       }
 
       & + .tab-content {
-        flex:     1;
+        flex: 1;
         overflow: hidden;
       }
     }
 
     pre {
-      margin:     0;
+      margin: 0;
       max-height: 500px;
-      overflow:   auto;
+      overflow: auto;
     }
   }
 }
@@ -459,7 +452,7 @@ div.component-demo {
 }
 
 .tab-content {
-  padding:  1rem 0;
+  padding: 1rem 0;
   overflow: hidden;
 }
 
@@ -469,8 +462,8 @@ nthd-api-docs-config {
   display: block;
 
   &:not(:first-child) {
-    margin-top:  3rem;
-    border-top:  1px solid $api-docs-border-color;
+    margin-top: 3rem;
+    border-top: 1px solid $api-docs-border-color;
     padding-top: 1rem;
   }
 }
@@ -478,20 +471,20 @@ nthd-api-docs-config {
 .overview {
   .alert {
     border-left-width: 5px;
-    border-radius:     0;
+    border-radius: 0;
   }
 }
 
 // override prism theme background color to inline it with bootstrap colors
-code[class*="language-"],
-pre[class*="language-"] {
+code[class*='language-'],
+pre[class*='language-'] {
   background-color: $language-syntax-bg;
   border-radius: 3px;
 }
 
 span.token.tag {
   font-size: 1em;
-  padding:   0;
+  padding: 0;
 }
 
 nthd-component-wrapper,

@@ -11,13 +11,13 @@ import {
   Output,
   QueryList,
   SimpleChanges,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 
-import {NgHighlightedValue} from './highlighted-value';
-import {NgHighlighterPatternDirective} from './highlighter-pattern.directive';
-import {Tag} from './util/interfaces';
-import {escapeHtml, Highlighted, isCoordinateWithinRect} from './util/utils';
+import { NgHighlightedValue } from './highlighted-value';
+import { NgHighlighterPatternDirective } from './highlighter-pattern.directive';
+import { Tag } from './util/interfaces';
+import { escapeHtml, Highlighted, isCoordinateWithinRect } from './util/utils';
 
 /**
  * The Highlighter Component
@@ -27,10 +27,9 @@ import {escapeHtml, Highlighted, isCoordinateWithinRect} from './util/utils';
   selector: 'ng-highlighter',
   template: '<div *ngFor="let line of lines" [innerHTML]="line"></div>',
   preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
-export class NgHighlighterComponent implements OnChanges,
-    AfterContentInit {
+export class NgHighlighterComponent implements OnChanges, AfterContentInit {
   /**
    * Text value to be highlighted
    */
@@ -93,25 +92,27 @@ export class NgHighlighterComponent implements OnChanges,
       while ((match = pattern.match(line)) !== null) {
         tags.push({
           type: pattern.className,
-          indices: {start: match.index, end: match.index + match[0].length},
-          formatter: pattern.format
+          indices: { start: match.index, end: match.index + match[0].length },
+          formatter: pattern.format,
         });
       }
     });
 
     const prevTags: Tag[] = [];
     const parts: string[] = [];
-    [...tags].sort((tagA, tagB) => tagA.indices.start - tagB.indices.start).forEach((tag: Tag) => {
-      const expectedLength = tag.indices.end - tag.indices.start;
-      const contents = line.slice(tag.indices.start, tag.indices.end);
-      if (contents.length === expectedLength) {
-        const prevIndex = prevTags.length > 0 ? prevTags[prevTags.length - 1].indices.end : 0;
-        const before = line.slice(prevIndex, tag.indices.start);
-        parts.push(escapeHtml(before));
-        parts.push(`<span class="highlighted ${tag.type || ''}" rel="${tag.type}">${tag.formatter(contents)}</span>`);
-        prevTags.push(tag);
-      }
-    });
+    [...tags]
+      .sort((tagA, tagB) => tagA.indices.start - tagB.indices.start)
+      .forEach((tag: Tag) => {
+        const expectedLength = tag.indices.end - tag.indices.start;
+        const contents = line.slice(tag.indices.start, tag.indices.end);
+        if (contents.length === expectedLength) {
+          const prevIndex = prevTags.length > 0 ? prevTags[prevTags.length - 1].indices.end : 0;
+          const before = line.slice(prevIndex, tag.indices.start);
+          parts.push(escapeHtml(before));
+          parts.push(`<span class="highlighted ${tag.type || ''}" rel="${tag.type}">${tag.formatter(contents)}</span>`);
+          prevTags.push(tag);
+        }
+      });
 
     const remainingStart = prevTags.length > 0 ? prevTags[prevTags.length - 1].indices.end : 0;
     const remaining = line.slice(remainingStart);
@@ -122,18 +123,20 @@ export class NgHighlighterComponent implements OnChanges,
   }
 
   private getMatchedElement(event: MouseEvent): Highlighted {
-    const matched = this.highlightedElements.find(
-        (el: Highlighted): boolean => isCoordinateWithinRect(el.clientRect, event.clientX, event.clientY));
+    const matched = this.highlightedElements.find((el: Highlighted): boolean =>
+      isCoordinateWithinRect(el.clientRect, event.clientX, event.clientY),
+    );
 
     return matched ? matched : null;
   }
 
   private collectHighlightedItems() {
-    this.highlightedElements = Array.from((<Element>this.element.nativeElement).getElementsByClassName('highlighted'))
-                                   .map((element: HTMLElement) => {
-                                     const type = element.getAttribute('rel') || null;
+    this.highlightedElements = Array.from(
+      (<Element>this.element.nativeElement).getElementsByClassName('highlighted'),
+    ).map((element: HTMLElement) => {
+      const type = element.getAttribute('rel') || null;
 
-                                     return new Highlighted(element, type);
-                                   });
+      return new Highlighted(element, type);
+    });
   }
 }

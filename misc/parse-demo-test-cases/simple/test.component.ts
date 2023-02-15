@@ -1,8 +1,7 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'test-component',
-  template: ''
+  template: '',
 })
-export class TestComponent {
-}
+export class TestComponent {}

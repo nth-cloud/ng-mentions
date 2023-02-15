@@ -11,20 +11,16 @@ Native Angular components & directives for customizable mentions. Allowing for c
 View it in action at https://nth-cloud.github.io/ng-mentions
 
 ## Dependencies
-* [Angular](https://angular.io) (tested with 14.2.12)
+* [Angular](https://angular.io) (tested with 15.1.5)
 
 | ng-mentions | Angular |   Active Support   |
 |-------------|---------|:------------------:|
-| 0.x.x       | 5.2.1   |        :x:         |
-| 1.x.x       | 6.1.0   |        :x:         |
-| 2.x.x       | 7.0.0   |        :x:         |
-| 3.x.x       | 8.0.0   |        :x:         |
-| 4.x.x       | 9.0.0   |        :x:         |
 | 5.x.x       | 10.0.0  |        :x:         |
 | 6.x.x       | 11.0.0  |        :x:         |
 | 7.x.x       | 12.0.0  |        :x:         |
 | 8.x.x       | 13.0.0  | :white_check_mark: |
 | 9.x.x       | 14.0.0  | :white_check_mark: |
+| 10.x.x      | 15.0.0  | :white_check_mark: |
 
 ## Installation
 

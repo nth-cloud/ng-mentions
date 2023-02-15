@@ -1,7 +1,7 @@
-import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import docs from '../../../../api-docs';
-import {PropertyDesc, DirectiveDesc, InputDesc, MethodDesc, ClassDesc, signature} from './api-docs.model';
-import {Analytics} from '../../../shared/analytics/analytics';
+import { PropertyDesc, DirectiveDesc, InputDesc, MethodDesc, ClassDesc, signature } from './api-docs.model';
+import { Analytics } from '../../../shared/analytics/analytics';
 
 /**
  * Displays the API docs of a directive.
@@ -13,23 +13,23 @@ import {Analytics} from '../../../shared/analytics/analytics';
   selector: 'nthd-api-docs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './api-docs.component.html',
-  styles: [`
-    .label-cell {
-      width: 25%;
-    }
-    .content-cell {
-      width: 75%;
-    }
+  styles: [
     `
-  ]
+      .label-cell {
+        width: 25%;
+      }
+      .content-cell {
+        width: 75%;
+      }
+    `,
+  ],
 })
 export class NthdApiDocs {
-
   /**
    * Object which contains, for each input name of the directive, the corresponding property of the associated config
    * service (if any)
    */
-  private _configProperties: {[propertyName: string]: PropertyDesc};
+  private _configProperties: { [propertyName: string]: PropertyDesc };
 
   apiDocs: DirectiveDesc;
   configServiceName: string;
@@ -43,7 +43,8 @@ export class NthdApiDocs {
     this._configProperties = {};
     if (configApiDocs) {
       this.apiDocs.inputs.forEach(
-        input => this._configProperties[input.name] = this._findInputConfigProperty(configApiDocs, input));
+        (input) => (this._configProperties[input.name] = this._findInputConfigProperty(configApiDocs, input)),
+      );
     }
   }
 
@@ -63,13 +64,15 @@ export class NthdApiDocs {
     return !!this._configProperties[input.name];
   }
 
-  methodSignature(method: MethodDesc): string { return signature(method); }
+  methodSignature(method: MethodDesc): string {
+    return signature(method);
+  }
 
   trackSourceClick() {
     this._analytics.trackEvent('Source File View', this.apiDocs.className);
   }
 
   private _findInputConfigProperty(configApiDocs: ClassDesc, input: InputDesc): PropertyDesc {
-    return configApiDocs.properties.filter(prop => prop.name === input.name)[0];
+    return configApiDocs.properties.filter((prop) => prop.name === input.name)[0];
   }
 }

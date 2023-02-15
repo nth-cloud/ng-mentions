@@ -11,7 +11,6 @@
 var fs = require('fs');
 var util = require('util');
 
-
 var MAX_LENGTH = 140;
 var PATTERN = /^(?:fixup!\s*)?(\w*)(\((\w+)\))?\: (.*)$/;
 var IGNORED = /^WIP\:/;
@@ -24,19 +23,17 @@ var TYPES = {
   refactor: true,
   revert: true,
   style: true,
-  test: true
+  test: true,
 };
 
-
-var error = function() {
+var error = function () {
   // gitx does not display it
   // http://gitx.lighthouseapp.com/projects/17830/tickets/294-feature-display-hook-error-message-when-hook-fails
   // https://groups.google.com/group/gitx/browse_thread/thread/a03bcab60844b812
   console.error('INVALID COMMIT MSG: ' + util.format.apply(null, arguments));
 };
 
-
-var validateMessage = function(message) {
+var validateMessage = function (message) {
   var isValid = true;
 
   if (IGNORED.test(message)) {
@@ -77,12 +74,9 @@ var validateMessage = function(message) {
   return isValid;
 };
 
-
-var firstLineFromBuffer = function(buffer) {
+var firstLineFromBuffer = function (buffer) {
   return buffer.toString().split('\n').shift();
 };
-
-
 
 // publish for testing
 exports.validateMessage = validateMessage;
@@ -92,11 +86,11 @@ if (process.argv.join('').indexOf('jasmine-node') === -1) {
   var commitMsgFile = process.argv[2] || process.env.GIT_PARAMS;
   var incorrectLogFile = commitMsgFile.replace('COMMIT_EDITMSG', 'logs/incorrect-commit-msgs');
 
-  fs.readFile(commitMsgFile, function(err, buffer) {
+  fs.readFile(commitMsgFile, function (err, buffer) {
     var msg = firstLineFromBuffer(buffer);
 
     if (!validateMessage(msg)) {
-      fs.appendFile(incorrectLogFile, msg + '\n', function() {
+      fs.appendFile(incorrectLogFile, msg + '\n', function () {
         process.exit(1);
       });
     } else {

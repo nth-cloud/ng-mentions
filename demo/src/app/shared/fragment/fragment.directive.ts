@@ -4,8 +4,8 @@ import { Directive, Input } from '@angular/core';
   selector: 'a[nthdFragment]',
   host: {
     '[class.title-fragment]': 'true',
-    '[attr.id]': 'fragment'
-  }
+    '[attr.id]': 'fragment',
+  },
 })
 export class NthdFragment {
   @Input() fragment: string;

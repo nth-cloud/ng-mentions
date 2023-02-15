@@ -1,19 +1,28 @@
 import {
-  AfterContentChecked, AfterContentInit, Attribute, ChangeDetectorRef,
+  AfterContentChecked,
+  AfterContentInit,
+  Attribute,
+  ChangeDetectorRef,
   ContentChildren,
-  Directive, ElementRef,
-  EventEmitter, forwardRef,
-  Inject, Injectable,
-  Input, OnChanges, OnDestroy,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Inject,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
   OnInit,
   Output,
-  QueryList, SimpleChanges,
-  TemplateRef
+  QueryList,
+  SimpleChanges,
+  TemplateRef,
 } from '@angular/core';
-import {Subject} from 'rxjs';
-import {DOCUMENT} from '@angular/common';
-import {Key} from '../../../../../src/util/key';
-import {takeUntil} from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
+import { Key } from '../../../../../src/util/key';
+import { takeUntil } from 'rxjs/operators';
 
 export function isDefined(value: any): boolean {
   return value !== undefined && value !== null;
@@ -23,11 +32,10 @@ const isValidNavId = (id: any) => isDefined(id) && id !== '';
 
 let navCounter = 0;
 
-@Injectable({providedIn: 'root'})
-export class NthdConfig {
-}
+@Injectable({ providedIn: 'root' })
+export class NthdConfig {}
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class NthdNavConfig {
   destroyOnHide = true;
   orientation: 'horizontal' | 'vertical' = 'horizontal';
@@ -44,12 +52,12 @@ export interface NthdNavContentContext {
   $implicit: boolean;
 }
 
-@Directive({selector: 'ng-template[nthdNavContent]'})
+@Directive({ selector: 'ng-template[nthdNavContent]' })
 export class NthdNavContent {
   constructor(public templateRef: TemplateRef<any>) {}
 }
 
-@Directive({selector: '[nthdNavItem]', exportAs: 'nthdNavItem', host: {'[class.nav-item]': 'true'}})
+@Directive({ selector: '[nthdNavItem]', exportAs: 'nthdNavItem', host: { '[class.nav-item]': 'true' } })
 export class NthdNavItem implements AfterContentChecked, OnInit {
   /**
    * If `true`, non-active current nav item content will be removed from DOM
@@ -97,7 +105,7 @@ export class NthdNavItem implements AfterContentChecked, OnInit {
 
   contentTpl: NthdNavContent | null;
 
-  @ContentChildren(NthdNavContent, {descendants: false}) contentTpls: QueryList<NthdNavContent>;
+  @ContentChildren(NthdNavContent, { descendants: false }) contentTpls: QueryList<NthdNavContent>;
 
   constructor(@Inject(forwardRef(() => NthdNav)) private _nav: NthdNav, public elementRef: ElementRef<any>) {}
 
@@ -115,11 +123,17 @@ export class NthdNavItem implements AfterContentChecked, OnInit {
     }
   }
 
-  get active() { return this._nav.activeId === this.id; }
+  get active() {
+    return this._nav.activeId === this.id;
+  }
 
-  get id() { return isValidNavId(this._id) ? this._id : this.domId; }
+  get id() {
+    return isValidNavId(this._id) ? this._id : this.domId;
+  }
 
-  get panelDomId() { return `${this.domId}-panel`; }
+  get panelDomId() {
+    return `${this.domId}-panel`;
+  }
 
   isPanelInDom() {
     return (isDefined(this.destroyOnHide) ? !this.destroyOnHide : !this._nav.destroyOnHide) || this.active;
@@ -139,11 +153,10 @@ export class NthdNavItem implements AfterContentChecked, OnInit {
     '(keydown.arrowDown)': 'onKeyDown($event)',
     '(keydown.arrowUp)': 'onKeyDown($event)',
     '(keydown.Home)': 'onKeyDown($event)',
-    '(keydown.End)': 'onKeyDown($event)'
-  }
+    '(keydown.End)': 'onKeyDown($event)',
+  },
 })
-export class NthdNav implements AfterContentInit,
-  OnChanges, OnDestroy {
+export class NthdNav implements AfterContentInit, OnChanges, OnDestroy {
   static ngAcceptInputType_orientation: string;
   static ngAcceptInputType_roles: boolean | string;
 
@@ -217,14 +230,17 @@ export class NthdNav implements AfterContentInit,
   @Output() hidden = new EventEmitter<any>();
 
   @ContentChildren(NthdNavItem) items: QueryList<NthdNavItem>;
-  @ContentChildren(forwardRef(() => NthdNavLink), {descendants: true}) links: QueryList<NthdNavLink>;
+  @ContentChildren(forwardRef(() => NthdNavLink), { descendants: true }) links: QueryList<NthdNavLink>;
 
   destroy$ = new Subject<void>();
   navItemChange$ = new Subject<NthdNavItem | null>();
 
   constructor(
-    @Attribute('role') public role: string, config: NthdNavConfig, private _cd: ChangeDetectorRef,
-    @Inject(DOCUMENT) private _document: any) {
+    @Attribute('role') public role: string,
+    config: NthdNavConfig,
+    private _cd: ChangeDetectorRef,
+    @Inject(DOCUMENT) private _document: any,
+  ) {
     this.animation = true;
     this.destroyOnHide = config.destroyOnHide;
     this.orientation = config.orientation;
@@ -253,8 +269,8 @@ export class NthdNav implements AfterContentInit,
     }
     /* eslint-disable-next-line deprecation/deprecation */
     const key = event.which;
-    const enabledLinks = this.links.filter(link => !link.navItem.disabled);
-    const {length} = enabledLinks;
+    const enabledLinks = this.links.filter((link) => !link.navItem.disabled);
+    const { length } = enabledLinks;
 
     let position = -1;
 
@@ -310,7 +326,9 @@ export class NthdNav implements AfterContentInit,
    * Selects the nav with the given id and shows its associated pane.
    * Any other nav that was previously selected becomes unselected and its associated pane is hidden.
    */
-  select(id: any) { this._updateActiveId(id, false); }
+  select(id: any) {
+    this._updateActiveId(id, false);
+  }
 
   ngAfterContentInit() {
     if (!isDefined(this.activeId)) {
@@ -324,20 +342,28 @@ export class NthdNav implements AfterContentInit,
     this.items.changes.pipe(takeUntil(this.destroy$)).subscribe(() => this._notifyItemChanged(this.activeId));
   }
 
-  ngOnChanges({activeId}: SimpleChanges): void {
+  ngOnChanges({ activeId }: SimpleChanges): void {
     if (activeId && !activeId.firstChange) {
       this._notifyItemChanged(activeId.currentValue);
     }
   }
 
-  ngOnDestroy() { this.destroy$.next(); }
+  ngOnDestroy() {
+    this.destroy$.next();
+  }
 
   private _updateActiveId(nextId: any, emitNavChange = true) {
     if (this.activeId !== nextId) {
       let defaultPrevented = false;
 
       if (emitNavChange) {
-        this.navChange.emit({activeId: this.activeId, nextId, preventDefault: () => { defaultPrevented = true; }});
+        this.navChange.emit({
+          activeId: this.activeId,
+          nextId,
+          preventDefault: () => {
+            defaultPrevented = true;
+          },
+        });
       }
 
       if (!defaultPrevented) {
@@ -348,10 +374,12 @@ export class NthdNav implements AfterContentInit,
     }
   }
 
-  private _notifyItemChanged(nextItemId: any) { this.navItemChange$.next(this._getItemById(nextItemId)); }
+  private _notifyItemChanged(nextItemId: any) {
+    this.navItemChange$.next(this._getItemById(nextItemId));
+  }
 
   private _getItemById(itemId: any): NthdNavItem | null {
-    return this.items && this.items.find(item => item.id === itemId) || null;
+    return (this.items && this.items.find((item) => item.id === itemId)) || null;
   }
 }
 
@@ -362,20 +390,23 @@ export class NthdNav implements AfterContentInit,
     '[class.nav-link]': 'true',
     '[class.nav-item]': 'hasNavItemClass()',
     '[attr.role]': `role ? role : nav.roles ? 'tab' : undefined`,
-    'href': '',
+    href: '',
     '[class.active]': 'navItem.active',
     '[class.disabled]': 'navItem.disabled',
     '[attr.tabindex]': 'navItem.disabled ? -1 : undefined',
     '[attr.aria-controls]': 'navItem.isPanelInDom() ? navItem.panelDomId : null',
     '[attr.aria-selected]': 'navItem.active',
     '[attr.aria-disabled]': 'navItem.disabled',
-    '(click)': 'nav.click(navItem); $event.preventDefault()'
-  }
+    '(click)': 'nav.click(navItem); $event.preventDefault()',
+  },
 })
 export class NthdNavLink {
   constructor(
-    @Attribute('role') public role: string, public navItem: NthdNavItem, public nav: NthdNav,
-    public elRef: ElementRef) {}
+    @Attribute('role') public role: string,
+    public navItem: NthdNavItem,
+    public nav: NthdNav,
+    public elRef: ElementRef,
+  ) {}
 
   hasNavItemClass() {
     // with alternative markup we have to add `.nav-item` class, because `nthdNavItem` is on the ng-container

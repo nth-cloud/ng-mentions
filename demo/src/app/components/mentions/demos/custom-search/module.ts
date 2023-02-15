@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
-import {NgMentionsModule} from '@nth-cloud/ng-mentions';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NgMentionsModule } from '@nth-cloud/ng-mentions';
 
-import {NthdMentionsCustomSearch} from './mentions-custom-search';
+import { NthdMentionsCustomSearch } from './mentions-custom-search';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, NgMentionsModule],
@@ -11,5 +11,4 @@ import {NthdMentionsCustomSearch} from './mentions-custom-search';
   exports: [NthdMentionsCustomSearch],
   bootstrap: [NthdMentionsCustomSearch],
 })
-export class NthdMentionsCustomSearchModule {
-}
+export class NthdMentionsCustomSearchModule {}

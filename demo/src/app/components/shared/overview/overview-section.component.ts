@@ -6,7 +6,7 @@ import { NthdOverviewSection } from './overview';
   selector: 'nthd-overview-section',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'd-block'
+    class: 'd-block',
   },
   template: `
     <h2>
@@ -16,7 +16,7 @@ import { NthdOverviewSection } from './overview';
       {{ section.title }}
     </h2>
     <ng-content></ng-content>
-  `
+  `,
 })
 export class NthdOverviewSectionComponent {
   @Input() section: NthdOverviewSection;

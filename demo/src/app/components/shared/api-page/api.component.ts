@@ -4,12 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import apiDocs from '../../../../api-docs';
 
 export function getApis(component: string) {
-  const components: any[]  = [];
+  const components: any[] = [];
   const classes: any[] = [];
   const configs: any[] = [];
   Object.values(apiDocs)
-    .filter(entity => entity.fileName.startsWith(`src/${component}`))
-    .forEach(entity => {
+    .filter((entity) => entity.fileName.startsWith(`src/${component}`))
+    .forEach((entity) => {
       switch (entity.type) {
         case 'Directive':
         case 'Component':
@@ -37,7 +37,7 @@ export function getApis(component: string) {
     <nthd-api-docs *ngFor="let component of components" [directive]="component"></nthd-api-docs>
     <nthd-api-docs-class *ngFor="let klass of classes" [type]="klass"></nthd-api-docs-class>
     <nthd-api-docs-config *ngFor="let config of configs" [type]="config"></nthd-api-docs-config>
-  `
+  `,
 })
 export class NthdApiPage {
   classes: string[];

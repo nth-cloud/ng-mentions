@@ -1,11 +1,11 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {NthdSharedModule} from '../../shared';
-import {NthWidgetDemoComponent} from './example-page/demo.component';
-import {NthdApiDocs, NthdApiDocsBadge, NthdApiDocsClass, NthdApiDocsConfig} from './api-docs';
-import {NthdOverviewDirective, NthdOverviewSectionComponent} from './overview';
-import {NthdExamplesComponent} from './example-page/examples.component';
-import {NthdApiPage} from './api-page/api.component';
+import { NthdSharedModule } from '../../shared';
+import { NthWidgetDemoComponent } from './example-page/demo.component';
+import { NthdApiDocs, NthdApiDocsBadge, NthdApiDocsClass, NthdApiDocsConfig } from './api-docs';
+import { NthdOverviewDirective, NthdOverviewSectionComponent } from './overview';
+import { NthdExamplesComponent } from './example-page/examples.component';
+import { NthdApiPage } from './api-page/api.component';
 
 export * from './demo-list';
 
@@ -32,6 +32,6 @@ export * from './demo-list';
     NthdOverviewSectionComponent,
     NthdExamplesComponent,
     NthdApiPage,
-  ]
+  ],
 })
 export class NthdComponentsSharedModule {}

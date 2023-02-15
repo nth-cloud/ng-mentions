@@ -1,7 +1,7 @@
-import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import docs from '../../../../api-docs';
-import {ClassDesc, MethodDesc, signature} from './api-docs.model';
-import {Analytics} from '../../../shared/analytics/analytics';
+import { ClassDesc, MethodDesc, signature } from './api-docs.model';
+import { Analytics } from '../../../shared/analytics/analytics';
 
 /**
  * Displays the API docs of a class, which is not a directive.
@@ -12,15 +12,16 @@ import {Analytics} from '../../../shared/analytics/analytics';
   selector: 'nthd-api-docs-class',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './api-docs-class.component.html',
-  styles: [`
-    .label-cell {
-      width: 25%;
-    }
-    .content-cell {
-      width: 75%;
-    }
+  styles: [
     `
-  ]
+      .label-cell {
+        width: 25%;
+      }
+      .content-cell {
+        width: 75%;
+      }
+    `,
+  ],
 })
 export class NthdApiDocsClass {
   apiDocs: ClassDesc;
@@ -31,7 +32,9 @@ export class NthdApiDocsClass {
     this.apiDocs = docs[typeName];
   }
 
-  methodSignature(method: MethodDesc): string { return signature(method); }
+  methodSignature(method: MethodDesc): string {
+    return signature(method);
+  }
 
   trackSourceClick() {
     this._analytics.trackEvent('Source File View', this.apiDocs.className);

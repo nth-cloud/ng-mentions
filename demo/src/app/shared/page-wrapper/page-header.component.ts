@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {NthdOverviewSection} from '../../components/shared/overview';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { NthdOverviewSection } from '../../components/shared/overview';
 
 @Component({
   selector: 'nthd-page-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'd-block'
+    class: 'd-block',
   },
   template: `
     <h2>

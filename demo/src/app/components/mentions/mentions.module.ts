@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import {NgModule} from '@angular/core';
-import {Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 
-import {NthdSharedModule} from '../../shared';
-import {NthdComponentsSharedModule, NthdDemoList} from '../shared';
-import {NthdMentionsBasic} from './demos/basic/mentions-basic';
-import {NthdMentionsCustomSearch} from './demos/custom-search/mentions-custom-search';
-import {NthdMentionsStringValues} from './demos/string-values/mentions-string-values';
-import {NthdMentionsValidation} from './demos/validation/mentions-validation';
-import {NthdMentionsCustomTemplate} from './demos/custom-template/mentions-custom-template';
-import {ComponentWrapper} from '../../shared/component-wrapper/component-wrapper.component';
-import {NthdExamplesComponent} from '../shared/example-page/examples.component';
-import {NthdApiPage} from '../shared/api-page/api.component';
-import {NthdMentionsBasicModule} from './demos/basic/module';
-import {NthdMentionsStringValuesModule} from './demos/string-values/module';
-import {NthdMentionsCustomSearchModule} from './demos/custom-search/module';
-import {NthdMentionsCustomTemplateModule} from './demos/custom-template/module';
-import {NthdMentionsValidationModule} from './demos/validation/module';
+import { NthdSharedModule } from '../../shared';
+import { NthdComponentsSharedModule, NthdDemoList } from '../shared';
+import { NthdMentionsBasic } from './demos/basic/mentions-basic';
+import { NthdMentionsCustomSearch } from './demos/custom-search/mentions-custom-search';
+import { NthdMentionsStringValues } from './demos/string-values/mentions-string-values';
+import { NthdMentionsValidation } from './demos/validation/mentions-validation';
+import { NthdMentionsCustomTemplate } from './demos/custom-template/mentions-custom-template';
+import { ComponentWrapper } from '../../shared/component-wrapper/component-wrapper.component';
+import { NthdExamplesComponent } from '../shared/example-page/examples.component';
+import { NthdApiPage } from '../shared/api-page/api.component';
+import { NthdMentionsBasicModule } from './demos/basic/module';
+import { NthdMentionsStringValuesModule } from './demos/string-values/module';
+import { NthdMentionsCustomSearchModule } from './demos/custom-search/module';
+import { NthdMentionsCustomTemplateModule } from './demos/custom-template/module';
+import { NthdMentionsValidationModule } from './demos/validation/module';
 
 const DEMOS = {
   basic: {
@@ -48,7 +48,7 @@ const DEMOS = {
     type: NthdMentionsCustomTemplate,
     code: require('!!raw-loader!./demos/custom-template/mentions-custom-template').default,
     markup: require('!!raw-loader!./demos/custom-template/mentions-custom-template.html').default,
-  }
+  },
 };
 
 export const ROUTES: Routes = [
@@ -59,9 +59,9 @@ export const ROUTES: Routes = [
     data: {},
     children: [
       { path: 'examples', component: NthdExamplesComponent },
-      { path: 'api', component: NthdApiPage }
-    ]
-  }
+      { path: 'api', component: NthdApiPage },
+    ],
+  },
 ];
 
 @NgModule({

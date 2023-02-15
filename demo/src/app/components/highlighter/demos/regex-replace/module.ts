@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {NgMentionsModule} from '@nth-cloud/ng-mentions';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgMentionsModule } from '@nth-cloud/ng-mentions';
 
-import {NthdHighlighterRegexReplace} from './highlighter-regex-replace';
+import { NthdHighlighterRegexReplace } from './highlighter-regex-replace';
 
 @NgModule({
   imports: [BrowserModule, NgMentionsModule],
@@ -10,5 +10,4 @@ import {NthdHighlighterRegexReplace} from './highlighter-regex-replace';
   exports: [NthdHighlighterRegexReplace],
   bootstrap: [NthdHighlighterRegexReplace],
 })
-export class NthdHighlighterRegExpReplaceModule {
-}
+export class NthdHighlighterRegExpReplaceModule {}

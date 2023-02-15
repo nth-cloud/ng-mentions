@@ -8,7 +8,7 @@ import { versions } from './versions';
 export const environment = {
   production: false,
   version: versions.ngMentions,
-  bootstrap: versions.bootstrap
+  bootstrap: versions.bootstrap,
 };
 
 /*
