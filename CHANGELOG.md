@@ -1,3 +1,12 @@
+# [10.0.0](https://github.com/nth-cloud/ng-mentions/compare/9.1.1...10.0.0) (2023-02-15)
+
+
+### Features
+
+* Upgrading to Angular v15 ([6d976f6](https://github.com/nth-cloud/ng-mentions/commit/6d976f6a1413e64c1a6732b095c77f6f4cb09ebd))
+
+
+
 ## [9.1.1](https://github.com/nth-cloud/ng-mentions/compare/9.1.0...9.1.1) (2022-12-09)
 
 
