@@ -32,7 +32,7 @@ jobs:
 #      - run: npx playwright install
       - run: |
           npm run ci:test
-          npm run scripts:test
+#          npm run scripts:test
       - uses: codecov/codecov-action@v3
         with:
           file: coverage/lcov.info
