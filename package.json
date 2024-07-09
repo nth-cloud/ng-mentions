@@ -41,7 +41,7 @@
     "scripts:test": "ts-node --project misc/tsconfig.json node_modules/jasmine/bin/jasmine misc/*.spec.ts",
     "lib:build": "ng build ng-mentions --configuration production && npm run schematics:build && npm run static",
     "lib:lint": "ng lint ng-mentions",
-    "lib:test": "ng test ng-mentions --code-coverage --source-map false --progress false --watch false",
+    "lib:test": "ng test ng-mentions --code-coverage --progress false --watch false",
     "schematics:lint": "eslint schematics",
     "schematics:build": "rimraf schematics/dist && rollup --failAfterWarnings -c schematics/rollup.config.js",
     "schematics:tdd": "ts-node-dev --respawn --project misc/tsconfig.json node_modules/jasmine/bin/jasmine schematics/**/*.spec.ts",
