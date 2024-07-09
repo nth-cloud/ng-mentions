@@ -1,8 +1,10 @@
 # NG-MENTIONS
 
-[![Browser Tests And Coverage](https://github.com/nth-cloud/ng-mentions/actions/workflows/browser-tests.yml/badge.svg)](https://github.com/nth-cloud/ng-mentions/actions/workflows/browser-tests.yml)
-[![npm version](https://badge.fury.io/js/%40nth-cloud%2Fng-mentions.svg)](https://badge.fury.io/js/%40nth-cloud%2Fng-mentions)
+[![CodeQL](https://github.com/nth-cloud/ng-mentions/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/nth-cloud/ng-mentions/actions/workflows/codeql-analysis.yml)
+[![npm version](https://badge.fury.io/js/%40nth-cloud%2Fng-mentions.svg)](https://npmjs.org/package/@nth-cloud/ng-mentions)
+[![Test Coverage](https://github.com/nth-cloud/ng-mentions/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/nth-cloud/ng-mentions/actions/workflows/ci-tests.yml)
 [![codecov](https://codecov.io/gh/nth-cloud/ng-mentions/branch/master/graph/badge.svg)](https://codecov.io/gh/nth-cloud/ng-mentions)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/ng-mentions.svg)](https://saucelabs.com/u/ng-mentions)
 
 Native Angular components & directives for customizable mentions. Allowing for customizable search results and mention formatting.
 
