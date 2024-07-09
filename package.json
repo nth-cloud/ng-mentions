@@ -33,7 +33,7 @@
     "static": "ts-node --project misc/tsconfig.json misc/copy-static-files.ts",
     "update-src-package-version": "ts-node --project misc/tsconfig.json misc/update-src-package-version.ts",
     "lint": "npm run lib:lint",
-    "test": "npm run lint && npm run lib:test && Npm run schematics:test",
+    "test": "npm run lint && npm run lib:test && npm run schematics:test",
     "ci:test": "npm run check-format && npm run test && npm run build",
     "tdd": "ng test ng-mentions --source-map false",
     "saucelabs": "ng test ng-mentions -c saucelabs",
